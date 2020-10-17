@@ -12,16 +12,12 @@ import com.venty.venty.helpers.Utils
 
 class MainActivity : AppCompatActivity() {
     private var utils = Utils
-    private var TIME_OUT: Long = 4000
+    private var TIME_OUT: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar!!.hide() //Remove Action Bar
-
-
-        //val fadeInTop  = AnimationUtils.loadAnimation(this, R.anim.fade_in_top)
-        //val fadeInBottom  = AnimationUtils.loadAnimation(this, R.anim.fade_in_bottom)
 
         //Declare Var
         var logo    = findViewById<ImageView>(R.id.splash_screen_logo)
@@ -33,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         logo.startAnimation(utils.fadeInTop)
         pBar.startAnimation(utils.fadeInBottom)
-
 
         //start activity
         Handler().postDelayed(Runnable {

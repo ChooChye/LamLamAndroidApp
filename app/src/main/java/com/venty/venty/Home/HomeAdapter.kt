@@ -10,9 +10,9 @@ import com.venty.venty.R
 
 class HomeAdapter(var context: Context, var arrayList: ArrayList<HomeItem>) : BaseAdapter()  {
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-        var view:View       = View.inflate(context, R.layout.cardview_home, null)
-        var icons: ImageView = view.findViewById(R.id.icons)
-        var names: TextView = view.findViewById(R.id.name_textView)
+        var view:View           = View.inflate(context, R.layout.cardview_home, null)
+        var icons: ImageView    = view.findViewById(R.id.icons)
+        var names: TextView     = view.findViewById(R.id.name_textView)
 
         var listItem:HomeItem = arrayList.get(p0)
 

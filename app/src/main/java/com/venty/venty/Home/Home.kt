@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.Toast
 import com.venty.venty.R
+import com.venty.venty.Scan.Scan
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -42,21 +43,18 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         when (p2) {
             0 -> {
-                Toast.makeText(applicationContext, "Scan", Toast.LENGTH_SHORT)
-//                var securityIntent = Intent(this, Security::class.java)
-//                startActivity(securityIntent)
+                Toast.makeText(applicationContext, "SCAN", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Scan::class.java)
+                startActivity(intent)
             }
             1 -> {
-//                var smartLightsIntent = Intent(this, SmartLights::class.java)
-//                startActivity(smartLightsIntent)
+                Toast.makeText(applicationContext, "SEARCH", Toast.LENGTH_SHORT).show()
             }
             2 ->{
-//                var ThemIntent = Intent(this, Thermometer::class.java)
-//                startActivity(ThemIntent)
+                Toast.makeText(applicationContext, "LOANS", Toast.LENGTH_SHORT).show()
             }
             3 -> {
-//                var ultrasonicIntent = Intent(this, Ultrasonic::class.java)
-//                startActivity(ultrasonicIntent)
+                Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
             }
         }
     }
