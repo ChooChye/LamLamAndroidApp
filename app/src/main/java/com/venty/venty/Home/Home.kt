@@ -6,20 +6,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
+import android.widget.TextView
 import android.widget.Toast
 import com.venty.venty.R
 import com.venty.venty.Scan.Scan
+import com.venty.venty.helpers.Lcg
+import kotlinx.android.synthetic.main.activity_home.*
+import org.w3c.dom.Text
+import java.lang.reflect.Array
+import kotlin.experimental.xor
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private var arrayList:ArrayList<HomeItem> ? = null
     private var gridView: GridView? = null
     private var languageAdapter: HomeAdapter? = null
+    private var lcg : Lcg = Lcg()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        
+
         //Init Var
         gridView = findViewById(R.id.homeGridLayout)
         arrayList = ArrayList()
@@ -27,7 +34,23 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         languageAdapter = HomeAdapter(applicationContext, arrayList!!)
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
+
+        val welcome = findViewById<TextView>(R.id.welcome_user)
+
+        /*val str : String = "T"
+
+        var chars = str.toCharArray()
+        var i = 0;
+        *//*var n = mutableListOf<Int>();
+        while(i < 8){
+            n.add(i, chars[i].toInt() xor lcg.next().toInt())
+            i++
+        }*//*
+        val binary = chars[0].toInt()
+        val finalBinary = String.format("%8s", Integer.toBinaryString(binary)).replace(' ', '0')
+        welcome.text = lcg.toBinary(chars).toString()*/
     }
+
 
     private fun setDataList() : ArrayList<HomeItem>{
         var arrayList:ArrayList<HomeItem> = ArrayList()
