@@ -40,6 +40,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.app_name)
+        supportActionBar?.elevation = 0f
 
 
         nav_view.setNavigationItemSelectedListener {
