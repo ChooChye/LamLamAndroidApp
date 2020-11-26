@@ -1,4 +1,4 @@
-package com.venty.venty
+package com.choochyemeilin.lamlam
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.os.Handler
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import com.venty.venty.Home.Home
-import com.venty.venty.helpers.Utils
+import com.choochyemeilin.lamlam.Home.Home
+import com.choochyemeilin.lamlam.helpers.Utils
 
 
 class MainActivity : AppCompatActivity() {

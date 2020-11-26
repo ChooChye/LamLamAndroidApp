@@ -1,5 +1,7 @@
-package com.venty.venty.Scan
+package com.choochyemeilin.lamlam.Scan
 
+
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
-import com.venty.venty.R
+import com.choochyemeilin.lamlam.R
 import kotlinx.android.synthetic.main.activity_scan.*
 
 private const val CAMERA_REQUEST_CODE = 101
@@ -16,6 +18,7 @@ private const val CAMERA_REQUEST_CODE = 101
 class Scan : AppCompatActivity() {
 
     private lateinit var codeScanner: CodeScanner
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,9 @@ class Scan : AppCompatActivity() {
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
-                    scanner_text.text = it.text
+                    //scanner_text.text = it.text
+                    //Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()
+                    showDialog(it.toString())
                 }
             }
 
@@ -98,5 +103,16 @@ class Scan : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showDialog(msg : String) {
+        var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        builder
+            .setTitle("INFORMATION")
+            .setMessage(msg)
+            .setNegativeButton("OK") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            .show()
     }
 }

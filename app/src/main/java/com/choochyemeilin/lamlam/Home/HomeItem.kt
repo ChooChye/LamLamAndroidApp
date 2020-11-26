@@ -1,4 +1,4 @@
-package com.venty.venty.Home
+package com.choochyemeilin.lamlam.Home
 
 class HomeItem {
     var icons:Int ?     = 0

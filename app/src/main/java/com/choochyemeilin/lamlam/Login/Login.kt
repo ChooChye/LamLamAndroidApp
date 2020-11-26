@@ -1,8 +1,8 @@
-package com.venty.venty.Login
+package com.choochyemeilin.lamlam.Login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.venty.venty.R
+import com.choochyemeilin.lamlam.R
 
 class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

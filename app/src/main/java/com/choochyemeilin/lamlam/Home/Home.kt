@@ -1,20 +1,21 @@
-package com.venty.venty.Home
+package com.choochyemeilin.lamlam.Home
+
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
-import com.venty.venty.R
-import com.venty.venty.Scan.Scan
-import com.venty.venty.helpers.Lcg
+import androidx.appcompat.app.ActionBarDrawerToggle
+import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Scan.Scan
+import com.choochyemeilin.lamlam.helpers.Lcg
 import kotlinx.android.synthetic.main.activity_home.*
-import org.w3c.dom.Text
-import java.lang.reflect.Array
-import kotlin.experimental.xor
+import kotlinx.android.synthetic.main.activity_nav.nav_view
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -22,12 +23,34 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var gridView: GridView? = null
     private var languageAdapter: HomeAdapter? = null
     private var lcg : Lcg = Lcg()
+
+    lateinit var toggle: ActionBarDrawerToggle
     
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         //Init Var
+
+        //Navigation Bar
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle(R.string.app_name)
+
+
+        nav_view.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.mItem1 -> Toast.makeText(applicationContext, "Clicked Item 1", Toast.LENGTH_SHORT).show()
+                R.id.mItem2 -> Toast.makeText(applicationContext, "Clicked Item 2", Toast.LENGTH_SHORT).show()
+                R.id.mItem3 -> Toast.makeText(applicationContext, "Clicked Item 3", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }
+
         gridView = findViewById(R.id.homeGridLayout)
         arrayList = ArrayList()
         arrayList = setDataList()
@@ -35,7 +58,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
 
-        val welcome = findViewById<TextView>(R.id.welcome_user)
+        //val welcome = findViewById<TextView>(R.id.welcome_user)
 
         /*val str : String = "T"
 
@@ -59,6 +82,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         arrayList.add(HomeItem(R.drawable.magnifier, "SEARCH"))
         arrayList.add(HomeItem(R.drawable.loan, "LOANS"))
         arrayList.add(HomeItem(R.drawable.business_report , "REPORTS"))
+        arrayList.add(HomeItem(R.drawable.exchange, "RETURN ITEMS"))
 
         return arrayList
     }
@@ -80,5 +104,13 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                 Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    //Navigation Drawer
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

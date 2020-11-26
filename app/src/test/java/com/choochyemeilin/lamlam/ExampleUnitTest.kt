@@ -1,4 +1,4 @@
-package com.venty.venty
+package com.choochyemeilin.lamlam
 
 import org.junit.Test
 

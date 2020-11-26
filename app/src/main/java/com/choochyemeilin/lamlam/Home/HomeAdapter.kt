@@ -1,4 +1,4 @@
-package com.venty.venty.Home
+package com.choochyemeilin.lamlam.Home
 
 import android.content.Context
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.venty.venty.R
+import com.choochyemeilin.lamlam.R
 
 class HomeAdapter(var context: Context, var arrayList: ArrayList<HomeItem>) : BaseAdapter()  {
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {

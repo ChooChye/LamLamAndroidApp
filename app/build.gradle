@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.venty.venty"
+        applicationId 'com.choochyemeilin.lamlam'
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
