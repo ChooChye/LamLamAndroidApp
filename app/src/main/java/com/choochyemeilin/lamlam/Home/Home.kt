@@ -4,18 +4,24 @@ package com.choochyemeilin.lamlam.Home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.helpers.Lcg
+import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_nav.nav_view
+import org.apache.http.HttpResponse
+import org.apache.http.client.HttpClient
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.impl.client.DefaultHttpClient
+import org.apache.http.util.EntityUtils
+import java.lang.Exception
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -23,6 +29,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var gridView: GridView? = null
     private var languageAdapter: HomeAdapter? = null
     private var lcg : Lcg = Lcg()
+    private var utils : Utils = Utils
 
     lateinit var toggle: ActionBarDrawerToggle
     
@@ -30,7 +37,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        StrictMode.enableDefaults() //Enable thread policy to call internet service with one or more applications
         //Init Var
 
         //Navigation Bar
@@ -58,6 +65,8 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         languageAdapter = HomeAdapter(applicationContext, arrayList!!)
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
+
+        httpRun()
 
         //val welcome = findViewById<TextView>(R.id.welcome_user)
 
@@ -114,4 +123,27 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun httpRun(){
+
+        val url = "http://10.0.2.2/www/FYP/WebApp/android/connect.php"
+        //val url = "http://192.168.1.138/www/FYP/WebApp/android/connect.php"
+        //val url = "http://10.0.2.16:8080/www/FYP/WebApp/android/connect.php"
+        //val url = "http://127.0.0.1:80/www/FYP/WebApp/android/connect.php"
+        //val url = "https://google.com"
+
+
+        try{
+            val httpClient : HttpClient = DefaultHttpClient()
+            val httpPost : HttpPost = HttpPost(url)
+            val httpResp : HttpResponse = httpClient.execute(httpPost)
+            val respBody = EntityUtils.toString(httpResp.entity)
+            utils.log("Test = passed. Connected to MySQL | ${respBody}")
+            //Toast.makeText(applicationContext, "MySQL connecting...", Toast.LENGTH_SHORT).show()
+        }catch (e: Exception){
+            utils.log("Error connecting to MySQL | ${e.message}")
+            //Toast.makeText(applicationContext, "Error connecting to MySQL", Toast.LENGTH_LONG).show()
+        }
+    }
+
 }
