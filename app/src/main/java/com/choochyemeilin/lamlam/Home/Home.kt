@@ -15,12 +15,13 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.helpers.Lcg
 import com.choochyemeilin.lamlam.helpers.Utils
+import cz.msebera.android.httpclient.HttpResponse
+import cz.msebera.android.httpclient.client.HttpClient
+import cz.msebera.android.httpclient.client.methods.HttpPost
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient
+import cz.msebera.android.httpclient.util.EntityUtils
 import kotlinx.android.synthetic.main.activity_home.*
-import org.apache.http.HttpResponse
-import org.apache.http.client.HttpClient
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.impl.client.DefaultHttpClient
-import org.apache.http.util.EntityUtils
+
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -146,10 +147,10 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         try{
             val jsonObject: JSONObject = getJsonData("connect.php")
-            id = jsonObject.getString("userID")
-            username = jsonObject.getString("userName")
+            //id = jsonObject.getString("userID")
+            //username = jsonObject.getString("userName")
 
-            utils.log("Test = passed. Connected to MySQL | ${id}  ${username}")
+            utils.log("Connected to MySQL")
         }catch (e: Exception){
             utils.log("An error has occurred Error #1654")
         }
