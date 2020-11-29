@@ -15,11 +15,6 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.helpers.Lcg
 import com.choochyemeilin.lamlam.helpers.Utils
-import cz.msebera.android.httpclient.HttpResponse
-import cz.msebera.android.httpclient.client.HttpClient
-import cz.msebera.android.httpclient.client.methods.HttpPost
-import cz.msebera.android.httpclient.impl.client.DefaultHttpClient
-import cz.msebera.android.httpclient.util.EntityUtils
 import kotlinx.android.synthetic.main.activity_home.*
 
 import org.json.JSONArray
@@ -80,7 +75,6 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
 
-        httpRun()
 
         //val welcome = findViewById<TextView>(R.id.welcome_user)
 
@@ -136,43 +130,5 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun httpRun(){
-
-        val url = "http://10.0.2.2/www/FYP/WebApp/android/connect.php" //change when going live
-
-        var id : String ?= null
-        var username : String ?= null
-
-        try{
-            val jsonObject: JSONObject = getJsonData("connect.php")
-            //id = jsonObject.getString("userID")
-            //username = jsonObject.getString("userName")
-
-            utils.log("Connected to MySQL")
-        }catch (e: Exception){
-            utils.log("An error has occurred Error #1654")
-        }
-    }
-
-    private fun getJsonData(phpFile : String) : JSONObject{
-        val url = "http://10.0.2.2/www/FYP/WebApp/android/$phpFile"
-        var jsonObject: JSONObject ?=null
-        try{
-            val httpClient : HttpClient = DefaultHttpClient()
-            val httpPost : HttpPost = HttpPost(url)
-            val httpResp : HttpResponse = httpClient.execute(httpPost)
-            val respBody = EntityUtils.toString(httpResp.entity)
-
-            val parseJson : JSONArray = JSONArray(respBody)
-
-            for (i in 0 until parseJson.length()) {
-                jsonObject = parseJson.getJSONObject(i)
-            }
-        }catch (e: Exception){
-            utils.log("error getting json Error #1532")
-        }
-        return jsonObject!!
     }
 }
