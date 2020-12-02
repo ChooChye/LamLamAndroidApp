@@ -8,4 +8,8 @@
     <color name="colorError">#E76976</color>
     <color name="colorFontPrimary">#9B9B9B</color>
     <color name="colorFontBold">#6D6D6D</color>
+
+    <color name="white">#ffffff</color>
+    <color name="colorLightGray">#B29B9B9B</color>
+    <color name="colorTextPurple">#7A3EE2</color>
 </resources>

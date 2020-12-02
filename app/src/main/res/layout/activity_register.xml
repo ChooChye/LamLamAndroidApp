@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Register.Register"
+    android:background="@drawable/splash_screen_bg">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="520dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/text_register_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REGISTER"
+        android:textColor="@color/white"
+        android:textSize="28dp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_login"
+        android:layout_width="300dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/text_register_reg"
+        app:layout_constraintStart_toStartOf="@id/text_register_reg"
+        app:layout_constraintTop_toBottomOf="@id/text_register_reg">
+
+
+        <EditText
+            android:id="@+id/editTextNumber_register_staffID"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="110dp"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Staff ID"
+            android:background="@color/white"
+            android:textSize="18sp"
+            android:textColor="@color/colorLightGray"
+            android:drawableStart="@drawable/ic_staff_id"
+            android:drawablePadding="14dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="55dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+
+            android:background="@color/white"
+            android:textSize="18sp"
+            android:textColor="@color/colorLightGray"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:drawablePadding="15dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:background="@color/white"
+            android:textSize="18sp"
+            android:textColor="@color/colorLightGray"
+            android:drawableStart="@drawable/ic_baseline_email"
+            android:drawablePadding="15dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="52dp"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="H/P No."
+            android:background="@color/white"
+            android:textSize="18sp"
+            android:textColor="@color/colorLightGray"
+            android:drawableStart="@drawable/ic_baseline_call_24"
+            android:drawablePadding="15dp"/>
+
+        <EditText
+            android:id="@+id/editTextTextPassword_login_password"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="108dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:textSize="18sp"
+            android:drawableStart="@drawable/ic_baseline_lock"
+            android:drawablePadding="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
+            app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
+            app:layout_constraintTop_toBottomOf="@id/editTextNumber_login_username"/>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button_register_reg"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_green"
+        android:text="REGISTER NOW"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+        app:layout_constraintStart_toStartOf="@id/cardview_login"
+        app:layout_constraintTop_toBottomOf="@id/cardview_login" />
+
+    <Button
+        android:id="@+id/button_login_signin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_white"
+        android:text="LOGIN"
+        android:textColor="@color/colorTextPurple"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/button_register_reg"
+        app:layout_constraintStart_toStartOf="@id/button_register_reg"
+        app:layout_constraintTop_toBottomOf="@id/button_register_reg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
