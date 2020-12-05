@@ -59,14 +59,22 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     "Clicked Item 2",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                /*
                 R.id.mItem3 -> Toast.makeText(
                     applicationContext,
                     "Clicked Item 3",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                 */
+
+
             }
             true
         }
+
+
 
         gridView = findViewById(R.id.homeGridLayout)
         arrayList = ArrayList()

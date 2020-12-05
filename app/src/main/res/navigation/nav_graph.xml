@@ -25,4 +25,21 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+    <activity
+        android:id="@+id/mItem4"
+        android:name="com.choochyemeilin.lamlam.Login.Login"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" >
+        <action
+            android:id="@+id/action_Login_to_Register"
+            app:destination="@id/nav_register/>"
+        />
+    </activity>
+
+    <activity
+        android:id="@+id/nav_register"
+        android:name="com.choochyemeilin.lamlam.Register.Register"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" />
 </navigation>
