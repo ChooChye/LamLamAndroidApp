@@ -1,0 +1,52 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'kotlin-android'\r\napply plugin: 'kotlin-android-extensions'\r\napply plugin: 'com.google.gms.google-services'\r\n\r\nandroid {\r\n    compileSdkVersion 30\r\n    buildToolsVersion \"30.0.1\"\r\n    useLibrary \"org.apache.http.legacy\"\r\n\r\n    defaultConfig {\r\n        applicationId 'com.choochyemeilin.lamlam'\r\n        minSdkVersion 19\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version\"\r\n    implementation 'androidx.core:core-ktx:1.3.1'\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'\r\n    implementation 'com.google.android.material:material:1.2.0'\r\n    implementation 'androidx.annotation:annotation:1.1.0'\r\n    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    implementation 'androidx.navigation:navigation-fragment:2.1.0'\r\n    implementation 'androidx.navigation:navigation-ui:2.1.0'\r\n    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'\r\n    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'\r\n    implementation 'androidx.gridlayout:gridlayout:1.0.0'\r\n    implementation 'com.google.firebase:firebase-database:19.2.1'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n\r\n    //Custom Dependencies\r\n    implementation 'com.budiyev.android:code-scanner:2.1.0'\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 9085ce82905e615aafc7592ecd2695dae5c79025)
++++ app/build.gradle	(date 1607508026411)
+@@ -49,6 +49,7 @@
+     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
+     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+     implementation 'com.google.firebase:firebase-database:19.2.1'
++    implementation 'com.google.firebase:firebase-auth:20.0.1'
+     testImplementation 'junit:junit:4.12'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+@@ -56,4 +57,11 @@
+     //Custom Dependencies
+     implementation 'com.budiyev.android:code-scanner:2.1.0'
+ 
++    // Import the BoM for the Firebase platform
++    implementation platform('com.google.firebase:firebase-bom:26.1.1')
++
++    // Declare the dependency for the Firebase Authentication library
++    // When using the BoM, you don't specify versions in Firebase library dependencies
++    implementation 'com.google.firebase:firebase-auth-ktx'
++
+ }
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.choochyemeilin.lamlam\">\r\n\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        tools:targetApi=\"m\">\r\n        <activity\r\n            android:name=\".Register.Register\"\r\n            android:label=\"@string/title_activity_register\"\r\n            android:theme=\"@style/AppTheme.NoActionBar\"></activity>\r\n\r\n        <uses-library\r\n            android:name=\"org.apache.http.legacy\"\r\n            android:required=\"false\" />\r\n\r\n        <activity\r\n            android:name=\".Scan.Scan\"\r\n            android:screenOrientation=\"portrait\" />\r\n        <activity\r\n            android:name=\".Home.Home\"\r\n            android:label=\"@string/title_activity_home\"\r\n            android:theme=\"@style/AppTheme\" />\r\n        <activity android:name=\".Login.Login\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 9085ce82905e615aafc7592ecd2695dae5c79025)
++++ app/src/main/AndroidManifest.xml	(date 1607509091266)
+@@ -16,10 +16,11 @@
+         android:theme="@style/AppTheme"
+         android:usesCleartextTraffic="true"
+         tools:targetApi="m">
++        <activity android:name=".Login.SignUpActivity"></activity>
+         <activity
+             android:name=".Register.Register"
+             android:label="@string/title_activity_register"
+-            android:theme="@style/AppTheme.NoActionBar"></activity>
++            android:theme="@style/AppTheme.NoActionBar" />
+ 
+         <uses-library
+             android:name="org.apache.http.legacy"
