@@ -15,6 +15,8 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.helpers.Lcg
 import com.choochyemeilin.lamlam.helpers.Utils
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 
 import org.json.JSONArray
@@ -28,13 +30,13 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var lcg : Lcg = Lcg()
     private var utils : Utils = Utils
 
+
     lateinit var toggle: ActionBarDrawerToggle
     
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        StrictMode.enableDefaults() //Enable thread policy to call internet service with one or more applications
         //Init Var
 
         //Navigation Bar
@@ -108,7 +110,6 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         when (p2) {
             0 -> {
-                Toast.makeText(applicationContext, "SCAN", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, Scan::class.java)
                 startActivity(intent)
             }
