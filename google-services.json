@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "145452212040",
+    "firebase_url": "https://lamlam-3818d.firebaseio.com",
+    "project_id": "lamlam-3818d",
+    "storage_bucket": "lamlam-3818d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145452212040:android:76cb75507e0e7453dc1d7d",
+        "android_client_info": {
+          "package_name": "com.choochyemeilin.lamlam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145452212040-r967v3q15okls77ljh77al377g1valdv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ1GXzNAzGxhfSoyOymXXKJwBV8RWKHsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145452212040-r967v3q15okls77ljh77al377g1valdv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
