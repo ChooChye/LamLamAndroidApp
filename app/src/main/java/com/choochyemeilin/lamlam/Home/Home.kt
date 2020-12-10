@@ -62,14 +62,18 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                /*
+
                 R.id.mItem3 -> Toast.makeText(
                     applicationContext,
                     "Clicked Item 3",
                     Toast.LENGTH_SHORT
                 ).show()
 
-                 */
+                R.id.mItem4 -> Toast.makeText(
+                    applicationContext,
+                    "Clicked Item 4",
+                    Toast.LENGTH_SHORT
+                ).show()
 
 
             }
