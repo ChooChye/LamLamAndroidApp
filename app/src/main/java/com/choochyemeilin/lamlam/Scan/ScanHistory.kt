@@ -1,7 +1,7 @@
 package com.choochyemeilin.lamlam.Scan
 
 class ScanHistory{
-    private var id : String ?= null
+    var id : String ?= null
     private var Category : String ?= null
     private var Product : String ?= null
 

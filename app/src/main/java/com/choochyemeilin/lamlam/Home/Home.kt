@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.Scan
+import com.choochyemeilin.lamlam.Search.Search
 import com.choochyemeilin.lamlam.helpers.Lcg
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.DatabaseReference
@@ -114,7 +115,8 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                 startActivity(intent)
             }
             1 -> {
-                Toast.makeText(applicationContext, "SEARCH", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Search::class.java)
+                startActivity(intent)
             }
             2 -> {
                 Toast.makeText(applicationContext, "LOANS", Toast.LENGTH_SHORT).show()
