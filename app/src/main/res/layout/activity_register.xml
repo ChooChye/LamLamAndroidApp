@@ -60,7 +60,7 @@
             />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/editText_register_name"
             android:layout_width="275dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
@@ -77,7 +77,7 @@
             />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/editTextTextEmailAddress_register_email"
             android:layout_width="275dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
@@ -92,7 +92,7 @@
             />
 
         <EditText
-            android:id="@+id/editTextNumber"
+            android:id="@+id/editTextNumber_register_phoneNo"
             android:layout_width="275dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
@@ -107,7 +107,7 @@
             android:drawablePadding="15dp"/>
 
         <EditText
-            android:id="@+id/editTextTextPassword_login_password"
+            android:id="@+id/editTextTextPassword_register_password"
             android:layout_width="275dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
