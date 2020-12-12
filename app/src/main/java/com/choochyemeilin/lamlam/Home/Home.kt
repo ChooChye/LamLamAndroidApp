@@ -1,6 +1,7 @@
 package com.choochyemeilin.lamlam.Home
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
@@ -11,11 +12,18 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.Scan.Scan
-import com.choochyemeilin.lamlam.Search.Search
+//import com.choochyemeilin.lamlam.Search.Search
 import com.choochyemeilin.lamlam.helpers.Lcg
 import com.choochyemeilin.lamlam.helpers.Utils
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
@@ -30,7 +38,6 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var languageAdapter: HomeAdapter? = null
     private var lcg : Lcg = Lcg()
     private var utils : Utils = Utils
-
 
     lateinit var toggle: ActionBarDrawerToggle
     
@@ -48,7 +55,6 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.app_name)
         supportActionBar?.elevation = 0f
-
 
         nav_view.setNavigationItemSelectedListener {
             when(it.itemId){
@@ -70,18 +76,18 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                R.id.mItem4 -> Toast.makeText(
-                    applicationContext,
-                    "Clicked Item 4",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+               // R.id.mItem4 -> startActivity(Intent(this,Register::class.java))
 
             }
             true
         }
 
 
+        //logout
+        nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {
+            logout()
+            return@setOnMenuItemClickListener true
+        }
 
         gridView = findViewById(R.id.homeGridLayout)
         arrayList = ArrayList()
@@ -107,6 +113,14 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         welcome.text = lcg.toBinary(chars).toString()*/
     }
 
+    //Logout Methods
+    private fun logout(){
+
+        FirebaseAuth.getInstance().signOut()
+        Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show()
+        val intent : Intent = Intent(this, Login::class.java)
+        startActivity(intent)
+    }
 
     private fun setDataList() : ArrayList<HomeItem>{
         var arrayList:ArrayList<HomeItem> = ArrayList()
@@ -126,9 +140,15 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                 val intent = Intent(this, Scan::class.java)
                 startActivity(intent)
             }
+            /*
             1 -> {
                 val intent = Intent(this, Search::class.java)
                 startActivity(intent)
+            }
+
+             */
+            1 -> {
+                Toast.makeText(applicationContext, "SEARCH", Toast.LENGTH_SHORT).show()
             }
             2 -> {
                 Toast.makeText(applicationContext, "LOANS", Toast.LENGTH_SHORT).show()

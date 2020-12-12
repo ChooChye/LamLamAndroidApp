@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Home.Home
+import com.choochyemeilin.lamlam.Login.Login
+import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.helpers.Utils
 
 
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed(Runnable {
-            val intent = Intent(this, Home::class.java)
+            val intent = Intent(this, Register::class.java)
             startActivity(intent)
             finish()
         }, TIME_OUT)
