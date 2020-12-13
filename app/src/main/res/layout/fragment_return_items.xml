@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ReturnItems.ReturnItems">
+
+    <com.budiyev.android.codescanner.CodeScannerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/returnItems_scanner_view"
+        app:autoFocusButtonColor="@android:color/white"
+        app:autoFocusButtonVisible="true"
+        app:flashButtonColor="@android:color/white"
+        app:flashButtonVisible="true"
+        app:maskColor="#52000000"/>
+
+    <TextView
+        android:id="@+id/returnItems_scanner_text"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@id/returnItems_scanner_view"
+        android:text="Place a QR code to Return Items"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@color/white"
+        android:textColor="@android:color/black"
+         />
+
+</RelativeLayout>

@@ -30,7 +30,14 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".Login.Login" />
+        <activity
+            android:name=".Login.Login"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".Register.Register"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

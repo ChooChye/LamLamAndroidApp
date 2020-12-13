@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Register.Register
+import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
 //import com.choochyemeilin.lamlam.Search.Search
 import com.choochyemeilin.lamlam.helpers.Lcg
@@ -155,6 +156,11 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             }
             3 -> {
                 Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
+            }
+            4 -> {
+               val intent = Intent(this, ReturnItems::class.java)
+                startActivity(intent)
+               // Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
             }
         }
     }
