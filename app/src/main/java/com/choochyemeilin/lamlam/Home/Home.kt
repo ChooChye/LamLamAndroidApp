@@ -84,6 +84,10 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         }
 
 
+        fun jsonTest(){
+            ArrayList<String>()
+        }
+
         //logout
         nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {
             logout()

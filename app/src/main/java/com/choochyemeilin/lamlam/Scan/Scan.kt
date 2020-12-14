@@ -17,12 +17,9 @@ import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_scan.*
-import java.lang.Exception
-import java.lang.reflect.Executable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -32,7 +29,7 @@ private const val CAMERA_REQUEST_CODE = 101
 class Scan : AppCompatActivity() {
 
     private lateinit var codeScanner: CodeScanner
-    //private var utils: Utils = Utils
+    private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("ScanHistory")
 
@@ -65,11 +62,14 @@ class Scan : AppCompatActivity() {
                 runOnUiThread {
                     hapticFeedback()
                     try {
-                        val jsonData = "[$it]" //{"id":"5fcb238224456","Category":"Tops","Product":"Pink Sweatshirt"}
+                        //val jsonData = "[$it]" [{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
+                        val jsonData = """
+                        {"id":"-MOMC5KxRtiN1NIlAPZC","category":"Tops","product":{"desc":"Pink Sweatshirt with Logo","price":"39.00","product_name":"Pink Sweatshirt","qty":"1"}}"""
                         codeScanner.stopPreview()
                         updateDB(jsonData)
-                    }catch (e : Exception){
-                        showDialog("An error has occurred #9784")
+                    } catch (e: Exception) {
+                        utils.log(e.toString())
+                        showDialog("An error has occurred #9784 | $e")
                     }
                 }
             }
@@ -88,8 +88,8 @@ class Scan : AppCompatActivity() {
 
     //Update Database after scanning
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun updateDB(jsonData: String): Boolean {
-        var stat = true
+    private fun updateDB(jsonData: String) {
+        var data : List<ScanHistory> ?= null
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
         val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
@@ -98,19 +98,37 @@ class Scan : AppCompatActivity() {
         val formattedTime = current.format(formatter2)
         val formattedSec = current.format(formatter3)
 
-        val data = readJSON(jsonData)
+        try {
+            data = readJSON(jsonData)
+        } catch (e: Exception) {
+            utils.log("Error #897 | $e")
+        }
+        //utils.log("TEST readJSON = $data");
 
         val process = myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
         process
             .addOnSuccessListener {
-                val cat = data[0].getCategory()
-                val prod = data[0].getProduct()
-                val id = data[0].getID()
+                val cat = data!![0].category
+                val id = data!![0].id
+
+                val prodDesc = data!![0].product!![0].desc
+                val prodPrice = data!![0].product!![0].price
+                val prodName = data!![0].product!![0].product_name
+                val prodQty = data!![0].product!![0].qty
+
 
                 val msg =   "ID : $id \n" +
                             "Category : $cat \n" +
-                            "Product : $prod \n" +
+                        "Product : \n" +
+                        "$prodDesc \n " +
+                        "$prodPrice \n " +
+                        "$prodName \n " +
+                        "$prodQty \n" +
                         "Successfully recorded"
+
+                /*val msg =   "ID : ${data.id} \n" +
+                        "Category : ${data.category} \n" +
+                        "Successfully recorded"*/
 
                 showDialog(msg)
 
@@ -118,7 +136,7 @@ class Scan : AppCompatActivity() {
             .addOnFailureListener {
                 showDialog("Firebase error")
             }
-        return stat
+
     }
 
     //Vibrate when scanning
@@ -138,7 +156,7 @@ class Scan : AppCompatActivity() {
         }
     }
 
-    private fun readJSON(json: String): List<ScanHistory> {
+    private fun readJSON(json: String) : List<ScanHistory> {
         return if (json != null)
             Gson().fromJson(json) //Extension Call
         else

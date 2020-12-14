@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Register.Register"
     style="@style/AppTheme.NoActionBar"
+    android:id="@+id/activity_register"
     android:background="@drawable/splash_screen_bg">
 
     <ImageView

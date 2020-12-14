@@ -1,25 +1,22 @@
 package com.choochyemeilin.lamlam.Scan
 
+import com.choochyemeilin.lamlam.helpers.Products
+
 class ScanHistory{
     var id : String ?= null
-    private var Category : String ?= null
-    private var Product : String ?= null
+    var category : String ?= null
+    var product : List<Products>? = null
 
 
-    override fun toString(): String {
-        return "$id | $Category | $Product"
+    /*override fun toString(): String {
+        return "$id | $category "
     }
 
-    fun getID(): String{
+    fun getProdID(): String{
         return "$id"
     }
-    fun getCategory(): String{
-        return "$Category"
-    }
-    fun getProduct(): String{
-        return "$Product"
-    }
-
-
+    fun getScanCategory(): String{
+        return "$category"
+    }*/
 
 }

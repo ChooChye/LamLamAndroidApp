@@ -8,17 +8,13 @@ import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.navigation.findNavController
-import com.choochyemeilin.lamlam.Login.ForgotPasswordActivity
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
-import java.util.HashMap
 
 class Register : AppCompatActivity() {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -74,11 +70,8 @@ class Register : AppCompatActivity() {
 
     //Registers the user
     private fun register(email:String, password:String){
-        /*
-        utils.closeKeyboard()
-         */
 
-        closeKeyBoard()
+        utils.closeKeyboard(findViewById(R.id.activity_register))
 
         /*
         var staffID=editTextNumber_register_staffID.toString().toInt()
@@ -123,15 +116,4 @@ class Register : AppCompatActivity() {
                 }
             }
     }
-
-    //Hiding the keyboard
-    private fun closeKeyBoard() {
-        val view = this.currentFocus
-        if (view != null) {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
-
-
 }
