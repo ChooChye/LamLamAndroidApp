@@ -24,6 +24,7 @@
         <activity
             android:name=".Scan.Scan"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".Home.Home"
             android:label="@string/title_activity_home"
@@ -38,6 +39,7 @@
             android:name=".Register.Register"
             android:theme="@style/AppTheme.NoActionBar"
             />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,12 +1,12 @@
 package com.choochyemeilin.lamlam.Register
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
@@ -15,23 +15,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.HashMap
 
 class Register : AppCompatActivity() {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var utils = Utils
-
-   // var database= FirebaseDatabase.getInstance().reference
-
-  //  private var fStore         : FirebaseFirestore = FirebaseFirestore.getInstance()
-   // private var fAuth          : FirebaseAuth = FirebaseAuth.getInstance()
-  //  private var fData          : FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var passwordLock=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-       // databaseReference.reference.child("profile")
         button_register_reg.setOnClickListener{
             if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())){
                 editTextNumber_register_staffID.setError("Please enter Staff ID")
@@ -64,8 +59,12 @@ class Register : AppCompatActivity() {
             finish()
         }
 
+        imageView_register_password_eye.setOnClickListener{
+            passwordLock=!passwordLock
+            showPassword(passwordLock)
+        }
+        showPassword(passwordLock)
     }
-
 
 
     //Registers the user
@@ -106,7 +105,6 @@ class Register : AppCompatActivity() {
                     currentUserDb?.child("Password")?.setValue(editTextTextPassword_register_password.text.toString())
 
 
-
                  //   database.child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNumber,pw))
                     Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this, Login::class.java))
@@ -116,4 +114,17 @@ class Register : AppCompatActivity() {
                 }
             }
     }
+
+     fun showPassword(isShow:Boolean){
+        if(isShow){
+            editTextTextPassword_register_password.transformationMethod=
+                HideReturnsTransformationMethod.getInstance()
+            imageView_register_password_eye.setImageResource(R.drawable.ic_baseline_visibility_off_24)
+        }else{
+            editTextTextPassword_register_password.transformationMethod= PasswordTransformationMethod.getInstance()
+            imageView_register_password_eye.setImageResource(R.drawable.ic_baseline_remove_red_eye_24)
+        }
+         editTextTextPassword_register_password.setSelection(editTextTextPassword_register_password.text.toString().length)
+    }
+
 }

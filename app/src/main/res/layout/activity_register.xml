@@ -51,14 +51,14 @@
             android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginBottom="110dp"
-            android:ems="10"
-            android:inputType="number"
-            android:hint="Staff ID"
-            android:textSize="18sp"
             android:background="@color/white"
-            android:drawableStart="@drawable/ic_staff_id"
+            android:drawableStart="@drawable/custom_staff_id"
             android:drawablePadding="14dp"
-            />
+            android:ems="10"
+            android:hint="Staff ID"
+            android:maxLength="7"
+            android:inputType="number"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editText_register_name"
@@ -71,7 +71,7 @@
             android:hint="Name"
             android:textSize="18sp"
             android:background="@color/white"
-            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:drawableStart="@drawable/custom_account_circle"
             android:drawablePadding="15dp"
             />
 
@@ -85,7 +85,7 @@
             android:hint="Email"
             android:background="@color/white"
             android:textSize="18sp"
-            android:drawableStart="@drawable/ic_baseline_email"
+            android:drawableStart="@drawable/custom_email"
             android:drawablePadding="15dp"
             />
 
@@ -100,7 +100,7 @@
             android:hint="H/P No."
             android:background="@color/white"
             android:textSize="18sp"
-            android:drawableStart="@drawable/ic_baseline_call_24"
+            android:drawableStart="@drawable/custom_phone"
             android:drawablePadding="15dp"/>
 
         <EditText
@@ -114,11 +114,20 @@
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
             android:textSize="18sp"
-            android:drawableStart="@drawable/ic_baseline_lock"
+            android:drawableStart="@drawable/custom_lock"
             android:drawablePadding="15dp"
             app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
             app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
             app:layout_constraintTop_toBottomOf="@id/editTextNumber_login_username"/>
+
+        <ImageView
+            android:id="@+id/imageView_register_password_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_remove_red_eye_24"
+            android:layout_marginTop="235dp"
+            android:layout_marginStart="260dp"
+            />
     </androidx.cardview.widget.CardView>
 
     <Button

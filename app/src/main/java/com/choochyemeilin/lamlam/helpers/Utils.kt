@@ -31,7 +31,7 @@ object Utils {
     }
 
     //Hiding the keyboard
-    fun closeKeyboard(view: View) {
+   public fun closeKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
