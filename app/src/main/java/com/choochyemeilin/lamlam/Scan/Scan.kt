@@ -62,9 +62,8 @@ class Scan : AppCompatActivity() {
                 runOnUiThread {
                     hapticFeedback()
                     try {
-                        //val jsonData = "[$it]" [{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
-                        val jsonData = """
-                        {"id":"-MOMC5KxRtiN1NIlAPZC","category":"Tops","product":{"desc":"Pink Sweatshirt with Logo","price":"39.00","product_name":"Pink Sweatshirt","qty":"1"}}"""
+                        val jsonData = "[$it]"
+                        //[{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
                         codeScanner.stopPreview()
                         updateDB(jsonData)
                     } catch (e: Exception) {
@@ -89,7 +88,7 @@ class Scan : AppCompatActivity() {
     //Update Database after scanning
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDB(jsonData: String) {
-        var data : List<ScanHistory> ?= null
+        var data: List<ScanHistory>? = null
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
         val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
@@ -105,7 +104,8 @@ class Scan : AppCompatActivity() {
         }
         //utils.log("TEST readJSON = $data");
 
-        val process = myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
+        val process =
+            myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
         process
             .addOnSuccessListener {
                 val cat = data!![0].category
@@ -117,19 +117,21 @@ class Scan : AppCompatActivity() {
                 val prodQty = data!![0].product!![0].qty
 
 
-                val msg =   "ID : $id \n" +
-                            "Category : $cat \n" +
-                        "Product : \n" +
-                        "$prodDesc \n " +
-                        "$prodPrice \n " +
-                        "$prodName \n " +
-                        "$prodQty \n" +
-                        "Successfully recorded"
+                /*val msg =
+                    "ID : $id\n" +
+                            "Category     : $cat\n" +
+                            "Product      : $prodDesc\n" +
+                            "Product Name : $prodName\n " +
+                            "Price        : $prodPrice\n" +
+                            "Quantity     : $prodQty \n\n" +
+                            "Successfully recorded"*/
 
-                /*val msg =   "ID : ${data.id} \n" +
-                        "Category : ${data.category} \n" +
-                        "Successfully recorded"*/
-
+                val msg = String.format("ID : %s\n" +
+                        "Category : %s\n" +
+                        "Product Name : %s\n" +
+                        "Price : %s\n" +
+                        "Quantity : %s\n\n" +
+                        "Successfully Recorded", id, cat, prodName, prodPrice, prodQty)
                 showDialog(msg)
 
             }
@@ -156,7 +158,7 @@ class Scan : AppCompatActivity() {
         }
     }
 
-    private fun readJSON(json: String) : List<ScanHistory> {
+    private fun readJSON(json: String): List<ScanHistory> {
         return if (json != null)
             Gson().fromJson(json) //Extension Call
         else
