@@ -162,9 +162,10 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                 Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
             }
             4 -> {
-               val intent = Intent(this, ReturnItems::class.java)
-                startActivity(intent)
                 Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ReturnItems::class.java)
+                startActivity(intent)
+                
             }
         }
     }
