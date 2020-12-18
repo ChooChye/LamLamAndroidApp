@@ -10,6 +10,7 @@ import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
+import com.choochyemeilin.lamlam.Search.Search
 import com.choochyemeilin.lamlam.helpers.Utils
 
 
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed(Runnable {
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, Search::class.java)
             startActivity(intent)
             finish()
         }, TIME_OUT)
