@@ -31,6 +31,7 @@ import com.choochyemeilin.lamlam.helpers.Lcg
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_register.*
@@ -75,42 +76,19 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     "My Profile",
                     Toast.LENGTH_SHORT
                 ).show()
-                /*
-                R.id.mItem2 -> Toast.makeText(
-                    applicationContext,
-                    "My Stock",
-                    Toast.LENGTH_SHORT
-                ).show()
-                 */
+                R.id.mItem2 -> {
+                    val intent : Intent = Intent(this, MyStocks::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.mItem3 -> Toast.makeText(
                     applicationContext,
                     "Notifications",
                     Toast.LENGTH_SHORT
                 ).show()
-
-               // R.id.mItem4 -> startActivity(Intent(this,Register::class.java))
-
+               R.id.mItem4 -> logout()
             }
             true
-        }
-
-
-        fun jsonTest(){
-            ArrayList<String>()
-        }
-
-        //MY STOCK <- drawer item
-        nav_view.menu.findItem(R.id.mItem2).setOnMenuItemClickListener {
-            val intent : Intent = Intent(this, MyStocks::class.java)
-            startActivity(intent)
-            return@setOnMenuItemClickListener true
-        }
-
-        //LOGOUT <- drawer item
-        nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {
-            logout()
-            return@setOnMenuItemClickListener true
         }
 
         gridView = findViewById(R.id.homeGridLayout)
@@ -238,6 +216,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
  */
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun changeDrawerName(){
         var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -258,8 +237,6 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-
 
                 for (i in dataSnapshot.children){
                     val drawerName : Staff? = i.getValue(Staff::class.java)

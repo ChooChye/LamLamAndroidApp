@@ -11,9 +11,11 @@ import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_my_stocks.*
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search.rv_result
 
-class MyStocks : AppCompatActivity() {
+ class MyStocks : AppCompatActivity() {
 
     lateinit var recyclerView: RecyclerView
     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -27,7 +29,7 @@ class MyStocks : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         arrayList = ArrayList()
-        rv_result.setHasFixedSize(true)
+        list_view_recycle.setHasFixedSize(true)
 
        // recyclerView=findViewById(R.id.list_view_recycle)
         StocksRecyclerView()
@@ -58,8 +60,8 @@ class MyStocks : AppCompatActivity() {
                         }
                     }
                     val myAdapter = MyStocksAdapter(applicationContext, arrayList)
-                    rv_result.adapter = myAdapter
-                    rv_result.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+                    list_view_recycle.adapter = myAdapter
+                    list_view_recycle.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
                     myAdapter.notifyDataSetChanged()
                 }
             }

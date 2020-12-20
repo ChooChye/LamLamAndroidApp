@@ -22,6 +22,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_return_items.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import com.choochyemeilin.lamlam.Scan.fromJson
 
 private const val CAMERA_REQUEST_CODE = 101
 
