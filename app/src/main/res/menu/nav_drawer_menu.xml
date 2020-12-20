@@ -8,6 +8,7 @@
 
     <item
         android:id="@+id/mItem2"
+        android:icon="@drawable/ic_baseline_store_24"
         android:title="My Stock" />
 
     <item

@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
+import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import com.google.gson.Gson
@@ -60,6 +61,7 @@ class ReturnItems : AppCompatActivity() {
                     hapticFeedback()
                     try {
                         val jsonData = "[$it]"
+                        utils.log(it.toString())
                         //[{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
                         codeScanner.stopPreview()
                         updateDB(jsonData)
@@ -85,7 +87,7 @@ class ReturnItems : AppCompatActivity() {
     //Update Database after scanning
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDB(jsonData: String) {
-        var data: List<ReturnHistory>? = null
+        var data: List<Products>? = null
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
         val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
@@ -96,6 +98,7 @@ class ReturnItems : AppCompatActivity() {
 
         try {
             data = readJSON(jsonData)
+
         } catch (e: Exception) {
             utils.log("Error #897 | $e")
         }
@@ -106,12 +109,12 @@ class ReturnItems : AppCompatActivity() {
         process
             .addOnSuccessListener {
                 val cat = data!![0].category
-                val id = data!![0].id
+                val id = data[0].id
 
-                val prodDesc = data!![0].product!![0].desc
-                val prodPrice = data!![0].product!![0].price
-                val prodName = data!![0].product!![0].product_name
-                val prodQty = data!![0].product!![0].qty
+                //val prodDesc = data!![0].desc
+                val prodPrice = data[0].price
+                val prodName = data[0].product_name
+                val prodQty = data[0].qty
 
                 val msg = String.format("Product ID : %s\n" +
                         "Category : %s\n" +
@@ -145,9 +148,9 @@ class ReturnItems : AppCompatActivity() {
         }
     }
 
-    private fun readJSON(json: String): List<ReturnHistory> {
+    private fun readJSON(json: String): List<Products> {
         return if (json != null)
-            Gson().fromJson(json) //Extension Call
+            Gson().fromJson(json) //GsonExtension Call
         else
             listOf()
     }

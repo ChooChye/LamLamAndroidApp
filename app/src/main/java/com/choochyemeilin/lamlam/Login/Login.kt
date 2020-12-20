@@ -61,7 +61,7 @@ class Login : AppCompatActivity() {
 
         text_login_forgotpw.setOnClickListener{
             val builder:AlertDialog.Builder=AlertDialog.Builder(this)
-            builder.setTitle("FORGOT PASSWORD: \n Please enter your email")
+            builder.setTitle("FORGOT PASSWORD: \n Please enter your email\n")
             val view:View=layoutInflater.inflate(R.layout.activity_forgot_password,null)
             val email:EditText=view.findViewById<EditText>(R.id.editText_login_forgotpw)
             builder.setView(view)
@@ -86,8 +86,8 @@ class Login : AppCompatActivity() {
         val currentUser=auth.currentUser
 
         if(editTextTextPassword_login_password.length()<6){
-            editTextTextPassword_login_password.setError("Password must be greater than 5 characters")
-        }
+           editTextTextPassword_login_password.setError("Password must be greater than 5 characters")
+       }
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             if (TextUtils.isEmpty(editText_login_email.text.toString())){

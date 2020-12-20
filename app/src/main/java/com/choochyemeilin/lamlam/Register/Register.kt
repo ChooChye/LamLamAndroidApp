@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -26,8 +27,23 @@ class Register : AppCompatActivity() {
     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var utils = Utils
     private var passwordLock=false
-    private var myRef: DatabaseReference = databaseReference.getReference("User")
+    private var myRef: DatabaseReference = databaseReference.getReference("Staff ID")
+/*
+    val userID="User ID : "
+    val staffID=editTextNumber_register_staffID.text.toString().toInt()
+    val staffName=editText_register_name.text.toString()
+    val  staffEmail=editTextTextEmailAddress_register_email.text.toString()
+    val phoneNo=editTextNumber_register_phoneNo.text.toString().toInt()
+    val pw=editTextTextPassword_register_password.text.toString()
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    val current = LocalDateTime.now()
+    @RequiresApi(Build.VERSION_CODES.O)
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
+    @RequiresApi(Build.VERSION_CODES.O)
+    val formattedDate = current.format(formatter)
+
+ */
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,39 +54,51 @@ class Register : AppCompatActivity() {
 
                 if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())) {
                     editTextNumber_register_staffID.setError("Please enter Staff ID")
+                    return@setOnClickListener
 
                 } else if (TextUtils.isEmpty(editText_register_name.text.toString())) {
                     editText_register_name.setError("Please enter Name")
-
+                    return@setOnClickListener
                 } else if (TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())) {
                     editTextTextEmailAddress_register_email.setError("Please enter Email")
-
+                    return@setOnClickListener
                 } else if (TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())) {
                     editTextNumber_register_phoneNo.setError("Please enter Phone Number")
+                    return@setOnClickListener
 
-                } else if (TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())) {
+                }else if (TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())) {
                     editTextTextPassword_register_password.setError("Please enter Password")
+                    return@setOnClickListener
                 }
+            // add authentication user
+            if (
+                editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty() ||
+                editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
+            ) {
+
+                register(
+                    editTextTextEmailAddress_register_email.text.trim().toString(),
+                    editTextTextPassword_register_password.text.trim().toString()
+                )
+
+            }
 
            if (editTextNumber_register_staffID.length()!=7){
                editTextNumber_register_staffID.setError("Staff ID must be 7 characters")
+               return@setOnClickListener
         }
+           else if (!editTextNumber_register_staffID.equals(compareStaffID())){
+               editTextNumber_register_staffID.setError("Staff ID is not in the database")
+               return@setOnClickListener
+           }
+
+
 
             if (editTextTextPassword_register_password.length()<6){
                 editTextTextPassword_register_password.setError("Password must be greater than 5 characters")
+                return@setOnClickListener
             }
 
-            // add authentication user
-                if (
-                    editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty() ||
-                    editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
-                ) {
-
-                    register(
-                        editTextTextEmailAddress_register_email.text.trim().toString(),
-                        editTextTextPassword_register_password.text.trim().toString()
-                    )
-                }
         }
 
         button_register_cancel.setOnClickListener{
@@ -185,6 +213,32 @@ class Register : AppCompatActivity() {
             imageView_register_password_eye.setImageResource(R.drawable.ic_baseline_remove_red_eye_24)
         }
          editTextTextPassword_register_password.setSelection(editTextTextPassword_register_password.text.toString().length)
+    }
+
+    fun compareStaffID(){
+
+        var query : Query =myRef
+
+        //Get Data
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                utils.log("$error")
+                Toast.makeText(this@Register, "ERROR", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                 var textRegStaffID=editTextNumber_register_staffID.text
+
+                for (i in dataSnapshot.children){
+
+                var id=i.getValue().toString()
+
+                    textRegStaffID.equals(id)
+                }
+
+            }
+        })
     }
 
 }

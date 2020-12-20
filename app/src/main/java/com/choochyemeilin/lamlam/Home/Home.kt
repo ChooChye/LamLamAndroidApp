@@ -120,7 +120,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
 
-       // changeDrawerName()
+       // changeDrawerName()◀◀◀
 
         //val welcome = findViewById<TextView>(R.id.welcome_user)
 
@@ -199,7 +199,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         }
         return super.onOptionsItemSelected(item)
     }
-
+/*
     @RequiresApi(Build.VERSION_CODES.O)
     fun changeDrawerName(){
         var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -232,6 +232,42 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     sb.append("$name_in_drawer")
                 }
                 textView_drawer_name.setText(sb)
+            }
+        })
+    }
+
+ */
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun changeDrawerName(){
+        var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
+        var myRef: DatabaseReference = databaseReference.getReference("User")
+        val userID="User ID : "
+        val staffID=editTextNumber_register_staffID.text.toString().toInt()
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
+        val formattedDate = current.format(formatter)
+
+        var query : Query =myRef.child(formattedDate).child(userID).child(staffID.toString()).orderByChild("staffName")
+
+        //Get Data
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                utils.log("$error")
+                Toast.makeText(this@Home, "ERROR", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+
+
+                for (i in dataSnapshot.children){
+                    val drawerName : Staff? = i.getValue(Staff::class.java)
+
+                    textView_drawer_name.text=drawerName.toString()
+
+                }
+
             }
         })
     }

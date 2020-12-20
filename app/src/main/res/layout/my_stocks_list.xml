@@ -14,7 +14,7 @@
         android:src="@drawable/ic_baseline_error_outline_24" />
 
     <TextView
-        android:id="@+id/textView_stock_number"
+        android:id="@+id/textView_stock_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
