@@ -4,21 +4,21 @@ package com.choochyemeilin.lamlam.Search
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_search.*
-import com.choochyemeilin.lamlam.Search.SearchAdapter
 
 
 class Search : AppCompatActivity() {
 
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var myRef: DatabaseReference = database.getReference("Categories")
+    private var myRef: DatabaseReference = database.getReference("Products")
     private lateinit var arrayList: ArrayList<Products>
     private var utils : Utils = Utils
 
@@ -31,78 +31,98 @@ class Search : AppCompatActivity() {
         supportActionBar?.elevation = 0f
 
         arrayList = ArrayList()
+        setupArray()
+
         rv_result.setHasFixedSize(true)
 
-        val kword : String = search_text.text.toString()
+
+        val searchText : EditText = findViewById(R.id.search_text)
+        val kword : String = searchText.text.toString()
 
         search_searchBtn.setOnClickListener { search(kword) }
 
-        search_text.addTextChangedListener { object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        searchText.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    search(p0.toString().toUpperCase())
+                }
 
             }
+        )
+    }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+    private fun search(kword: String) {
+        val searchArrayList : ArrayList<Products> = ArrayList()
+        for(list in arrayList){
+            if(list.product_name.toString().contains(kword)){
+                searchArrayList.add(list)
             }
+        }
+        val myAdapter = SearchAdapter(searchArrayList)
+        rv_result.adapter = myAdapter
+        rv_result.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+        myAdapter.notifyDataSetChanged()
+    }
 
-            override fun afterTextChanged(p0: Editable?) {
-                if(p0.toString().isEmpty()){
-                    search("")
-                }else{
-                    search(p0.toString())
+    private fun setupArray(){
+
+        myRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dss in snapshot.children){
+                    val catItem : Products? = dss.getValue(Products::class.java)
+                    if(catItem != null){
+                        arrayList.add(catItem)
+                    }
                 }
             }
 
-        }
-        }
-    }
+            override fun onCancelled(error: DatabaseError) {
+                utils.toast(applicationContext, "Search Error #1256 | $error", 0)
+            }
 
-    private fun search(kword: String){
+        })
 
-        var query : Query = myRef.child("Tops").orderByChild("product_name")
+
+        /*var query : Query = myRef
             .startAt(kword)
-            .endAt(kword + "\uf0ff")
+            .endAt(kword + "\uf8ff")
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.hasChildren()) {
+
+                for (dss in snapshot.children){
+                    utils.log(dss.value.toString())
+                }
+
+                *//*if (snapshot.hasChildren()) {
                     arrayList.clear()
                     for (dss in snapshot.children) {
-                        //utils.log("${dss.value}")
-                        val productItem : Products? = dss.getValue(Products::class.java)
-                        if(productItem != null){
-                            arrayList.add(productItem)
+                        utils.log("snapshot == ${dss.value}")
+                        val catItem : Products? = dss.getValue(Products::class.java)
+                        if(catItem != null){
+                            arrayList.add(catItem)
                         }
                     }
-                    val myAdapter = SearchAdapter(applicationContext, arrayList)
+                    val myAdapter = SearchAdapter(arrayList)
                     rv_result.adapter = myAdapter
                     rv_result.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
                     myAdapter.notifyDataSetChanged()
-                }
+                }*//*
             }
 
             override fun onCancelled(error: DatabaseError) {
                 utils.log("$error")
             }
 
-        })
+        })*/
     }
-
-    /*private fun setupRV() {
-        val query: Query = FirebaseDatabase.getInstance()
-            .reference
-            .child("Categories").child("Tops")
-            .limitToLast(50)
-
-        val options: FirebaseRecyclerOptions<Products> = FirebaseRecyclerOptions.Builder<Products>()
-            .setQuery(query, Products::class.java)
-            .build()
-
-        adapter = SearchAdapter(options)
-
-        rv_result.adapter = adapter
-        rv_result.layoutManager = LinearLayoutManager(this)
-    }*/
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
