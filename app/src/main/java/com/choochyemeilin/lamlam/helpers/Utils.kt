@@ -6,10 +6,8 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Register.Register
-import java.time.Duration
 
 
 object Utils {
@@ -24,14 +22,6 @@ object Utils {
 
     fun log(msg: String){
         Log.e("TEST", msg)
-    }
-
-    fun toast(context: Context, msg: String, duration: Int){ // duration : 0 = short || >= 1 Long
-        if(duration === 0){
-            return Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-        }else{
-            return Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
-        }
     }
 
     //Showing the keyboard

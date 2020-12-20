@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed(Runnable {
-            val intent = Intent(this, Home::class.java)
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
         }, TIME_OUT)

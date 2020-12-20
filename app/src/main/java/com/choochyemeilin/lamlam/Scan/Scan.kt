@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
 import com.choochyemeilin.lamlam.R
-import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import com.google.gson.Gson
@@ -40,7 +39,6 @@ class Scan : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
-
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         setupPermissions()
@@ -65,7 +63,6 @@ class Scan : AppCompatActivity() {
                     hapticFeedback()
                     try {
                         val jsonData = "[$it]"
-                        utils.log(it.toString())
                         //[{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
                         codeScanner.stopPreview()
                         updateDB(jsonData)
@@ -91,7 +88,7 @@ class Scan : AppCompatActivity() {
     //Update Database after scanning
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDB(jsonData: String) {
-        var data: List<Products>? = null
+        var data: List<ScanHistory>? = null
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
         val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
@@ -112,12 +109,12 @@ class Scan : AppCompatActivity() {
         process
             .addOnSuccessListener {
                 val cat = data!![0].category
-                val id = data[0].id
+                val id = data!![0].id
 
-                //val prodDesc = data!![0].desc
-                val prodPrice = data[0].price
-                val prodName = data[0].product_name
-                val prodQty = data[0].qty
+                val prodDesc = data!![0].product!![0].desc
+                val prodPrice = data!![0].product!![0].price
+                val prodName = data!![0].product!![0].product_name
+                val prodQty = data!![0].product!![0].qty
 
 
                 /*val msg =
@@ -161,9 +158,9 @@ class Scan : AppCompatActivity() {
         }
     }
 
-    private fun readJSON(json: String): List<Products> {
+    private fun readJSON(json: String): List<ScanHistory> {
         return if (json != null)
-            Gson().fromJson(json) //GsonExtension Call
+            Gson().fromJson(json) //Extension Call
         else
             listOf()
     }

@@ -2,7 +2,6 @@ package com.choochyemeilin.lamlam.Register
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
@@ -10,17 +9,17 @@ import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.nav_header.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.HashMap
 
 class Register : AppCompatActivity() {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -53,6 +52,13 @@ class Register : AppCompatActivity() {
                     editTextTextPassword_register_password.setError("Please enter Password")
                 }
 
+           if (editTextNumber_register_staffID.length()!=7){
+               editTextNumber_register_staffID.setError("Staff ID must be 7 characters")
+        }
+
+            if (editTextTextPassword_register_password.length()<6){
+                editTextTextPassword_register_password.setError("Password must be greater than 5 characters")
+            }
 
             // add authentication user
                 if (
@@ -65,7 +71,6 @@ class Register : AppCompatActivity() {
                         editTextTextPassword_register_password.text.trim().toString()
                     )
                 }
-
         }
 
         button_register_cancel.setOnClickListener{
@@ -83,7 +88,7 @@ class Register : AppCompatActivity() {
 
     //Registers the user
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun register(email:String, password:String){
+    private fun register(email: String, password: String){
 
       //  utils.closeKeyboard(findViewById(R.id.activity_register))
 
@@ -96,7 +101,7 @@ class Register : AppCompatActivity() {
      //   val password=findViewById<EditText>(R.id.editTextTextPassword_register_password)
 
         //Firebase
-        auth.createUserWithEmailAndPassword(email,password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful){
                     val currentUser=auth.currentUser
@@ -106,17 +111,21 @@ class Register : AppCompatActivity() {
                     val  staffEmail=editTextTextEmailAddress_register_email.text.toString()
                     val phoneNo=editTextNumber_register_phoneNo.text.toString().toInt()
                     val pw=editTextTextPassword_register_password.text.toString()
-
-                   // val currentUserDb=databaseReference.reference.child(currentUser?.uid!!)
-                 //   val currentUserDb=databaseReference.reference.child("User").child(currentUser?.uid!!)
                     val current = LocalDateTime.now()
                     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
                     val formattedDate = current.format(formatter)
-                    myRef.child(formattedDate).child(userID).child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNo,pw))
 
-
+                    myRef.child(formattedDate).child(userID).child(staffID.toString()).setValue(
+                        Staff(
+                            staffName,
+                            staffEmail,
+                            phoneNo,
+                            pw
+                        )
+                    )
 
 /*
+                //   val currentUserDb=databaseReference.reference.child("User").child(currentUser?.uid!!)
                     currentUserDb?.child("Staff ID")?.setValue(editTextNumber_register_staffID.text.toString())
                     currentUserDb?.child("Name")?.setValue(editText_register_name.text.toString())
                     currentUserDb?.child("Email")?.setValue(editTextTextEmailAddress_register_email.text.toString())
@@ -124,18 +133,49 @@ class Register : AppCompatActivity() {
                     currentUserDb?.child("Password")?.setValue(editTextTextPassword_register_password.text.toString())
 
  */
-
-                 //   database.child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNumber,pw))
                     Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this, Login::class.java))
                     finish()
                 }else{
-                    Toast.makeText(this@Register, "Registration failed. Please try again", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@Register,
+                        "Registration failed. Please try again",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
+
+/*
+        var userDate: DatabaseReference=myRef.child(formattedDate)
+        var userDateID: DatabaseReference=userDate.child(userID)
+        var userStaffID: DatabaseReference=userDateID.child(staffID.toString())
+        var userStaffName: DatabaseReference=userStaffID.child("staffName")
+
+
+        //Get Data
+        userStaffName.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                textView_drawer_name.text="USERNAME ERROR"
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                var sb= StringBuilder()
+
+                for (i in dataSnapshot.children){
+                  //  var name_in_drawer=i.child("staffName").getValue()
+
+                    val name_in_drawer: String = dataSnapshot.child("staffName").getValue().toString()
+                    sb.append("$name_in_drawer")
+                }
+                textView_drawer_name.setText(sb)
+            }
+        })
+
+ */
     }
 
-     fun showPassword(isShow:Boolean){
+     fun showPassword(isShow: Boolean){
         if(isShow){
             editTextTextPassword_register_password.transformationMethod=
                 HideReturnsTransformationMethod.getInstance()
