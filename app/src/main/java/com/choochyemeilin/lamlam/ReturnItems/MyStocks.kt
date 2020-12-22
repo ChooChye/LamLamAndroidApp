@@ -27,6 +27,8 @@ import kotlinx.android.synthetic.main.activity_search.rv_result
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_stocks)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val actionBar = supportActionBar
+        actionBar!!.title = "My Stocks"
 
         arrayList = ArrayList()
         list_view_recycle.setHasFixedSize(true)

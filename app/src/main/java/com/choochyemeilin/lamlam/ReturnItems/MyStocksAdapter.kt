@@ -30,7 +30,7 @@ class MyStocksAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val products: Products = arrayList.get(position)
         holder.itemView.textView_stock_name.text = products.product_name
-        holder.itemView.textView_stock_date.text = products.returnDate.toString()
+        holder.itemView.textView_stock_date.text = products.returnDate
     }
 
     override fun getItemCount(): Int {

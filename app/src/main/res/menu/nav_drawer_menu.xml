@@ -11,10 +11,7 @@
         android:icon="@drawable/ic_baseline_store_24"
         android:title="My Stock" />
 
-    <item
-        android:id="@+id/mItem3"
-        android:icon="@drawable/ic_baseline_notifications_none_24"
-        android:title="Notifications" />
+
 
     <item
         android:id="@+id/mItem4"

@@ -10,8 +10,8 @@ class Products {
     var price : String = ""
     var qty : String = ""
     var status:String?=null
-    var loanDate:Date?=null
-    var returnDate:Date?=null
+    var loanDate:String?=null
+    var returnDate:String?=null
 
     constructor(){
 
@@ -25,8 +25,8 @@ class Products {
         price: String,
         qty: String,
         status: String,
-        loanDate: Date,
-        returnDate: Date) {
+        loanDate: String,
+        returnDate: String) {
 
         this.category = category
         this.id = id

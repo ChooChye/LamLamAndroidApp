@@ -42,7 +42,6 @@ class Login : AppCompatActivity() {
     private var utils = Utils
     private var passwordLock=false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ class Login : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         utils.closeKeyboard(findViewById(R.id.activity_login))
 
-     //   val currentUser=auth.currentUser
+        val currentUser=auth.currentUser
         textView_login_register.setOnClickListener{
             startActivity(Intent(this,Register::class.java))
         }
@@ -83,7 +82,7 @@ class Login : AppCompatActivity() {
     fun login(){
         val email:String=editText_login_email.text.toString()
         val password:String=editTextTextPassword_login_password.text.toString()
-        val currentUser=auth.currentUser
+      //  val currentUser=auth.currentUser
 
         if(editTextTextPassword_login_password.length()<6){
            editTextTextPassword_login_password.setError("Password must be greater than 5 characters")

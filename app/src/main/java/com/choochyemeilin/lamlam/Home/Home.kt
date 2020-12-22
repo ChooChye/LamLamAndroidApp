@@ -80,12 +80,14 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     val intent : Intent = Intent(this, MyStocks::class.java)
                     startActivity(intent)
                 }
-
+/*
                 R.id.mItem3 -> Toast.makeText(
                     applicationContext,
                     "Notifications",
                     Toast.LENGTH_SHORT
                 ).show()
+
+ */
                R.id.mItem4 -> logout()
             }
             true

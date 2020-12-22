@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_remove_red_eye_24"
             android:layout_marginTop="70dp"
-            android:layout_marginStart="260dp"
+            android:layout_marginStart="242dp"
             />
     </androidx.cardview.widget.CardView>
 

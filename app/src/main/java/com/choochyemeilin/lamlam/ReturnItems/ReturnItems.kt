@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.budiyev.android.codescanner.*
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_return_items.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import com.choochyemeilin.lamlam.Scan.fromJson
+import kotlinx.android.synthetic.main.activity_my_stocks.*
 
 private const val CAMERA_REQUEST_CODE = 101
 
@@ -32,7 +34,7 @@ class ReturnItems : AppCompatActivity() {
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("Return History")
-
+    private var productRef: DatabaseReference = database.getReference("Products")
 
     //Main Program
     @RequiresApi(Build.VERSION_CODES.O)
@@ -113,17 +115,25 @@ class ReturnItems : AppCompatActivity() {
                 val id = data[0].id
 
                 //val prodDesc = data!![0].desc
-                val prodPrice = data[0].price
                 val prodName = data[0].product_name
                 val prodQty = data[0].qty
+
+                val oldStatus = data[0].status
+                val status="IN STOCK"
+                oldStatus.equals(status)
+                val returnDate = data[0].returnDate
+                val current = LocalDateTime.now()
 
                 val msg = String.format("Product ID : %s\n" +
                         "Category : %s\n" +
                         "Product Name : %s\n" +
-                        "Price : %s\n" +
-                        "Quantity : %s\n\n" +
-                        "Successfully Recorded", id, cat, prodName, prodPrice, prodQty)
+                        "Quantity : %s\n" +
+                        "Status : %s\n" +
+                        "Return Date : %s\n\n" +
+                        "Successfully Recorded", id, cat, prodName, prodQty, status, current)
                 showDialog(msg)
+
+                Toast.makeText(this,"Items Return Successfully",Toast.LENGTH_LONG).show()
 
             }
             .addOnFailureListener {
@@ -221,6 +231,30 @@ class ReturnItems : AppCompatActivity() {
         onBackPressed()
         this.finish()
         return true
+    }
+
+    fun updateStatus(){
+        var query : Query = productRef.orderByChild("status")
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.hasChildren()) {
+                   // arrayList.clear()
+                    for (dss in snapshot.children) {
+                        //utils.log("${dss.value}")
+                        val productStatus : Products? = dss.getValue(Products::class.java)
+
+
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                utils.log("$error")
+            }
+
+        })
     }
 
 }

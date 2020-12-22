@@ -24,26 +24,12 @@ import java.time.format.DateTimeFormatter
 
 class Register : AppCompatActivity() {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    val currentUser=auth.currentUser
     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var utils = Utils
     private var passwordLock=false
     private var myRef: DatabaseReference = databaseReference.getReference("Staff ID")
-/*
-    val userID="User ID : "
-    val staffID=editTextNumber_register_staffID.text.toString().toInt()
-    val staffName=editText_register_name.text.toString()
-    val  staffEmail=editTextTextEmailAddress_register_email.text.toString()
-    val phoneNo=editTextNumber_register_phoneNo.text.toString().toInt()
-    val pw=editTextTextPassword_register_password.text.toString()
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    val current = LocalDateTime.now()
-    @RequiresApi(Build.VERSION_CODES.O)
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-    @RequiresApi(Build.VERSION_CODES.O)
-    val formattedDate = current.format(formatter)
-
- */
+    private var userRef: DatabaseReference = databaseReference.getReference("User")
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,34 +56,43 @@ class Register : AppCompatActivity() {
                     editTextTextPassword_register_password.setError("Please enter Password")
                     return@setOnClickListener
                 }
-            // add authentication user
-            if (
-                editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty() ||
-                editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
-            ) {
-
-                register(
-                    editTextTextEmailAddress_register_email.text.trim().toString(),
-                    editTextTextPassword_register_password.text.trim().toString()
-                )
-
-            }
 
            if (editTextNumber_register_staffID.length()!=7){
                editTextNumber_register_staffID.setError("Staff ID must be 7 characters")
                return@setOnClickListener
-        }
+             }
+/*
            else if (!editTextNumber_register_staffID.equals(compareStaffID())){
                editTextNumber_register_staffID.setError("Staff ID is not in the database")
                return@setOnClickListener
            }
 
+ */
 
 
             if (editTextTextPassword_register_password.length()<6){
                 editTextTextPassword_register_password.setError("Password must be greater than 5 characters")
                 return@setOnClickListener
             }
+
+
+
+            // add authentication user
+            if (
+                editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty() ||
+                editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
+            ) {
+
+                    register(
+                        editTextTextEmailAddress_register_email.text.trim().toString(),
+                        editTextTextPassword_register_password.text.trim().toString()
+                    )
+                    return@setOnClickListener
+
+
+
+            }
+
 
         }
 
@@ -118,50 +113,39 @@ class Register : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun register(email: String, password: String){
 
-      //  utils.closeKeyboard(findViewById(R.id.activity_register))
-
+        utils.closeKeyboard(findViewById(R.id.activity_register))
 
         //Start progress
         val progress: ProgressBar = progressBar_reg
         progress.visibility = View.VISIBLE
 
-     //   val email=findViewById<EditText>(R.id.editTextTextEmailAddress_register_email)
-     //   val password=findViewById<EditText>(R.id.editTextTextPassword_register_password)
 
         //Firebase
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful){
-                    val currentUser=auth.currentUser
-                    val userID="User ID : "
+                    Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
+                //    val userID="User ID : "
                     val staffID=editTextNumber_register_staffID.text.toString().toInt()
                     val staffName=editText_register_name.text.toString()
                     val  staffEmail=editTextTextEmailAddress_register_email.text.toString()
-                    val phoneNo=editTextNumber_register_phoneNo.text.toString().toInt()
+                    val phoneNumber=editTextNumber_register_phoneNo.text.toString().toInt()
                     val pw=editTextTextPassword_register_password.text.toString()
-                    val current = LocalDateTime.now()
-                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-                    val formattedDate = current.format(formatter)
+               //     val current = LocalDateTime.now()
+               //     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
+               //     val formattedDate = current.format(formatter)
 
-                    myRef.child(formattedDate).child(userID).child(staffID.toString()).setValue(
+                    userRef.child(currentUser?.uid!!).setValue(
                         Staff(
+                            staffID,
                             staffName,
                             staffEmail,
-                            phoneNo,
+                            phoneNumber,
                             pw
                         )
                     )
 
-/*
-                //   val currentUserDb=databaseReference.reference.child("User").child(currentUser?.uid!!)
-                    currentUserDb?.child("Staff ID")?.setValue(editTextNumber_register_staffID.text.toString())
-                    currentUserDb?.child("Name")?.setValue(editText_register_name.text.toString())
-                    currentUserDb?.child("Email")?.setValue(editTextTextEmailAddress_register_email.text.toString())
-                    currentUserDb?.child("Phone Number")?.setValue(editTextNumber_register_phoneNo.text.toString())
-                    currentUserDb?.child("Password")?.setValue(editTextTextPassword_register_password.text.toString())
-
- */
-                    Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
+               //     Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this, Login::class.java))
                     finish()
                 }else{
@@ -228,17 +212,17 @@ class Register : AppCompatActivity() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                 var textRegStaffID=editTextNumber_register_staffID.text
+                var textRegStaffID=editTextNumber_register_staffID.text
 
                 for (i in dataSnapshot.children){
 
-                var id=i.getValue().toString()
+                    var id=i.getValue().toString()
 
+                  //  id.equals(true)
                     textRegStaffID.equals(id)
                 }
 
             }
         })
     }
-
 }

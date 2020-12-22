@@ -20,7 +20,8 @@
         android:layout_marginStart="150dp"
         android:layout_marginTop="30dp"
         android:text="STOCK"
-        android:textSize="22sp"
+        android:maxLines="2"
+        android:textSize="20sp"
         android:textStyle="bold"/>
 
     <TextView
@@ -30,16 +31,18 @@
         android:layout_marginStart="150dp"
         android:layout_marginTop="70dp"
         android:text="Return Date :"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textView_stock_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="270dp"
+        android:layout_marginStart="260dp"
         android:layout_marginTop="70dp"
-        android:text=" "
-        android:textSize="18sp"
+        android:text="error"
+        android:textSize="17sp"
         android:textStyle="bold"/>
+
+
 </RelativeLayout>
