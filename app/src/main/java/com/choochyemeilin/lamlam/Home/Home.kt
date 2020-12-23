@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Register.Register
+import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
 //import com.choochyemeilin.lamlam.Search.Search
@@ -64,34 +65,15 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     "Clicked Item 1",
                     Toast.LENGTH_SHORT
                 ).show()
-                R.id.mItem2 -> Toast.makeText(
-                    applicationContext,
-                    "Clicked Item 2",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.mItem2 -> {
+                    val intent : Intent = Intent(this, MyStocks::class.java)
+                    startActivity(intent)
+                }
 
-
-                R.id.mItem3 -> Toast.makeText(
-                    applicationContext,
-                    "Clicked Item 3",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-               // R.id.mItem4 -> startActivity(Intent(this,Register::class.java))
+                R.id.mItem3 -> logout()
 
             }
             true
-        }
-
-
-        fun jsonTest(){
-            ArrayList<String>()
-        }
-
-        //logout
-        nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {
-            logout()
-            return@setOnMenuItemClickListener true
         }
 
         gridView = findViewById(R.id.homeGridLayout)

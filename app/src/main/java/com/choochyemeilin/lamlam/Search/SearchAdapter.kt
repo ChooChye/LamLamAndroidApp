@@ -1,24 +1,17 @@
 package com.choochyemeilin.lamlam.Search
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Products
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
 import kotlinx.android.synthetic.main.search_list_layout.view.*
 
 class SearchAdapter(
 
-    private var context: Context,
     private var arrayList: ArrayList<Products>
 
 ) : Adapter<SearchAdapter.ViewHolder>() {

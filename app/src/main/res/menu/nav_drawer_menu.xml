@@ -11,10 +11,8 @@
         android:icon="@drawable/ic_baseline_store_24"
         android:title="My Stock" />
 
-
-
     <item
-        android:id="@+id/mItem4"
+        android:id="@+id/mItem3"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
         android:title="Logout" />
 
