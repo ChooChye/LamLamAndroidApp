@@ -1,10 +1,8 @@
 package com.choochyemeilin.lamlam.Home
 
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.StrictMode
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -12,22 +10,15 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
-import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
-//import com.choochyemeilin.lamlam.Search.Search
+import com.choochyemeilin.lamlam.Search.Search
 import com.choochyemeilin.lamlam.helpers.Lcg
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 
 import org.json.JSONArray
@@ -66,7 +57,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     Toast.LENGTH_SHORT
                 ).show()
                 R.id.mItem2 -> {
-                    val intent : Intent = Intent(this, MyStocks::class.java)
+                    val intent = Intent(this, MyStocks::class.java)
                     startActivity(intent)
                 }
 
@@ -98,6 +89,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         val binary = chars[0].toInt()
         val finalBinary = String.format("%8s", Integer.toBinaryString(binary)).replace(' ', '0')
         welcome.text = lcg.toBinary(chars).toString()*/
+
     }
 
     //Logout Methods
@@ -105,12 +97,12 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         FirebaseAuth.getInstance().signOut()
         Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show()
-        val intent : Intent = Intent(this, Login::class.java)
+        val intent = Intent(this, Login::class.java)
         startActivity(intent)
     }
 
     private fun setDataList() : ArrayList<HomeItem>{
-        var arrayList:ArrayList<HomeItem> = ArrayList()
+        val arrayList:ArrayList<HomeItem> = ArrayList()
 
         arrayList.add(HomeItem(R.drawable.qr_code, "SCAN"))
         arrayList.add(HomeItem(R.drawable.magnifier, "SEARCH"))
@@ -127,15 +119,9 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                 val intent = Intent(this, Scan::class.java)
                 startActivity(intent)
             }
-            /*
             1 -> {
                 val intent = Intent(this, Search::class.java)
                 startActivity(intent)
-            }
-
-             */
-            1 -> {
-                Toast.makeText(applicationContext, "SEARCH", Toast.LENGTH_SHORT).show()
             }
             2 -> {
                 Toast.makeText(applicationContext, "LOANS", Toast.LENGTH_SHORT).show()
