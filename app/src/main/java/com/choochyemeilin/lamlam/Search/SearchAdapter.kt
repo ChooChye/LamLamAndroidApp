@@ -1,5 +1,6 @@
 package com.choochyemeilin.lamlam.Search
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -26,10 +27,11 @@ class SearchAdapter(
         return object : ViewHolder(view) {}
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val products: Products = arrayList.get(position)
         holder.itemView.search_layout_prodName.text = products.product_name
-        holder.itemView.search_layout_stockCount.text = products.qty
+        holder.itemView.search_layout_stockCount.text = "In Stock (${products.qty})"
     }
 
     override fun getItemCount(): Int {

@@ -62,7 +62,7 @@ class Search : AppCompatActivity() {
     private fun search(kword: String) {
         val searchArrayList : ArrayList<Products> = ArrayList()
         for(list in arrayList){
-            if(list.product_name.toString().contains(kword)){
+            if(list.product_name.toString().toUpperCase().contains(kword)){
                 searchArrayList.add(list)
             }
         }
