@@ -1,0 +1,303 @@
+Index: app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Home\r\n\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.StrictMode\r\nimport android.view.MenuItem\r\nimport android.view.View\r\nimport android.widget.AdapterView\r\nimport android.widget.GridView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.navigation.fragment.FragmentNavigator\r\nimport androidx.navigation.fragment.NavHostFragment.findNavController\r\nimport androidx.navigation.ui.AppBarConfiguration\r\nimport androidx.navigation.ui.setupActionBarWithNavController\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.Register.Register\r\nimport com.choochyemeilin.lamlam.Scan.Scan\r\n//import com.choochyemeilin.lamlam.Search.Search\r\nimport com.choochyemeilin.lamlam.helpers.Lcg\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.DatabaseReference\r\nimport com.google.firebase.database.FirebaseDatabase\r\nimport kotlinx.android.synthetic.main.activity_home.*\r\n\r\nimport org.json.JSONArray\r\nimport org.json.JSONObject\r\n\r\nclass Home : AppCompatActivity(), AdapterView.OnItemClickListener {\r\n\r\n    private var arrayList:ArrayList<HomeItem> ? = null\r\n    private var gridView: GridView? = null\r\n    private var languageAdapter: HomeAdapter? = null\r\n    private var lcg : Lcg = Lcg()\r\n    private var utils : Utils = Utils\r\n\r\n    lateinit var toggle: ActionBarDrawerToggle\r\n    \r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_home)\r\n        //Init Var\r\n\r\n        //Navigation Bar\r\n        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)\r\n        drawerLayout.addDrawerListener(toggle)\r\n        toggle.syncState()\r\n\r\n        supportActionBar?.setDisplayHomeAsUpEnabled(true)\r\n        supportActionBar?.setTitle(R.string.app_name)\r\n        supportActionBar?.elevation = 0f\r\n\r\n        nav_view.setNavigationItemSelectedListener {\r\n            when(it.itemId){\r\n                R.id.mItem1 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 1\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n                R.id.mItem2 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 2\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n\r\n                R.id.mItem3 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 3\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n               // R.id.mItem4 -> startActivity(Intent(this,Register::class.java))\r\n\r\n            }\r\n            true\r\n        }\r\n\r\n\r\n        //logout\r\n        nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {\r\n            logout()\r\n            return@setOnMenuItemClickListener true\r\n        }\r\n\r\n        gridView = findViewById(R.id.homeGridLayout)\r\n        arrayList = ArrayList()\r\n        arrayList = setDataList()\r\n        languageAdapter = HomeAdapter(applicationContext, arrayList!!)\r\n        gridView?.adapter = languageAdapter\r\n        gridView?.onItemClickListener = this\r\n\r\n\r\n        //val welcome = findViewById<TextView>(R.id.welcome_user)\r\n\r\n        /*val str : String = \"T\"\r\n\r\n        var chars = str.toCharArray()\r\n        var i = 0;\r\n        *//*var n = mutableListOf<Int>();\r\n        while(i < 8){\r\n            n.add(i, chars[i].toInt() xor lcg.next().toInt())\r\n            i++\r\n        }*//*\r\n        val binary = chars[0].toInt()\r\n        val finalBinary = String.format(\"%8s\", Integer.toBinaryString(binary)).replace(' ', '0')\r\n        welcome.text = lcg.toBinary(chars).toString()*/\r\n    }\r\n\r\n    //Logout Methods\r\n    private fun logout(){\r\n\r\n        FirebaseAuth.getInstance().signOut()\r\n        Toast.makeText(this, \"Signed Out\", Toast.LENGTH_SHORT).show()\r\n        val intent : Intent = Intent(this, Login::class.java)\r\n        startActivity(intent)\r\n    }\r\n\r\n    private fun setDataList() : ArrayList<HomeItem>{\r\n        var arrayList:ArrayList<HomeItem> = ArrayList()\r\n\r\n        arrayList.add(HomeItem(R.drawable.qr_code, \"SCAN\"))\r\n        arrayList.add(HomeItem(R.drawable.magnifier, \"SEARCH\"))\r\n        arrayList.add(HomeItem(R.drawable.loan, \"LOANS\"))\r\n        arrayList.add(HomeItem(R.drawable.business_report, \"REPORTS\"))\r\n        arrayList.add(HomeItem(R.drawable.exchange, \"RETURN ITEMS\"))\r\n\r\n        return arrayList\r\n    }\r\n\r\n    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {\r\n        when (p2) {\r\n            0 -> {\r\n                val intent = Intent(this, Scan::class.java)\r\n                startActivity(intent)\r\n            }\r\n            /*\r\n            1 -> {\r\n                val intent = Intent(this, Search::class.java)\r\n                startActivity(intent)\r\n            }\r\n\r\n             */\r\n            1 -> {\r\n                Toast.makeText(applicationContext, \"SEARCH\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            2 -> {\r\n                Toast.makeText(applicationContext, \"LOANS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            3 -> {\r\n                Toast.makeText(applicationContext, \"REPORTS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n\r\n    //Navigation Drawer\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        if(toggle.onOptionsItemSelected(item)){\r\n            return true\r\n        }\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(revision d1cc7b59772910766dcf29d253ab9fe54a642b74)
++++ app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(date 1607925976775)
+@@ -83,6 +83,10 @@
+         }
+ 
+ 
++        fun jsonTest(){
++            ArrayList<String>()
++        }
++
+         //logout
+         nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {
+             logout()
+Index: app/src/main/java/com/choochyemeilin/lamlam/Scan/ScanHistory.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Scan\r\n\r\nclass ScanHistory{\r\n    var id : String ?= null\r\n    private var Category : String ?= null\r\n    private var Product : String ?= null\r\n\r\n\r\n    override fun toString(): String {\r\n        return \"$id | $Category | $Product\"\r\n    }\r\n\r\n    fun getID(): String{\r\n        return \"$id\"\r\n    }\r\n    fun getCategory(): String{\r\n        return \"$Category\"\r\n    }\r\n    fun getProduct(): String{\r\n        return \"$Product\"\r\n    }\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Scan/ScanHistory.kt	(revision d1cc7b59772910766dcf29d253ab9fe54a642b74)
++++ app/src/main/java/com/choochyemeilin/lamlam/Scan/ScanHistory.kt	(date 1607923928238)
+@@ -1,25 +1,22 @@
+ package com.choochyemeilin.lamlam.Scan
+ 
++import com.choochyemeilin.lamlam.helpers.Products
++
+ class ScanHistory{
+     var id : String ?= null
+-    private var Category : String ?= null
+-    private var Product : String ?= null
++    var category : String ?= null
++    var product : List<Products>? = null
+ 
+ 
+-    override fun toString(): String {
+-        return "$id | $Category | $Product"
++    /*override fun toString(): String {
++        return "$id | $category "
+     }
+ 
+-    fun getID(): String{
++    fun getProdID(): String{
+         return "$id"
+     }
+-    fun getCategory(): String{
+-        return "$Category"
+-    }
+-    fun getProduct(): String{
+-        return "$Product"
+-    }
+-
+-
++    fun getScanCategory(): String{
++        return "$category"
++    }*/
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/choochyemeilin/lamlam/Scan/GsonExtension.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Scan\r\n\r\nimport com.google.gson.Gson\r\nimport com.google.gson.reflect.TypeToken\r\n\r\ninline fun <reified T> Gson.fromJson(json: String) =\r\n    this.fromJson<T>(json, object : TypeToken<T>(){}.type)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Scan/GsonExtension.kt	(revision d1cc7b59772910766dcf29d253ab9fe54a642b74)
++++ app/src/main/java/com/choochyemeilin/lamlam/Scan/GsonExtension.kt	(date 1607925657842)
+@@ -4,4 +4,4 @@
+ import com.google.gson.reflect.TypeToken
+ 
+ inline fun <reified T> Gson.fromJson(json: String) =
+-    this.fromJson<T>(json, object : TypeToken<T>(){}.type)
+\ No newline at end of file
++    this.fromJson<T>(json, object : TypeToken<T>(){}.type)
+Index: app/src/main/java/com/choochyemeilin/lamlam/Scan/Scan.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Scan\r\n\r\n\r\nimport android.content.Context\r\nimport android.content.DialogInterface\r\nimport android.content.pm.PackageManager\r\nimport android.os.Build\r\nimport android.os.Bundle\r\nimport android.os.VibrationEffect\r\nimport android.os.Vibrator\r\nimport android.util.Log\r\nimport android.widget.Toast\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.app.ActivityCompat\r\nimport androidx.core.content.ContextCompat\r\nimport com.budiyev.android.codescanner.*\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.google.android.material.snackbar.Snackbar\r\nimport com.google.firebase.database.*\r\nimport com.google.gson.Gson\r\nimport kotlinx.android.synthetic.main.activity_scan.*\r\nimport java.lang.Exception\r\nimport java.lang.reflect.Executable\r\nimport java.time.LocalDateTime\r\nimport java.time.format.DateTimeFormatter\r\n\r\n\r\nprivate const val CAMERA_REQUEST_CODE = 101\r\n\r\nclass Scan : AppCompatActivity() {\r\n\r\n    private lateinit var codeScanner: CodeScanner\r\n    //private var utils: Utils = Utils\r\n    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()\r\n    private var myRef: DatabaseReference = database.getReference(\"ScanHistory\")\r\n\r\n\r\n    //Main Program\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_scan)\r\n        supportActionBar!!.setDisplayHomeAsUpEnabled(true)\r\n\r\n        setupPermissions()\r\n        codeScanner()\r\n    }\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    private fun codeScanner() {\r\n        codeScanner = CodeScanner(this, scanner_view)\r\n\r\n        codeScanner.apply {\r\n            camera = CodeScanner.CAMERA_BACK\r\n            formats = CodeScanner.ALL_FORMATS\r\n\r\n            autoFocusMode = AutoFocusMode.SAFE\r\n            scanMode = ScanMode.CONTINUOUS\r\n            isAutoFocusEnabled = true\r\n            isFlashEnabled = false\r\n\r\n            decodeCallback = DecodeCallback {\r\n                runOnUiThread {\r\n                    hapticFeedback()\r\n                    try {\r\n                        val jsonData = \"[$it]\" //{\"id\":\"5fcb238224456\",\"Category\":\"Tops\",\"Product\":\"Pink Sweatshirt\"}\r\n                        codeScanner.stopPreview()\r\n                        updateDB(jsonData)\r\n                    }catch (e : Exception){\r\n                        showDialog(\"An error has occurred #9784\")\r\n                    }\r\n                }\r\n            }\r\n\r\n            errorCallback = ErrorCallback {\r\n                runOnUiThread {\r\n                    Log.e(\"Main\", \"Camera Initialization error : ${it.message}\")\r\n                }\r\n            }\r\n        }\r\n\r\n        scanner_view.setOnClickListener {\r\n            codeScanner.startPreview()\r\n        }\r\n    }\r\n\r\n    //Update Database after scanning\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    private fun updateDB(jsonData: String): Boolean {\r\n        var stat = true\r\n        val current = LocalDateTime.now()\r\n        val formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\") //yyyy-MM-dd HH:mm:ss.SSS\r\n        val formatter2 = DateTimeFormatter.ofPattern(\"HH:mm\") //yyyy-MM-dd HH:mm:ss.SSS\r\n        val formatter3 = DateTimeFormatter.ofPattern(\"ss\") //yyyy-MM-dd HH:mm:ss.SSS\r\n        val formattedDate = current.format(formatter)\r\n        val formattedTime = current.format(formatter2)\r\n        val formattedSec = current.format(formatter3)\r\n\r\n        val data = readJSON(jsonData)\r\n\r\n        val process = myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)\r\n        process\r\n            .addOnSuccessListener {\r\n                val cat = data[0].getCategory()\r\n                val prod = data[0].getProduct()\r\n                val id = data[0].getID()\r\n\r\n                val msg =   \"ID : $id \\n\" +\r\n                            \"Category : $cat \\n\" +\r\n                            \"Product : $prod \\n\" +\r\n                        \"Successfully recorded\"\r\n\r\n                showDialog(msg)\r\n\r\n            }\r\n            .addOnFailureListener {\r\n                showDialog(\"Firebase error\")\r\n            }\r\n        return stat\r\n    }\r\n\r\n    //Vibrate when scanning\r\n    private fun hapticFeedback() {\r\n        val time: Long = 200\r\n        val v = (getSystemService(Context.VIBRATOR_SERVICE) as Vibrator)\r\n        // Vibrate for 500 milliseconds\r\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {\r\n            v.vibrate(\r\n                VibrationEffect.createOneShot(\r\n                    time,\r\n                    VibrationEffect.DEFAULT_AMPLITUDE\r\n                )\r\n            )\r\n        } else {\r\n            v.vibrate(time)\r\n        }\r\n    }\r\n\r\n    private fun readJSON(json: String): List<ScanHistory> {\r\n        return if (json != null)\r\n            Gson().fromJson(json) //Extension Call\r\n        else\r\n            listOf()\r\n    }\r\n\r\n    //Check if camera permissions is granted\r\n    private fun setupPermissions() {\r\n        val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)\r\n\r\n        if (permission != PackageManager.PERMISSION_GRANTED) {\r\n            makeRequest()\r\n        }\r\n    }\r\n\r\n    //Check if camera permissions is granted else make request\r\n    private fun makeRequest() {\r\n        ActivityCompat.requestPermissions(\r\n            this,\r\n            arrayOf(android.Manifest.permission.CAMERA),\r\n            CAMERA_REQUEST_CODE\r\n        )\r\n    }\r\n\r\n    override fun onRequestPermissionsResult(\r\n        requestCode: Int,\r\n        permissions: Array<out String>,\r\n        grantResults: IntArray\r\n    ) {\r\n        when (requestCode) {\r\n            CAMERA_REQUEST_CODE -> {\r\n                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {\r\n                    Toast.makeText(\r\n                        this,\r\n                        \"You need the camera permission to be able to use this app!\",\r\n                        Toast.LENGTH_SHORT\r\n                    ).show()\r\n                } else {\r\n                    //success\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    //Show Dialog\r\n    private fun showDialog(msg: String) {\r\n        var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)\r\n        builder\r\n            .setTitle(\"INFORMATION\")\r\n            .setMessage(msg)\r\n            .setNegativeButton(\"OK\") { dialogInterface: DialogInterface, i: Int ->\r\n                dialogInterface.dismiss()\r\n                codeScanner.startPreview()\r\n            }\r\n            .show()\r\n    }\r\n\r\n    override fun onResume() {\r\n        super.onResume()\r\n        codeScanner.startPreview()\r\n    }\r\n\r\n    override fun onPause() {\r\n        codeScanner.releaseResources()\r\n        super.onPause()\r\n    }\r\n\r\n    override fun onSupportNavigateUp(): Boolean {\r\n        onBackPressed()\r\n        this.finish()\r\n        return true\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Scan/Scan.kt	(revision d1cc7b59772910766dcf29d253ab9fe54a642b74)
++++ app/src/main/java/com/choochyemeilin/lamlam/Scan/Scan.kt	(date 1607952429083)
+@@ -17,12 +17,9 @@
+ import com.budiyev.android.codescanner.*
+ import com.choochyemeilin.lamlam.R
+ import com.choochyemeilin.lamlam.helpers.Utils
+-import com.google.android.material.snackbar.Snackbar
+ import com.google.firebase.database.*
+ import com.google.gson.Gson
+ import kotlinx.android.synthetic.main.activity_scan.*
+-import java.lang.Exception
+-import java.lang.reflect.Executable
+ import java.time.LocalDateTime
+ import java.time.format.DateTimeFormatter
+ 
+@@ -32,7 +29,7 @@
+ class Scan : AppCompatActivity() {
+ 
+     private lateinit var codeScanner: CodeScanner
+-    //private var utils: Utils = Utils
++    private var utils: Utils = Utils
+     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+     private var myRef: DatabaseReference = database.getReference("ScanHistory")
+ 
+@@ -65,11 +62,14 @@
+                 runOnUiThread {
+                     hapticFeedback()
+                     try {
+-                        val jsonData = "[$it]" //{"id":"5fcb238224456","Category":"Tops","Product":"Pink Sweatshirt"}
++                        //val jsonData = "[$it]" [{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
++                        val jsonData = """
++                        {"id":"-MOMC5KxRtiN1NIlAPZC","category":"Tops","product":{"desc":"Pink Sweatshirt with Logo","price":"39.00","product_name":"Pink Sweatshirt","qty":"1"}}"""
+                         codeScanner.stopPreview()
+                         updateDB(jsonData)
+-                    }catch (e : Exception){
+-                        showDialog("An error has occurred #9784")
++                    } catch (e: Exception) {
++                        utils.log(e.toString())
++                        showDialog("An error has occurred #9784 | $e")
+                     }
+                 }
+             }
+@@ -88,8 +88,8 @@
+ 
+     //Update Database after scanning
+     @RequiresApi(Build.VERSION_CODES.O)
+-    private fun updateDB(jsonData: String): Boolean {
+-        var stat = true
++    private fun updateDB(jsonData: String) {
++        var data : List<ScanHistory> ?= null
+         val current = LocalDateTime.now()
+         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
+         val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
+@@ -98,27 +98,45 @@
+         val formattedTime = current.format(formatter2)
+         val formattedSec = current.format(formatter3)
+ 
+-        val data = readJSON(jsonData)
++        try {
++            data = readJSON(jsonData)
++        } catch (e: Exception) {
++            utils.log("Error #897 | $e")
++        }
++        //utils.log("TEST readJSON = $data");
+ 
+         val process = myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
+         process
+             .addOnSuccessListener {
+-                val cat = data[0].getCategory()
+-                val prod = data[0].getProduct()
+-                val id = data[0].getID()
++                val cat = data!![0].category
++                val id = data!![0].id
++
++                val prodDesc = data!![0].product!![0].desc
++                val prodPrice = data!![0].product!![0].price
++                val prodName = data!![0].product!![0].product_name
++                val prodQty = data!![0].product!![0].qty
++
+ 
+                 val msg =   "ID : $id \n" +
+                             "Category : $cat \n" +
+-                            "Product : $prod \n" +
++                        "Product : \n" +
++                        "$prodDesc \n " +
++                        "$prodPrice \n " +
++                        "$prodName \n " +
++                        "$prodQty \n" +
+                         "Successfully recorded"
+ 
++                /*val msg =   "ID : ${data.id} \n" +
++                        "Category : ${data.category} \n" +
++                        "Successfully recorded"*/
++
+                 showDialog(msg)
+ 
+             }
+             .addOnFailureListener {
+                 showDialog("Firebase error")
+             }
+-        return stat
++
+     }
+ 
+     //Vibrate when scanning
+@@ -138,7 +156,7 @@
+         }
+     }
+ 
+-    private fun readJSON(json: String): List<ScanHistory> {
++    private fun readJSON(json: String) : List<ScanHistory> {
+         return if (json != null)
+             Gson().fromJson(json) //Extension Call
+         else
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.choochyemeilin.lamlam\">\r\n\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n\r\n    <uses-permission android:name=\"android.permission.VIBRATE\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        android:theme=\"@style/AppTheme\"\r\n        android:screenOrientation=\"portrait\"\r\n        tools:targetApi=\"m\">\r\n        <uses-library android:name=\"org.apache.http.legacy\" android:required=\"false\"/>\r\n        \r\n        <activity\r\n            android:name=\".Scan.Scan\"\r\n            android:screenOrientation=\"portrait\" />\r\n        <activity\r\n            android:name=\".Home.Home\"\r\n            android:label=\"@string/title_activity_home\"\r\n            android:theme=\"@style/AppTheme\"\r\n            android:screenOrientation=\"portrait\"\r\n            />\r\n        <activity android:name=\".Login.Login\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision d1cc7b59772910766dcf29d253ab9fe54a642b74)
++++ app/src/main/AndroidManifest.xml	(date 1607825859686)
+@@ -31,6 +31,7 @@
+             android:screenOrientation="portrait"
+             />
+         <activity android:name=".Login.Login" />
++        <activity android:name=".Register.Register" />
+         <activity android:name=".MainActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+Index: app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.widget.ImageView\r\nimport android.widget.ProgressBar\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.choochyemeilin.lamlam.Home.Home\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.Register.Register\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\n\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    private var utils = Utils\r\n    private var TIME_OUT: Long = 2000\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n        supportActionBar!!.hide() //Remove Action Bar\r\n\r\n        //Declare Var\r\n        var logo    = findViewById<ImageView>(R.id.splash_screen_logo)\r\n        var pBar    = findViewById<ProgressBar>(R.id.splash_screen_progressBar)\r\n\r\n\r\n        //Declare Animation\r\n        utils.declareAnim(this)\r\n\r\n        logo.startAnimation(utils.fadeInTop)\r\n        pBar.startAnimation(utils.fadeInBottom)\r\n\r\n        //start activity\r\n        Handler().postDelayed(Runnable {\r\n            val intent = Intent(this, Register::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }, TIME_OUT)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt	(revision d1cc7b59772910766dcf29d253ab9fe54a642b74)
++++ app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt	(date 1607835619720)
+@@ -34,7 +34,7 @@
+ 
+         //start activity
+         Handler().postDelayed(Runnable {
+-            val intent = Intent(this, Register::class.java)
++            val intent = Intent(this, Home::class.java)
+             startActivity(intent)
+             finish()
+         }, TIME_OUT)
+Index: app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Register\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.text.TextUtils\r\nimport android.view.View\r\nimport android.view.inputmethod.InputMethodManager\r\nimport android.widget.Button\r\nimport android.widget.ProgressBar\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport androidx.navigation.findNavController\r\nimport com.choochyemeilin.lamlam.Login.ForgotPasswordActivity\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.DatabaseReference\r\nimport com.google.firebase.database.FirebaseDatabase\r\nimport kotlinx.android.synthetic.main.activity_login.*\r\nimport kotlinx.android.synthetic.main.activity_register.*\r\nimport java.util.HashMap\r\n\r\nclass Register : AppCompatActivity() {\r\n    private lateinit var auth: FirebaseAuth\r\n    var databaseReference: DatabaseReference?=null\r\n    var database: FirebaseDatabase?=null\r\n\r\n  //  private var fStore         : FirebaseFirestore = FirebaseFirestore.getInstance()\r\n   // private var fAuth          : FirebaseAuth = FirebaseAuth.getInstance()\r\n  //  private var fData          : FirebaseDatabase = FirebaseDatabase.getInstance()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_register)\r\n        auth = FirebaseAuth.getInstance()\r\n        database= FirebaseDatabase.getInstance()\r\n        databaseReference=database?.reference!!.child(\"profile\")\r\n\r\n        register()\r\n\r\n        button_register_cancel.setOnClickListener{\r\n            startActivity(Intent(this, Login::class.java))\r\n            finish()\r\n        }\r\n\r\n    }\r\n\r\n    //Registers the user\r\n    private fun register(){\r\n        closeKeyBoard()\r\n\r\n        button_register_reg.setOnClickListener {\r\n            if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())){\r\n                editTextNumber_register_staffID.setError(\"Please enter staff ID\")\r\n                return@setOnClickListener\r\n            }else if(TextUtils.isEmpty(editText_register_name.text.toString())){\r\n                editTextNumber_register_staffID.setError(\"Please enter name\")\r\n                return@setOnClickListener\r\n            }else if(TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())){\r\n                editTextNumber_register_staffID.setError(\"Please enter email\")\r\n                return@setOnClickListener\r\n            }else if(TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())){\r\n                editTextNumber_register_staffID.setError(\"Please enter phone number\")\r\n                return@setOnClickListener\r\n            }else if(TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())){\r\n                editTextNumber_register_staffID.setError(\"Please enter password\")\r\n                return@setOnClickListener\r\n            }\r\n        }\r\n\r\n        //Start progress\r\n        val progress: ProgressBar = progressBar_reg\r\n        progress.visibility = View.VISIBLE\r\n\r\n        //Firebase\r\n        auth.createUserWithEmailAndPassword(editTextNumber_register_staffID.text.toString(),editTextTextPassword_register_password.text.toString())\r\n            .addOnCompleteListener {\r\n                if (it.isSuccessful){\r\n                    val currentUser=auth.currentUser\r\n                    val currentUserDb=databaseReference?.child(currentUser?.uid!!)\r\n                    currentUserDb?.child(\"staffID\")?.setValue(editTextNumber_register_staffID.text.toString())\r\n                    currentUserDb?.child(\"name\")?.setValue(editTextNumber_register_staffID.text.toString())\r\n\r\n\r\n                    Toast.makeText(this@Register, \"Registration Success\", Toast.LENGTH_LONG).show()\r\n                    startActivity(Intent(this, Login::class.java))\r\n                    finish()\r\n                }else{\r\n                    Toast.makeText(this@Register, \"Registration failed. Please try again\", Toast.LENGTH_LONG).show()\r\n                }\r\n            }\r\n    }\r\n    private fun closeKeyBoard() {\r\n        val view = this.currentFocus\r\n        if (view != null) {\r\n            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager\r\n            imm.hideSoftInputFromWindow(view.windowToken, 0)\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt	(revision d1cc7b59772910766dcf29d253ab9fe54a642b74)
++++ app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt	(date 1607827587195)
+@@ -7,10 +7,7 @@
+ import android.text.TextUtils
+ import android.view.View
+ import android.view.inputmethod.InputMethodManager
+-import android.widget.Button
+-import android.widget.ProgressBar
+-import android.widget.TextView
+-import android.widget.Toast
++import android.widget.*
+ import androidx.navigation.findNavController
+ import com.choochyemeilin.lamlam.Login.ForgotPasswordActivity
+ import com.choochyemeilin.lamlam.Login.Login
+@@ -23,20 +20,14 @@
+ import java.util.HashMap
+ 
+ class Register : AppCompatActivity() {
+-    private lateinit var auth: FirebaseAuth
+-    var databaseReference: DatabaseReference?=null
+-    var database: FirebaseDatabase?=null
++    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
++    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+ 
+-  //  private var fStore         : FirebaseFirestore = FirebaseFirestore.getInstance()
+-   // private var fAuth          : FirebaseAuth = FirebaseAuth.getInstance()
+-  //  private var fData          : FirebaseDatabase = FirebaseDatabase.getInstance()
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_register)
+-        auth = FirebaseAuth.getInstance()
+-        database= FirebaseDatabase.getInstance()
+-        databaseReference=database?.reference!!.child("profile")
++        database.reference.child("profile")
+ 
+         register()
+ 
+@@ -74,12 +65,15 @@
+         val progress: ProgressBar = progressBar_reg
+         progress.visibility = View.VISIBLE
+ 
++        val staff = findViewById<EditText>(R.id.editTextNumber_register_staffID)
++        val password = findViewById<EditText>(R.id.editTextTextPassword_register_password)
++
+         //Firebase
+-        auth.createUserWithEmailAndPassword(editTextNumber_register_staffID.text.toString(),editTextTextPassword_register_password.text.toString())
++        auth.createUserWithEmailAndPassword(staff.toString(),password.toString())
+             .addOnCompleteListener {
+                 if (it.isSuccessful){
+                     val currentUser=auth.currentUser
+-                    val currentUserDb=databaseReference?.child(currentUser?.uid!!)
++                    val currentUserDb=database.reference.child(currentUser?.uid!!)
+                     currentUserDb?.child("staffID")?.setValue(editTextNumber_register_staffID.text.toString())
+                     currentUserDb?.child("name")?.setValue(editTextNumber_register_staffID.text.toString())
+ 
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM__Default_Changelist_1.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM__Default_Changelist_.xml

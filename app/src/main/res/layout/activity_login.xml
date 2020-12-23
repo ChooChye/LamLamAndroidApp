@@ -4,6 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login.Login">
+    tools:context=".Login.Login"
+    android:background="@drawable/splash_screen_bg"
+    android:id="@+id/activity_login"
+    style="@style/AppTheme.NoActionBar">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="400dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/text_login_signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN IN"
+        android:textColor="@color/white"
+        android:textSize="28dp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_login"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/text_login_signin"
+        app:layout_constraintStart_toStartOf="@id/text_login_signin"
+        app:layout_constraintTop_toBottomOf="@id/text_login_signin">
+
+
+        <EditText
+            android:id="@+id/editText_login_email"
+            android:layout_width="280dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:background="@color/white"
+            android:textSize="18sp"
+            android:drawableStart="@drawable/custom_email"
+            android:drawablePadding="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+            app:layout_constraintStart_toStartOf="@id/cardview_login"
+            app:layout_constraintTop_toBottomOf="@id/cardview_login"/>
+
+        <EditText
+            android:id="@+id/editTextTextPassword_login_password"
+            android:layout_width="280dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+
+            android:textSize="18sp"
+            android:drawableStart="@drawable/custom_lock"
+            android:drawablePadding="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
+            app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
+            app:layout_constraintTop_toBottomOf="@id/editTextNumber_login_username"/>
+
+        <ImageView
+            android:id="@+id/imageView_login_password_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_remove_red_eye_24"
+            android:layout_marginTop="70dp"
+            android:layout_marginStart="242dp"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/text_login_forgotpw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+        app:layout_constraintTop_toBottomOf="@+id/cardview_login"/>
+
+    <Button
+        android:id="@+id/button_login_signin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:background="@drawable/button_green"
+        android:text="SIGN IN NOW"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+        app:layout_constraintStart_toStartOf="@id/cardview_login"
+        app:layout_constraintTop_toBottomOf="@id/cardview_login" />
+
+    <TextView
+        android:id="@+id/textView_login_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Register an account"
+        android:textSize="17dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/button_login_signin"
+        app:layout_constraintStart_toStartOf="@id/button_login_signin"
+        app:layout_constraintTop_toBottomOf="@+id/button_login_signin" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
