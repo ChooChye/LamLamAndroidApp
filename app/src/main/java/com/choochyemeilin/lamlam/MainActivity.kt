@@ -7,10 +7,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Home.Home
-import com.choochyemeilin.lamlam.Login.Login
-import com.choochyemeilin.lamlam.Register.Register
-import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
-import com.choochyemeilin.lamlam.Search.Search
+import com.choochyemeilin.lamlam.Loans.Loans
 import com.choochyemeilin.lamlam.helpers.Utils
 
 
@@ -24,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.hide() //Remove Action Bar
 
         //Declare Var
-        var logo    = findViewById<ImageView>(R.id.splash_screen_logo)
-        var pBar    = findViewById<ProgressBar>(R.id.splash_screen_progressBar)
+        val logo    = findViewById<ImageView>(R.id.splash_screen_logo)
+        val pBar    = findViewById<ProgressBar>(R.id.splash_screen_progressBar)
 
 
         //Declare Animation
@@ -35,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         pBar.startAnimation(utils.fadeInBottom)
 
         //start activity
-        Handler().postDelayed(Runnable {
-            val intent = Intent(this, Search::class.java)
+        Handler().postDelayed( {
+            val intent = Intent(this, Home::class.java)
             startActivity(intent)
             finish()
         }, TIME_OUT)

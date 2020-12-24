@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choochyemeilin.lamlam.R
@@ -62,11 +61,11 @@ class Search : AppCompatActivity() {
     private fun search(kword: String) {
         val searchArrayList : ArrayList<Products> = ArrayList()
         for(list in arrayList){
-            if(list.product_name.toString().contains(kword)){
+            if(list.product_name.toString().toUpperCase().contains(kword)){
                 searchArrayList.add(list)
             }
         }
-        val myAdapter = SearchAdapter(searchArrayList)
+        val myAdapter = SearchAdapter(searchArrayList, applicationContext)
         rv_result.adapter = myAdapter
         rv_result.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         myAdapter.notifyDataSetChanged()
