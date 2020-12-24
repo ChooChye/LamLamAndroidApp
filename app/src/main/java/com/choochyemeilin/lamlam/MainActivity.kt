@@ -6,7 +6,8 @@ import android.os.Handler
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import com.choochyemeilin.lamlam.Login.Login
+import com.choochyemeilin.lamlam.Home.Home
+import com.choochyemeilin.lamlam.Loans.Loans
 import com.choochyemeilin.lamlam.helpers.Utils
 
 
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed( {
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, Home::class.java)
             startActivity(intent)
             finish()
         }, TIME_OUT)

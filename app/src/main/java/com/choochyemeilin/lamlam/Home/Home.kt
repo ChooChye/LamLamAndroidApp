@@ -10,6 +10,7 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import com.choochyemeilin.lamlam.Loans.Loans
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.ReturnItems.MyStocks
@@ -115,25 +116,16 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         when (p2) {
-            0 -> {
-                val intent = Intent(this, Scan::class.java)
-                startActivity(intent)
-            }
-            1 -> {
-                val intent = Intent(this, Search::class.java)
-                startActivity(intent)
-            }
-            2 -> {
-                Toast.makeText(applicationContext, "LOANS", Toast.LENGTH_SHORT).show()
-            }
+            0 -> startActivity(Intent(this, Scan::class.java))
+
+            1 -> startActivity(Intent(this, Search::class.java))
+
+            2 -> startActivity(Intent(this, Loans::class.java))
+
             3 -> {
                 Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
             }
-            4 -> {
-               val intent = Intent(this, ReturnItems::class.java)
-                startActivity(intent)
-                Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
-            }
+            4 -> startActivity(Intent(this, ReturnItems::class.java))
         }
     }
 

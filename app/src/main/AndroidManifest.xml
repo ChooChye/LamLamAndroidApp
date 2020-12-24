@@ -18,6 +18,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity
+            android:name=".Loans.Loans"
+            android:label="@string/title_activity_loans"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ReturnItems.MyStocks" />
 
         <uses-library

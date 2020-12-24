@@ -21,6 +21,10 @@ object Utils {
         fadeInBottom = AnimationUtils.loadAnimation(context, R.anim.fade_in_bottom)
     }
 
+    fun backBtn(){
+
+    }
+
     fun log(msg: String){
         Log.e("TEST", msg)
     }
