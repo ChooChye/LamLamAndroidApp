@@ -100,6 +100,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun setDataList() : ArrayList<HomeItem>{
