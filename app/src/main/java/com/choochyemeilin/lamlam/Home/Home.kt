@@ -58,8 +58,8 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     Toast.LENGTH_SHORT
                 ).show()
                 R.id.mItem2 -> {
-                    val intent = Intent(this, MyStocks::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, MyStocks::class.java))
+                    finish()
                 }
 
                 R.id.mItem3 -> logout()
@@ -100,6 +100,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun setDataList() : ArrayList<HomeItem>{
@@ -117,11 +118,8 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         when (p2) {
             0 -> startActivity(Intent(this, Scan::class.java))
-
             1 -> startActivity(Intent(this, Search::class.java))
-
             2 -> startActivity(Intent(this, Loans::class.java))
-
             3 -> {
                 Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
             }
