@@ -35,7 +35,7 @@ class SearchAdapter(
         val products: Products = arrayList.get(position)
         loadImage(holder, products.image)
         holder.itemView.search_layout_prodName.text = products.product_name
-        holder.itemView.search_layout_stockCount.text = "In Stock (${products.qty}"
+        holder.itemView.search_layout_stockCount.text = "In Stock (${products.qty})"
     }
 
     private fun loadImage(holder: ViewHolder, getImage : String) {
