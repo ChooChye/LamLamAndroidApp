@@ -34,4 +34,14 @@ class LoanApplication {
         this.productName = product_name
     }
 
+    constructor(
+        loan_id: Int?,
+        loanDate: String?,
+        status: String
+    ) {
+        this.loanID = loan_id
+        this.loanDate = loanDate
+        this.status = status
+    }
+
 }
