@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -54,6 +53,7 @@ class LoanAppForm2 : AppCompatActivity() {
         val loan_id = loanID
         val loanDate = utils.now()
         val products = array
+        val status = "pending"
 
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
@@ -62,7 +62,7 @@ class LoanAppForm2 : AppCompatActivity() {
         val formattedTime = current.format(formatter2)
 
         //Create Class
-        val loanApplication = LoanApplication(loan_id, loanDate, products)
+        val loanApplication = LoanApplication(loan_id, loanDate, status, products)
         myRef.child(formattedDate).child(formattedTime).setValue(loanApplication).addOnSuccessListener {
             startActivity(Intent(this, LoanAppForm3::class.java))
             this.finish()

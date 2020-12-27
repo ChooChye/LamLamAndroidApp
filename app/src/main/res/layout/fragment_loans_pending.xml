@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    android:id="@+id/pending"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,12 +7,15 @@
     tools:context=".Loans.LoansPending">
 
     <!-- TODO: Update blank fragment layout -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/loansPending_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="4dp"
-        tools:listitem="@layout/loans_pending_list_layout"/>
+        tools:listitem="@layout/loans_pending_list_layout">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

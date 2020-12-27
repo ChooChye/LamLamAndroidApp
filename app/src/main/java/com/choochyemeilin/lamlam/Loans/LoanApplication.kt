@@ -27,10 +27,12 @@ class LoanApplication {
     constructor(
         loan_id: Int?,
         loanDate: String?,
+        status: String,
         product_name: ArrayList<String>
     ) {
         this.loanID = loan_id
         this.loanDate = loanDate
+        this.status = status
         this.productName = product_name
     }
 

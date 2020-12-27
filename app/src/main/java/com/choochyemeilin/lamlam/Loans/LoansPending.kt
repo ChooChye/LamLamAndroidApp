@@ -1,8 +1,6 @@
 package com.choochyemeilin.lamlam.Loans
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +17,7 @@ import com.choochyemeilin.lamlam.helpers.FbCallback
 class LoansPending : Fragment() {
 
     private var utils : Utils = Utils
-    var datas: ArrayList<LoanApplication> = ArrayList<LoanApplication>()
+    var datas: ArrayList<LoanApplication> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +34,6 @@ class LoansPending : Fragment() {
                 view.loansPending_rv.setHasFixedSize(true)
             }
         })
-
         return view
     }
 
@@ -49,13 +46,16 @@ class LoansPending : Fragment() {
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dss in snapshot.children) {
-                    val key = dss.key
-                    val size = dss.childrenCount
                     dss.children.forEach {
                         val loanID = it.child("loanID").value.toString().toInt()
                         val date = it.child("loanDate").value.toString()
                         val status = it.child("status").value.toString()
-                        val item = LoanApplication(loanID,date, status)
+                        val product = it.child("productName")
+                        val products : ArrayList<String> = ArrayList()
+                        for (i in 0 until product.childrenCount){
+                            products.add(product.child(i.toString()).value.toString())
+                        }
+                        val item = LoanApplication(loanID,date, status, products)
                         list.add(item)
                         //{loanDate=2020-11-26 23:16, loanID=45647, productName=[Pink Sweatshirt, Blue Sweatshirt, Levi's Jeans (Black)], status=pending}
                     }
@@ -64,21 +64,10 @@ class LoansPending : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                utils.toast(view?.context!!, "An error has occurred #0984", 1)
+                utils.toast(view?.context!!, "An error has occurred #0984 | ${error.message}", 1)
             }
 
         })
         return list
     }
-
-    private fun displayLoansTest(size : Int) : List<LoanApplication> {
-
-        val list = ArrayList<LoanApplication>()
-        for (i in 0 until size){
-            val item = LoanApplication(i,"27/12/20", "pending")
-            list += item
-        }
-        return list
-    }
-
 }
