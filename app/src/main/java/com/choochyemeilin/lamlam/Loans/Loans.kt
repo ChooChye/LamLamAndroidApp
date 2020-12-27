@@ -27,6 +27,8 @@ class Loans : AppCompatActivity() {
         sectionsPagerAdapter.addFragment(LoansPending(), "Pending Loans")
         sectionsPagerAdapter.addFragment(MyLoans(), "My Loans")
 
+
+
         viewPager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(viewPager)
 

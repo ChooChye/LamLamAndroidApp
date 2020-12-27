@@ -92,4 +92,9 @@ class Search : AppCompatActivity() {
         this.finish()
         return true
     }
+
+    override fun onStop() {
+        super.onStop()
+        arrayList.clear()
+    }
 }
