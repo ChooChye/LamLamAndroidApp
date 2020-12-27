@@ -36,9 +36,6 @@ class Search : AppCompatActivity() {
 
 
         val searchText : EditText = findViewById(R.id.search_text)
-        val kword : String = searchText.text.toString()
-
-        search_searchBtn.setOnClickListener { search(kword) }
 
         searchText.addTextChangedListener(
             object : TextWatcher {

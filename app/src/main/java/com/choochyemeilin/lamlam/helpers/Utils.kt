@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Register.Register
+import java.util.*
 
 
 object Utils {
@@ -21,8 +22,19 @@ object Utils {
         fadeInBottom = AnimationUtils.loadAnimation(context, R.anim.fade_in_bottom)
     }
 
-    fun backBtn(){
+    //get current date
+    fun now() : String{
+        val c : Calendar = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
 
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+
+        val now = "$year-$month-$day $hour:$minute"
+
+        return now
     }
 
     fun log(msg: String){

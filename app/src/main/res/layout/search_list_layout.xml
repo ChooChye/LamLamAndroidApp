@@ -20,7 +20,7 @@
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@+id/search_layout_image"
         android:text="Sweatshirt"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView

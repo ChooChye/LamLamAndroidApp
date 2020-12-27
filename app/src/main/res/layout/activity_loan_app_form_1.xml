@@ -1,42 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Loans.form.LoanAppForm">
 
-
-    <LinearLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/loanAppForm1_fab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:contentDescription="NextBtn"
+        android:enabled="false"
+        app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+        tools:ignore="VectorDrawableCompat"
+        tools:layout_editor_absoluteX="16dp" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/introText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="STEP 1 of 2"
+            android:textColor="@color/colorSuccess"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/quicksand_bold"
-            android:text="SELECT PRODUCT ITEMS" />
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="SELECT PRODUCT ITEMS"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/introText" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/loanform1_product_container"
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2">
 
             <LinearLayout
                 android:id="@+id/loanAppForm1_linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="16dp">
 
                 <ProgressBar
                     android:id="@+id/loanAppForm1_progressBar"
@@ -45,26 +76,8 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </ScrollView>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom">
-
-            <Button
-                android:id="@+id/loanAppForm1_btn_next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_green"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="@string/next"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
