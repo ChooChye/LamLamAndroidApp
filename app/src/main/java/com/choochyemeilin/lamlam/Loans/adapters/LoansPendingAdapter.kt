@@ -13,6 +13,7 @@ import com.choochyemeilin.lamlam.Loans.LoanApplication
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_loans_pending.view.*
 import kotlinx.android.synthetic.main.loans_pending_list_layout.view.*
 
 class LoansPendingAdapter(
@@ -45,6 +46,7 @@ class LoansPendingAdapter(
             holder.status.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
         }
         holder.title.setOnClickListener { showDialog(context, position) }
+
     }
 
     override fun getItemCount(): Int {

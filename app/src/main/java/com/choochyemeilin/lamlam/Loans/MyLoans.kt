@@ -32,6 +32,7 @@ class MyLoans : Fragment() {
 
         getPendingLoans(object : FbCallback {
             override fun onCallback(arr: ArrayList<LoanApplication>) {
+                approvedLoans.clear()
                 for (i in arr) {
                     if (i.status.toUpperCase() == "APPROVED" || i.status.toUpperCase() == "REJECTED") {
                         approvedLoans.add(i)
@@ -54,6 +55,7 @@ class MyLoans : Fragment() {
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                list.clear()
                 for (dss in snapshot.children) {
                     dss.children.forEach {
                         val loanID = it.child("loanID").value.toString().toInt()

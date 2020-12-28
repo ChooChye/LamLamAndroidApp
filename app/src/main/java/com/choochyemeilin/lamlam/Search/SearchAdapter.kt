@@ -2,16 +2,19 @@ package com.choochyemeilin.lamlam.Search
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
+import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Products
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.search_list_layout.view.*
+import java.util.logging.Handler
 import kotlin.collections.ArrayList
 
 
@@ -45,9 +48,13 @@ class SearchAdapter(
         gsReference.downloadUrl.addOnSuccessListener { Uri ->
             image = Uri.toString()
             Picasso.get().load(image).into(holder.itemView.search_layout_image)
+            android.os.Handler().postDelayed( {
+                holder.itemView.searchList_layout_progressBar.visibility = View.GONE
+            }, 1000)
         }.addOnFailureListener {
-            image = "fail"
+            holder.itemView.search_layout_image.setImageResource(R.drawable.no_image)
         }
+
     }
 
     override fun getItemCount(): Int {

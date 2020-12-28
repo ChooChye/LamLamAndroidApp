@@ -2,6 +2,7 @@ package com.choochyemeilin.lamlam.Loans
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
@@ -32,9 +33,10 @@ class Loans : AppCompatActivity() {
         //Init Fragments
         sectionsPagerAdapter.addFragment(LoansPending(), "Pending Loans")
         sectionsPagerAdapter.addFragment(MyLoans(), "My Loans")
-
         viewPager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(viewPager)
+
+
 
         setSupportActionBar(findViewById(R.id.loans_toolbar))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

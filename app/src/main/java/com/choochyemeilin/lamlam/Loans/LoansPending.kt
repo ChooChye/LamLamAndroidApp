@@ -1,6 +1,7 @@
 package com.choochyemeilin.lamlam.Loans
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_loans_pending.*
 import kotlinx.android.synthetic.main.fragment_loans_pending.view.*
 
 
@@ -24,10 +26,12 @@ class LoansPending : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_loans_pending, container, false)
+
+       val view = inflater.inflate(R.layout.fragment_loans_pending, container, false)
 
         getPendingLoans(object : FbCallback {
             override fun onCallback(arr: ArrayList<LoanApplication>) {
+                pendingLoans.clear()
                 for (i in arr) {
                     if (i.status.toUpperCase() == "PENDING") {
                         pendingLoans.add(i)
@@ -37,6 +41,7 @@ class LoansPending : Fragment() {
                 view.loansPending_rv.adapter = LoansPendingAdapter(pendingLoans)
                 view.loansPending_rv.layoutManager = LinearLayoutManager(view.context)
                 view.loansPending_rv.setHasFixedSize(true)
+                loansPending_progressBar.visibility = View.GONE
             }
         })
         return view
@@ -50,6 +55,7 @@ class LoansPending : Fragment() {
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                list.clear()
                 for (dss in snapshot.children) {
                     dss.children.forEach {
                         val loanID = it.child("loanID").value.toString().toInt()
