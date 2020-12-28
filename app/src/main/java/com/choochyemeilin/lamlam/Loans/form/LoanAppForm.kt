@@ -60,7 +60,7 @@ class LoanAppForm : AppCompatActivity() {
                         val cb = CheckBox(applicationContext)
                         cb.id = index
                         cb.text = "${catItem.product_name}"
-                        cb.setOnCheckedChangeListener { compoundButton, b ->
+                        cb.setOnCheckedChangeListener { _, _ ->
                             checkboxAction(cb)
                         }
                         ll.addView(cb)

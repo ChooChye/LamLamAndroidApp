@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed( {
-            val intent = Intent(this, Loans::class.java)
+            val intent = Intent(this, Home::class.java)
             startActivity(intent)
             finish()
         }, TIME_OUT)
