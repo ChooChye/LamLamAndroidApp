@@ -1,21 +1,29 @@
 package com.choochyemeilin.lamlam.helpers
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
-import com.choochyemeilin.lamlam.Register.Register
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
+
 
 
 object Utils {
 
     lateinit var fadeInTop: Animation
     lateinit var fadeInBottom: Animation
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val fbAuth : FirebaseAuth = FirebaseAuth.getInstance()
 
     fun declareAnim(context: Context) {
         fadeInTop = AnimationUtils.loadAnimation(context, R.anim.fade_in_top)
@@ -56,8 +64,29 @@ object Utils {
     }
 
     //Hiding the keyboard
-   public fun closeKeyboard(view: View) {
+   fun closeKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun getUser(){
+        val user = fbAuth.currentUser
+
+        val myRef: DatabaseReference = database.getReference("User")
+
+    }
+
+    fun checkUserAuth() : Boolean{
+        val user = fbAuth.currentUser
+        var status = false
+        if(user != null){
+            status = true
+        }
+        return status
+    }
+
+    fun forceLogin(context : Context){
+        val intent = Intent(context, Login::class.java)
+        startActivity(context, intent,  null)
     }
 }

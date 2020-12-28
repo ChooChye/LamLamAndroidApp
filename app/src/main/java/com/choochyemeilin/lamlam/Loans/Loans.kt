@@ -10,9 +10,12 @@ import androidx.fragment.app.Fragment
 import com.choochyemeilin.lamlam.Loans.form.LoanAppForm
 import com.choochyemeilin.lamlam.Loans.ui.main.SectionsPagerAdapter
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.activity_loans.*
 
 class Loans : AppCompatActivity() {
+
+    private var utils : Utils = Utils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +26,12 @@ class Loans : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs)
         val fab: FloatingActionButton = findViewById(R.id.fab)
 
+//       if(!utils.checkUserAuth())
+//           utils.forceLogin(this)
+
         //Init Fragments
         sectionsPagerAdapter.addFragment(LoansPending(), "Pending Loans")
         sectionsPagerAdapter.addFragment(MyLoans(), "My Loans")
-
-
 
         viewPager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(viewPager)

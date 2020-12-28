@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.choochyemeilin.lamlam.Loans.adapters.LoansApprovedAdapter
 import com.choochyemeilin.lamlam.Loans.adapters.LoansPendingAdapter
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
@@ -30,12 +33,12 @@ class MyLoans : Fragment() {
         getPendingLoans(object : FbCallback {
             override fun onCallback(arr: ArrayList<LoanApplication>) {
                 for (i in arr) {
-                    if (i.status == "approved" || i.status == "rejected") {
+                    if (i.status.toUpperCase() == "APPROVED" || i.status.toUpperCase() == "REJECTED") {
                         approvedLoans.add(i)
                     }
                 }
 
-                view.myloans_rv.adapter = LoansPendingAdapter(approvedLoans)
+                view.myloans_rv.adapter = LoansApprovedAdapter(approvedLoans)
                 view.myloans_rv.layoutManager = LinearLayoutManager(view.context)
                 view.myloans_rv.setHasFixedSize(true)
             }

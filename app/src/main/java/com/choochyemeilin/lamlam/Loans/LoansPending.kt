@@ -29,7 +29,7 @@ class LoansPending : Fragment() {
         getPendingLoans(object : FbCallback {
             override fun onCallback(arr: ArrayList<LoanApplication>) {
                 for (i in arr) {
-                    if (i.status == "pending") {
+                    if (i.status.toUpperCase() == "PENDING") {
                         pendingLoans.add(i)
                     }
                 }
