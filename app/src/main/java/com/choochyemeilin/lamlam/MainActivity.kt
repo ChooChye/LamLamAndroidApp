@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.Register.Register
-import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
-import com.choochyemeilin.lamlam.Search.Search
+import com.choochyemeilin.lamlam.Register.RegisterNewRole
 import com.choochyemeilin.lamlam.helpers.Utils
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,9 +36,21 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed(Runnable {
-            val intent = Intent(this, Search::class.java)
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
-            finish()
+
+            var auth: FirebaseAuth = FirebaseAuth.getInstance()
+            val currentUser=auth.currentUser
+
+            if (currentUser != null) {
+                // User is signed in
+                val intent = Intent(this, Home::class.java)
+                startActivity(intent)
+            } else {
+                // No user is signed in
+                // Toast.makeText(this, "User not found", Toast.LENGTH_LONG).show()
+            }
+
         }, TIME_OUT)
     }
 }

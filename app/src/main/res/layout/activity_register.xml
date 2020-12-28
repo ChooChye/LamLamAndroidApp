@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -95,13 +96,13 @@
             android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginTop="52dp"
-            android:ems="10"
-            android:inputType="number"
-            android:hint="H/P No."
             android:background="@color/white"
-            android:textSize="18sp"
             android:drawableStart="@drawable/custom_phone"
-            android:drawablePadding="15dp"/>
+            android:drawablePadding="15dp"
+            android:ems="10"
+            android:hint="H/P No."
+            android:inputType="number|phone"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editTextTextPassword_register_password"

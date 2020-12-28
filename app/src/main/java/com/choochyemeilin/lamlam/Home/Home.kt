@@ -22,13 +22,15 @@ import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
+import com.choochyemeilin.lamlam.Search.Search
 //import com.choochyemeilin.lamlam.Search.Search
 import com.choochyemeilin.lamlam.helpers.Lcg
+import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.nav_header.*
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -42,7 +44,9 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var utils : Utils = Utils
 
     lateinit var toggle: ActionBarDrawerToggle
-    
+    var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    val currentUser=auth.currentUser
+    val uid = currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +86,12 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         languageAdapter = HomeAdapter(applicationContext, arrayList!!)
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
+
+
+
+        if(currentUser!=null){
+            changeName()
+        }
 
 
         //val welcome = findViewById<TextView>(R.id.welcome_user)
@@ -127,15 +137,10 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                 val intent = Intent(this, Scan::class.java)
                 startActivity(intent)
             }
-            /*
+
             1 -> {
                 val intent = Intent(this, Search::class.java)
                 startActivity(intent)
-            }
-
-             */
-            1 -> {
-                Toast.makeText(applicationContext, "SEARCH", Toast.LENGTH_SHORT).show()
             }
             2 -> {
                 Toast.makeText(applicationContext, "LOANS", Toast.LENGTH_SHORT).show()
@@ -146,10 +151,11 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             4 -> {
                val intent = Intent(this, ReturnItems::class.java)
                 startActivity(intent)
-                Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
+
             }
         }
     }
+
 
     //Navigation Drawer
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -157,5 +163,29 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun changeName(){
+
+        var userRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("User")
+        var query : Query =userRef.orderByChild("staffName")
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (dss in snapshot.children) {
+                    val name=dss.getValue().toString()
+                    welcome_user.text="Welcome, "+name.toString()
+                    textView_drawer_name.text=name.toString()
+                }
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                utils.log("$error")
+            }
+
+        })
     }
 }

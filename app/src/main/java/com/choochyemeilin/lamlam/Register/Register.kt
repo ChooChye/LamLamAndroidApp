@@ -24,57 +24,60 @@ import java.time.format.DateTimeFormatter
 
 class Register : AppCompatActivity() {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    val currentUser=auth.currentUser
+
     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var utils = Utils
     private var passwordLock=false
+  //  private var id=true
     private var myRef: DatabaseReference = databaseReference.getReference("Staff ID")
     private var userRef: DatabaseReference = databaseReference.getReference("User")
+    private var roleRef: DatabaseReference = databaseReference.getReference("Role")
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+
+
         button_register_reg.setOnClickListener{
 
                 if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())) {
                     editTextNumber_register_staffID.setError("Please enter Staff ID")
+                    editTextNumber_register_staffID.requestFocus()
                     return@setOnClickListener
 
                 } else if (TextUtils.isEmpty(editText_register_name.text.toString())) {
                     editText_register_name.setError("Please enter Name")
+                    editText_register_name.requestFocus()
                     return@setOnClickListener
                 } else if (TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())) {
                     editTextTextEmailAddress_register_email.setError("Please enter Email")
+                    editTextTextEmailAddress_register_email.requestFocus()
                     return@setOnClickListener
                 } else if (TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())) {
                     editTextNumber_register_phoneNo.setError("Please enter Phone Number")
+                    editTextNumber_register_phoneNo.requestFocus()
                     return@setOnClickListener
 
                 }else if (TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())) {
                     editTextTextPassword_register_password.setError("Please enter Password")
+                    editTextTextPassword_register_password.requestFocus()
                     return@setOnClickListener
                 }
 
            if (editTextNumber_register_staffID.length()!=7){
                editTextNumber_register_staffID.setError("Staff ID must be 7 characters")
+               editTextNumber_register_staffID.requestFocus()
                return@setOnClickListener
              }
-/*
-           else if (!editTextNumber_register_staffID.equals(compareStaffID())){
-               editTextNumber_register_staffID.setError("Staff ID is not in the database")
-               return@setOnClickListener
-           }
-
- */
-
 
             if (editTextTextPassword_register_password.length()<6){
                 editTextTextPassword_register_password.setError("Password must be greater than 5 characters")
+                editTextTextPassword_register_password.requestFocus()
                 return@setOnClickListener
             }
-
 
 
             // add authentication user
@@ -82,18 +85,23 @@ class Register : AppCompatActivity() {
                 editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty() ||
                 editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
             ) {
+                register(
+                    editTextTextEmailAddress_register_email.text.trim().toString(),
+                    editTextTextPassword_register_password.text.trim().toString()
+                )
 
+ /*               if(compareStaffID()) {
+                    Toast.makeText(this@Register, "ID NOT IN THE DATABASE", Toast.LENGTH_LONG).show()
+                }else{
                     register(
                         editTextTextEmailAddress_register_email.text.trim().toString(),
                         editTextTextPassword_register_password.text.trim().toString()
                     )
-                    return@setOnClickListener
+                }
 
 
-
+  */
             }
-
-
         }
 
         button_register_cancel.setOnClickListener{
@@ -131,21 +139,24 @@ class Register : AppCompatActivity() {
                     val  staffEmail=editTextTextEmailAddress_register_email.text.toString()
                     val phoneNumber=editTextNumber_register_phoneNo.text.toString().toInt()
                     val pw=editTextTextPassword_register_password.text.toString()
-               //     val current = LocalDateTime.now()
-               //     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-               //     val formattedDate = current.format(formatter)
+                    val currentUser=auth.currentUser
+                    val uid = currentUser?.uid
 
-                    userRef.child(currentUser?.uid!!).setValue(
-                        Staff(
-                            staffID,
-                            staffName,
-                            staffEmail,
-                            phoneNumber,
-                            pw
+
+                    if (uid != null) {
+                        userRef.child(uid).setValue(
+
+                            Staff(
+                                staffID,
+                                staffName,
+                                staffEmail,
+                                phoneNumber,
+                                pw
+                            )
                         )
-                    )
+                    }
 
-               //     Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this, Login::class.java))
                     finish()
                 }else{
@@ -157,34 +168,6 @@ class Register : AppCompatActivity() {
                 }
             }
 
-/*
-        var userDate: DatabaseReference=myRef.child(formattedDate)
-        var userDateID: DatabaseReference=userDate.child(userID)
-        var userStaffID: DatabaseReference=userDateID.child(staffID.toString())
-        var userStaffName: DatabaseReference=userStaffID.child("staffName")
-
-
-        //Get Data
-        userStaffName.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                textView_drawer_name.text="USERNAME ERROR"
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                var sb= StringBuilder()
-
-                for (i in dataSnapshot.children){
-                  //  var name_in_drawer=i.child("staffName").getValue()
-
-                    val name_in_drawer: String = dataSnapshot.child("staffName").getValue().toString()
-                    sb.append("$name_in_drawer")
-                }
-                textView_drawer_name.setText(sb)
-            }
-        })
-
- */
     }
 
      fun showPassword(isShow: Boolean){
@@ -199,9 +182,13 @@ class Register : AppCompatActivity() {
          editTextTextPassword_register_password.setSelection(editTextTextPassword_register_password.text.toString().length)
     }
 
-    fun compareStaffID(){
 
-        var query : Query =myRef
+    fun compareStaffID():Boolean{
+
+        var query : Query =roleRef.child("Admin").orderByChild("Staff ID")
+        var q2:Query=roleRef.child("Staff").orderByChild("Staff ID")
+   //     val textRegStaffID = findViewById<EditText>(R.id.editTextNumber_register_staffID)
+
 
         //Get Data
         query.addValueEventListener(object : ValueEventListener {
@@ -212,17 +199,38 @@ class Register : AppCompatActivity() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                var textRegStaffID=editTextNumber_register_staffID.text
+             //   val i=dataSnapshot.getValue().toString()
+            //    i.equals(textRegStaffID)
+
+
+               var textRegStaffID=editTextNumber_register_staffID.text.toString()
+
 
                 for (i in dataSnapshot.children){
 
-                    var id=i.getValue().toString()
+                    var id=i.getValue().toString().compareTo(textRegStaffID)
+                    if(id.equals(true)){
+                        Toast.makeText(this@Register, "SUCCESS", Toast.LENGTH_LONG).show()
+                    }else{
+                        editTextNumber_register_staffID.setError("Staff ID is not in the database")
+                        editTextNumber_register_staffID.requestFocus()
+                    }
 
-                  //  id.equals(true)
-                    textRegStaffID.equals(id)
-                }
+                  //  textRegStaffID.equals(id)
+/*
+                  if (!id.equals(textRegStaffID)){
+                     editTextNumber_register_staffID.setError("Staff ID is not in the database")
+                     editTextNumber_register_staffID.requestFocus()
+
+                  }
+      */           }
+
+
 
             }
         })
+        return true
     }
+
+
 }

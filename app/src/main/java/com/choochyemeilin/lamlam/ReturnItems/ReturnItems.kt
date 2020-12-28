@@ -10,8 +10,11 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_return_items.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import com.choochyemeilin.lamlam.Scan.fromJson
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_my_stocks.*
 
 private const val CAMERA_REQUEST_CODE = 101
@@ -42,8 +46,11 @@ class ReturnItems : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_return_items)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val actionBar = supportActionBar
+        actionBar!!.title = "Return Items"
         setupPermissions()
         codeScanner()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
