@@ -18,25 +18,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-
+        <activity android:name=".Reports.Reports"></activity>
         <activity
             android:name=".Loans.form.LoanAppForm3"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Loans.form.LoanAppForm2"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Loans.form.LoanAppForm"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Loans.Loans"
             android:label="@string/title_activity_loans"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".ReturnItems.MyStocks" />
 
         <uses-library
@@ -50,7 +46,6 @@
             android:name=".Search.Search"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".Home.Home"
             android:label="@string/title_activity_home"
