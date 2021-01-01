@@ -2,17 +2,20 @@ package com.choochyemeilin.lamlam.Loans
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.constraintlayout.motion.widget.MotionScene
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
+import androidx.transition.TransitionSet
+import androidx.viewpager.widget.ViewPager
+import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.Loans.form.LoanAppForm
 import com.choochyemeilin.lamlam.Loans.ui.main.SectionsPagerAdapter
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Utils
-import kotlinx.android.synthetic.main.activity_loans.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
+
 
 class Loans : AppCompatActivity() {
 
@@ -27,8 +30,6 @@ class Loans : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs)
         val fab: FloatingActionButton = findViewById(R.id.fab)
 
-//       if(!utils.checkUserAuth())
-//           utils.forceLogin(this)
 
         //Init Fragments
         sectionsPagerAdapter.addFragment(LoansPending(), "Pending Loans")
@@ -37,19 +38,26 @@ class Loans : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
 
-
         setSupportActionBar(findViewById(R.id.loans_toolbar))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setTitle("LOANS")
 
         fab.setOnClickListener {
             startActivity(Intent(this, LoanAppForm::class.java))
+            this.finish()
         }
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val i = Intent(this, Home::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
+        this.finish()
+    }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-        this.finish()
         return true
     }
 }

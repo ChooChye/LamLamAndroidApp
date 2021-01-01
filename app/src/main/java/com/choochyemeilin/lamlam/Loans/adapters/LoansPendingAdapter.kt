@@ -6,14 +6,12 @@ import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.choochyemeilin.lamlam.Loans.LoanApplication
+import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_loans_pending.view.*
 import kotlinx.android.synthetic.main.loans_pending_list_layout.view.*
 
 class LoansPendingAdapter(
@@ -62,7 +60,7 @@ class LoansPendingAdapter(
         var msg = "Date Applied : ${data.loanDate}\n\n" +
                 "Products Requested : \n"
         for (i in 0 until data.productName.size) {
-            msg += "$i - ${data.productName[i]}\n"
+            msg += "$i - ${data}\n"
         }
         builder
             .setTitle("LOAN ID #${dataList[position].loanID}")

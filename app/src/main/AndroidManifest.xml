@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".Reports.Reports"></activity>
+        <activity android:name=".Reports.Reports" />
         <activity
             android:name=".Loans.form.LoanAppForm3"
             android:screenOrientation="portrait" />
@@ -50,7 +50,12 @@
             android:name=".Home.Home"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.HOME"/>
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Login.Login"
             android:theme="@style/AppTheme.NoActionBar" />

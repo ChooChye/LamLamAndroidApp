@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.Loans.adapters.LoansApprovedAdapter
-import com.choochyemeilin.lamlam.Loans.adapters.LoansPendingAdapter
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_loans_myloans.view.*
-import kotlinx.android.synthetic.main.fragment_loans_pending.view.*
 
 class MyLoans : Fragment() {
 
@@ -62,9 +59,12 @@ class MyLoans : Fragment() {
                         val date = it.child("loanDate").value.toString()
                         val status = it.child("status").value.toString()
                         val product = it.child("productName")
-                        val products: ArrayList<String> = ArrayList()
+                        val products: MutableMap<String, Int> = mutableMapOf()
+                        //val products: ArrayList<String> = ArrayList()
                         for (i in 0 until product.childrenCount) {
-                            products.add(product.child(i.toString()).value.toString())
+                            val prodName = product.child(i.toString()).value
+                            products[prodName.toString()] = 0
+                            //products.add(product.child(i.toString()).value.toString())
                         }
                         val item = LoanApplication(loanID, date, status, products)
                         list.add(item)
