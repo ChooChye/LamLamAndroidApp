@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Loans.Classes.SelectedProducts
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Reports.objects.ReportsObject
+import com.choochyemeilin.lamlam.helpers.Utils
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_reports.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,9 +43,29 @@ class Reports : AppCompatActivity() {
 
         pickStartDate()
         pickEndDate()
+        getData()
     }
 
+    private fun getData(){
+        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val myRef: DatabaseReference = database.getReference("Loans")
 
+        /*val startDate = reports_tv_StartDate.text.toString()
+        val endDate = reports_tv_endDate.text.toString()*/
+        val startDate = "2021-01-05"
+        val endDate = "2021-01-05"
+
+        myRef.startAt(startDate).endAt(endDate).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Utils.log(snapshot.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
     private fun getDateCalendar() {
         day = cal.get(Calendar.DAY_OF_MONTH)

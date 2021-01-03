@@ -4,17 +4,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ReportAdapter : RecyclerView.Adapter<ReportAdapter.reportViewHolder>(){
+class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>(){
 
-    class reportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): reportViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportViewHolder {
         TODO("Not yet implemented")
     }
 
-    override fun onBindViewHolder(holder: reportViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReportViewHolder, position: Int) {
         TODO("Not yet implemented")
     }
 
