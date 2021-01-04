@@ -1,10 +1,10 @@
-package com.choochyemeilin.lamlam.Loans
+package com.choochyemeilin.lamlam.Loans.Classes
 
 class LoanApplication {
     var loanID : Int? = 0
     var loanDate : String? = null
     var expiryLoanDate : String? = null
-    var productName : ArrayList<String> = ArrayList()
+    var productName : MutableMap<String, Int> = mutableMapOf()
     var status : String = "pending"
     var dateStatus : String? = null
 
@@ -12,7 +12,7 @@ class LoanApplication {
         loan_id: Int?,
         loanDate: String?,
         expiryLoanDate: String?,
-        product_name: ArrayList<String>,
+        product_name: MutableMap<String, Int>,
         status: String,
         date_status: String?
     ) {
@@ -28,7 +28,7 @@ class LoanApplication {
         loan_id: Int?,
         loanDate: String?,
         status: String,
-        product_name: ArrayList<String>
+        product_name: MutableMap<String, Int>
     ) {
         this.loanID = loan_id
         this.loanDate = loanDate
@@ -45,5 +45,4 @@ class LoanApplication {
         this.loanDate = loanDate
         this.status = status
     }
-
 }

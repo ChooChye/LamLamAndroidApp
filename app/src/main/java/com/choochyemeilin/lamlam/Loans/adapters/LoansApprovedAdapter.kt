@@ -3,14 +3,13 @@ package com.choochyemeilin.lamlam.Loans.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.choochyemeilin.lamlam.Loans.LoanApplication
+import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.loans_pending_list_layout.view.*
@@ -60,7 +59,7 @@ class LoansApprovedAdapter(
         var msg = "Date Applied : ${data.loanDate}\n\n" +
                 "Products Requested : \n"
         for (i in 0 until data.productName.size) {
-            msg += "$i - ${data.productName[i]}\n"
+            msg += "$i - ${data}\n"
         }
         builder
             .setTitle("LOAN ID #${dataList[position].loanID}")
