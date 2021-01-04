@@ -66,36 +66,6 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         }
     }
 
-    /*@SuppressLint("SetTextI18n")
-    private fun addCheckbox(){
-        val ll : LinearLayout = findViewById(R.id.loanAppForm1_linearLayout)
-        var index  = 0
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dss in snapshot.children) {
-                    val catItem: Products? = dss.getValue(Products::class.java)
-                    if (catItem != null) {
-                        val cb = CheckBox(applicationContext)
-                        cb.id = index
-                        cb.text = "${catItem.product_name}"
-                        cb.setOnCheckedChangeListener { _, _ ->
-                            checkboxAction(cb)
-                        }
-                        ll.addView(cb)
-                        index++
-                    }
-                }
-                loanAppForm1_progressBar.visibility = View.GONE
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                utils.toast(applicationContext, "Error occurred #9683 | ${error.message}", 0)
-            }
-
-        })
-    }*/
-
     private fun getPendingLoans(callback: FbCallback): List<String> {
         var list = ArrayList<String>()
 

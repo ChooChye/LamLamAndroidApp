@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Loans.Loans
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Reports.Reports
 import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
@@ -120,9 +121,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             0 -> startActivity(Intent(this, Scan::class.java))
             1 -> startActivity(Intent(this, Search::class.java))
             2 -> startActivity(Intent(this, Loans::class.java))
-            3 -> {
-                Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
-            }
+            3 -> startActivity(Intent(this, Reports::class.java))
             4 -> startActivity(Intent(this, ReturnItems::class.java))
         }
     }

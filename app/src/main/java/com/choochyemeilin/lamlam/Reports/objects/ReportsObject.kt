@@ -1,8 +1,8 @@
 package com.choochyemeilin.lamlam.Reports.objects
 
 class ReportsObject {
-    private var productName: String ? = null
-    private var qty : Int ? = null
+    var productName: String ? = null
+    var qty : Int ? = null
 
     constructor(productName: String?, qty: Int?) {
         this.productName = productName

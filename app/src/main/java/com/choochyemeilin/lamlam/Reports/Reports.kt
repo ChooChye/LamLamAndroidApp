@@ -6,15 +6,20 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.choochyemeilin.lamlam.Loans.Classes.SelectedProducts
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Reports.adapters.ReportAdapter
 import com.choochyemeilin.lamlam.Reports.objects.ReportsObject
+import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_reports.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Reports : AppCompatActivity() {
 
@@ -30,7 +35,8 @@ class Reports : AppCompatActivity() {
     private lateinit var mStartDateListenerStart: OnDateSetListener
     private lateinit var mEndDateListenerStart: OnDateSetListener
 
-    private var arrayList : ArrayList<ReportsObject> = ArrayList()
+    private var arrayList: ArrayList<ReportsObject> = ArrayList()
+    private var mutableList: MutableMap<String, Int> = mutableMapOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,28 +49,64 @@ class Reports : AppCompatActivity() {
 
         pickStartDate()
         pickEndDate()
-        getData()
+        getData(object : FbCallback {
+            override fun push(arr: MutableMap<String, Int>) {
+                super.push(arr)
+                reports_rv.adapter = ReportAdapter(arr)
+                reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+                reports_rv.setHasFixedSize(true)
+                reports_progressBar.visibility = View.GONE
+            }
+        })
     }
 
-    private fun getData(){
+    private fun getData(callback: FbCallback) {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("Loans")
 
         /*val startDate = reports_tv_StartDate.text.toString()
         val endDate = reports_tv_endDate.text.toString()*/
-        val startDate = "2021-01-05"
-        val endDate = "2021-01-05"
+        val startDate = "2021-01-03"
+        val endDate = "2021-01-03"
 
-        myRef.startAt(startDate).endAt(endDate).addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Utils.log(snapshot.toString())
-            }
+        myRef.orderByKey().startAt(startDate).endAt(endDate)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    arrayList.clear()
+                    var totalQty = 0
+                    for (dss in snapshot.children) {
+                        dss.children.forEach {
+                            val product = it.child("productName")
+                            product.children.forEach {
+                                val key = it.key.toString()
+                                val qty = it.value.toString().toInt()
+                                /*if (key == key) {
+                                    totalQty += qty
+                                    val obj = ReportsObject(key, qty)
+                                    if (obj != null) {
+                                        arrayList.add(obj)
+                                    }
+                                }*/
+                                val obj = ReportsObject(key, qty)
+                                if (obj != null) {
+                                    arrayList.add(obj)
+                                }
+                                mutableList[key] = qty
+                                if (mutableList.containsKey(key)) {
+                                    val oldValue = mutableList[key].toString().toInt()
+                                    mutableList[key] = oldValue + qty
+                                }
+                            }
+                        }
+                    }
+                    callback.push(mutableList)
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
 
-        })
+            })
     }
 
     private fun getDateCalendar() {
