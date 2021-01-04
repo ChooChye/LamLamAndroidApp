@@ -35,7 +35,6 @@ class Reports : AppCompatActivity() {
     private lateinit var mStartDateListenerStart: OnDateSetListener
     private lateinit var mEndDateListenerStart: OnDateSetListener
 
-    private var arrayList: ArrayList<ReportsObject> = ArrayList()
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
 
 
@@ -49,61 +48,60 @@ class Reports : AppCompatActivity() {
 
         pickStartDate()
         pickEndDate()
-        getData(object : FbCallback {
-            override fun push(arr: MutableMap<String, Int>) {
-                super.push(arr)
-                reports_rv.adapter = ReportAdapter(arr)
-                reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-                reports_rv.setHasFixedSize(true)
-                reports_progressBar.visibility = View.GONE
+        reports_btn_searchBtn.setOnClickListener {
+            val startDate = reports_tv_StartDate.text.toString()
+            val endDate = reports_tv_endDate.text.toString()
+
+            if(startDate.isNotEmpty() && endDate.isNotEmpty()){
+                getData(object : FbCallback {
+                    override fun push(arr: MutableMap<String, Int>) {
+                        super.push(arr)
+                        reports_rv.adapter = ReportAdapter(arr)
+                        reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+                        reports_rv.setHasFixedSize(true)
+                        reports_tv_message.visibility = View.GONE
+                    }
+                })
+            }else{
+                Utils.toast(applicationContext, "Please select a Start & End date", 1)
             }
-        })
+        }
     }
 
     private fun getData(callback: FbCallback) {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("Loans")
 
-        /*val startDate = reports_tv_StartDate.text.toString()
-        val endDate = reports_tv_endDate.text.toString()*/
-        val startDate = "2021-01-03"
-        val endDate = "2021-01-03"
+        val startDate = reports_tv_StartDate.text.toString()
+        val endDate = reports_tv_endDate.text.toString()
+
 
         myRef.orderByKey().startAt(startDate).endAt(endDate)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    arrayList.clear()
-                    var totalQty = 0
+                    mutableList.clear()
                     for (dss in snapshot.children) {
                         dss.children.forEach {
                             val product = it.child("productName")
                             product.children.forEach {
                                 val key = it.key.toString()
                                 val qty = it.value.toString().toInt()
-                                /*if (key == key) {
-                                    totalQty += qty
-                                    val obj = ReportsObject(key, qty)
-                                    if (obj != null) {
-                                        arrayList.add(obj)
-                                    }
-                                }*/
-                                val obj = ReportsObject(key, qty)
-                                if (obj != null) {
-                                    arrayList.add(obj)
-                                }
-                                mutableList[key] = qty
                                 if (mutableList.containsKey(key)) {
                                     val oldValue = mutableList[key].toString().toInt()
                                     mutableList[key] = oldValue + qty
+
+                                }else{
+                                    mutableList[key] = qty
                                 }
                             }
                         }
                     }
+                    Utils.log(mutableList.toString())
                     callback.push(mutableList)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Utils.toast(applicationContext, error.message, 1)
                 }
 
             })

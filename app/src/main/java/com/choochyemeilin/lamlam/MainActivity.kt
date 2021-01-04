@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed( {
-            val intent = Intent(this, Reports::class.java)
+            val intent = Intent(this, Home::class.java)
             startActivity(intent)
             finish()
         }, TIME_OUT)
