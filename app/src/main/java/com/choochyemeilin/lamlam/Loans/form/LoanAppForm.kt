@@ -90,26 +90,6 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         return list
     }
 
-    /*private fun checkboxAction(cb: CheckBox) {
-        try {
-            if(cb.isChecked){
-                arrayListId.add(cb.id)
-                arrayListText.add(cb.text.toString())
-                loanAppForm1_fab.isEnabled = true
-            }else{
-                arrayListId.removeAt(cb.id)
-                arrayListText.remove(cb.text.toString())
-            }
-
-            if(arrayListText.size == 0){
-                loanAppForm1_fab.isEnabled = false
-            }
-        }catch (e: Exception){
-            //Stop the index bound exception
-            //utils.toast(applicationContext, "An error has occurred Error #8905 | $e", 1)
-        }
-    }*/
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         this.finish()

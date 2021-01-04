@@ -61,7 +61,7 @@ class LoanAppForm2 : AppCompatActivity() {
 
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter2 = DateTimeFormatter.ofPattern("HH:mm::ss")
+        val formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss")
         val formattedDate = current.format(formatter)
         val formattedTime = current.format(formatter2)
 
