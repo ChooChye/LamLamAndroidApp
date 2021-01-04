@@ -1,12 +1,12 @@
 package com.choochyemeilin.lamlam.Loans
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.Loans.adapters.LoansPendingAdapter
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
@@ -14,12 +14,12 @@ import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_loans_pending.*
 import kotlinx.android.synthetic.main.fragment_loans_pending.view.*
+import java.lang.Exception
 
 
 class LoansPending : Fragment() {
 
-    private var utils : Utils = Utils
-    var pendingLoans : ArrayList<LoanApplication> = ArrayList()
+    var pendingLoans: ArrayList<LoanApplication> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,27 +27,37 @@ class LoansPending : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-       val view = inflater.inflate(R.layout.fragment_loans_pending, container, false)
-
+        val view = inflater.inflate(R.layout.fragment_loans_pending, container, false)
+        view.loansPending_progressBar.visibility = View.VISIBLE
         getPendingLoans(object : FbCallback {
             override fun onCallback(arr: ArrayList<LoanApplication>) {
-                pendingLoans.clear()
-                for (i in arr) {
-                    if (i.status.toUpperCase() == "PENDING") {
-                        pendingLoans.add(i)
+                try {
+                    pendingLoans.clear()
+                    for (i in arr) {
+                        if (i.status.toUpperCase() == "PENDING") {
+                            pendingLoans.add(i)
+                        }
                     }
+
+                    view.loansPending_rv.adapter = LoansPendingAdapter(pendingLoans)
+                    view.loansPending_rv.layoutManager = LinearLayoutManager(view.context)
+                    view.loansPending_rv.setHasFixedSize(true)
+                    view.loansPending_progressBar.visibility = View.GONE
+                } catch (e: Exception) {
+                    Utils.toast(
+                        view.context,
+                        "An error has occurred. Please restart the application",
+                        0
+                    )
+                    Utils.log(e.message.toString())
                 }
 
-                view.loansPending_rv.adapter = LoansPendingAdapter(pendingLoans)
-                view.loansPending_rv.layoutManager = LinearLayoutManager(view.context)
-                view.loansPending_rv.setHasFixedSize(true)
-                loansPending_progressBar.visibility = View.GONE
             }
         })
         return view
     }
 
-    private fun getPendingLoans(callback: FbCallback) : List<LoanApplication>{
+    private fun getPendingLoans(callback: FbCallback): List<LoanApplication> {
         var list = ArrayList<LoanApplication>()
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -62,9 +72,11 @@ class LoansPending : Fragment() {
                         val date = it.child("loanDate").value.toString()
                         val status = it.child("status").value.toString()
                         val product = it.child("productName")
-                        val products: ArrayList<String> = ArrayList()
+                        val products: MutableMap<String, Int> = mutableMapOf()
                         for (i in 0 until product.childrenCount) {
-                            products.add(product.child(i.toString()).value.toString())
+                            val prodName = product.child(i.toString()).value
+                            products[prodName.toString()] = 0
+                            //products.add(product.child(i.toString()).value.toString())
                         }
                         val item = LoanApplication(loanID, date, status, products)
                         list.add(item)
@@ -75,7 +87,7 @@ class LoansPending : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                utils.toast(view?.context!!, "An error has occurred #0984 | ${error.message}", 1)
+                Utils.toast(view?.context!!, "An error has occurred #0984 | ${error.message}", 1)
             }
 
         })

@@ -7,8 +7,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Home.Home
-import com.choochyemeilin.lamlam.Loans.Loans
-import com.choochyemeilin.lamlam.Loans.form.LoanAppForm
+import com.choochyemeilin.lamlam.Reports.Reports
 import com.choochyemeilin.lamlam.helpers.Utils
 
 
