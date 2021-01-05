@@ -18,7 +18,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".Register.RegisterNewRole"></activity>
+        <activity android:name=".Register.RegRetailer"></activity>
+        <activity android:name=".ReturnItems.ReturnItemForm" />
+        <activity android:name=".Register.RegisterNewRole" />
         <activity android:name=".ReturnItems.MyStocks" />
 
         <uses-library

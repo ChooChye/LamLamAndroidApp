@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:ems="10"
-        android:hint="ROLE"
+        android:hint="name"
         android:inputType="textPersonName"
         android:layout_marginTop="150dp"
       />
@@ -25,11 +25,23 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:ems="10"
-        android:hint="STAFF ID"
-        android:inputType="number"
-        android:maxLength="7"
+        android:hint="address"
+        android:inputType="textPostalAddress"
+
         android:layout_marginTop="200dp"
        />
+
+    <EditText
+        android:id="@+id/editTextNumber_ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="id"
+        android:inputType="number"
+
+        android:layout_marginTop="250dp"
+        />
 
     <Button
         android:id="@+id/button"
@@ -37,5 +49,5 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Register"
-        android:layout_marginTop="270dp"/>
+        android:layout_marginTop="300dp"/>
 </RelativeLayout>

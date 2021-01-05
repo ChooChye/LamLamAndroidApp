@@ -22,7 +22,7 @@ class RegisterNewRole : AppCompatActivity() {
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var myRef: DatabaseReference = databaseReference.getReference("Role")
+    private var myRef: DatabaseReference = databaseReference.getReference("Retailers")
 
 
 
@@ -38,11 +38,19 @@ class RegisterNewRole : AppCompatActivity() {
     private fun register(){
 
         var num=0
-        var no=0
+   //     var no=0
 
         val staffID=editTextNumber_StaffID.text.toString()
 
         button.setOnClickListener {
+            num++
+            myRef.child((num).toString())
+                .child("retailerAdrress").setValue(editTextNumber_StaffID.text.toString())
+            myRef.child((num).toString()).child("retailerName").setValue(editTextTextPersonName_ROLE.text.toString())
+            myRef.child((num).toString()).child("retailerID").setValue(editTextNumber_ID.text.toString().toInt())
+            Toast.makeText(this, " Success", Toast.LENGTH_LONG).show()
+        /*
+
             if(editTextTextPersonName_ROLE.text.toString()=="admin"){
 
                     num++
@@ -59,6 +67,8 @@ class RegisterNewRole : AppCompatActivity() {
                 Toast.makeText(this, " ERROR", Toast.LENGTH_LONG).show()
             }
 
+
+         */
 
         }
 

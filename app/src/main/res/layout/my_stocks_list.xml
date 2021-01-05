@@ -21,15 +21,35 @@
         android:layout_marginTop="30dp"
         android:text="STOCK"
         android:maxLines="2"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="70dp"
+        android:text="Quantity:"
+        android:textSize="17sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView_stock_qty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="70dp"
+        android:text="error"
+        android:textSize="17sp"
+        />
 
     <TextView
         android:id="@+id/textView_stock_date_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="105dp"
         android:text="Return Date :"
         android:textSize="17sp"
         android:textStyle="bold"/>
@@ -39,10 +59,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="260dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="105dp"
         android:text="error"
         android:textSize="17sp"
-        android:textStyle="bold"/>
+        />
 
 
 </RelativeLayout>

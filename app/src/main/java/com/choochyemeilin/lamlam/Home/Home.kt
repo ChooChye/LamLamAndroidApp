@@ -174,12 +174,23 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for (dss in snapshot.children) {
-                    val name=dss.getValue().toString()
-                    welcome_user.text="Welcome, "+name.toString()
-                    textView_drawer_name.text=name.toString()
+                    //var name=dss.getValue().toString()
+                        var cu= currentUser?.email.toString()
+                        if(cu==dss.child("staffEmail").value.toString()){
+
+                            var role1=dss.child("role").value.toString()
+                            var name=dss.child("staffName").value.toString().toUpperCase()
+
+
+                            if(role1=="admin"){
+                                welcome_user.text="Welcome, "+name+"("+role1+")"
+                            }else{
+                                welcome_user.text="Welcome, "+name
+                            }
+                            textView_drawer_name.text=name
+                        }
+
                 }
-
-
             }
 
             override fun onCancelled(error: DatabaseError) {

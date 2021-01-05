@@ -3,6 +3,7 @@ package com.choochyemeilin.lamlam
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.Register.RegisterNewRole
+import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 

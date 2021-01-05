@@ -39,8 +39,7 @@ class Register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
-
+        
         button_register_reg.setOnClickListener {
 
             if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())) {
@@ -151,7 +150,7 @@ class Register : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@Register, "User Registration Success", Toast.LENGTH_LONG).show()
                     //    val userID="User ID : "
                     val staffID = editTextNumber_register_staffID.text.toString().toInt()
                     val staffName = editText_register_name.text.toString()
@@ -175,7 +174,7 @@ class Register : AppCompatActivity() {
                         )
                     }
 
-                    Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
+
                     startActivity(Intent(this, Login::class.java))
                     finish()
                 } else {

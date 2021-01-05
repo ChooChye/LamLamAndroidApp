@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register.Register"
-    style="@style/AppTheme.NoActionBar"
-    android:id="@+id/activity_register"
+    tools:context=".Register.RegRetailer"
     android:background="@drawable/splash_screen_bg">
 
     <ImageView
@@ -25,7 +22,7 @@
         android:id="@+id/text_register_reg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="REGISTER"
+        android:text="REGISTER RETAILER"
         android:textColor="@color/white"
         android:textSize="28dp"
         android:textStyle="bold"
@@ -47,92 +44,51 @@
 
 
         <EditText
-            android:id="@+id/editTextNumber_register_staffID"
+            android:id="@+id/editText_reg_retailer_name"
             android:layout_width="275dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="110dp"
-            android:background="@color/white"
-            android:drawableStart="@drawable/custom_staff_id"
-            android:drawablePadding="14dp"
-            android:ems="10"
-            android:hint="Staff ID (e.g:1234567) "
-            android:maxLength="7"
-            android:inputType="number"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editText_register_name"
-            android:layout_width="275dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="55dp"
+            android:layout_marginBottom="105dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Name"
+            android:hint="Retailer Name"
             android:textSize="18sp"
             android:background="@color/white"
             android:drawableStart="@drawable/custom_account_circle"
             android:drawablePadding="15dp"
             />
 
-        <EditText
-            android:id="@+id/editTextTextEmailAddress_register_email"
+
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="275dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
-            android:background="@color/white"
-            android:textSize="18sp"
-            android:drawableStart="@drawable/custom_email"
-            android:drawablePadding="15dp"
+            android:layout_marginBottom="55dp"
             />
 
         <EditText
-            android:id="@+id/editTextNumber_register_phoneNo"
+            android:id="@+id/editText_reg_retailer_address"
             android:layout_width="275dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:layout_marginTop="52dp"
-            android:background="@color/white"
-            android:drawableStart="@drawable/custom_phone"
-            android:drawablePadding="15dp"
             android:ems="10"
-            android:hint="H/P No. (e.g:0123456789) "
-            android:inputType="number|phone"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editTextTextPassword_register_password"
-            android:layout_width="275dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="108dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword"
+            android:inputType="textPostalAddress"
+            android:hint="Address"
             android:textSize="18sp"
-            android:drawableStart="@drawable/custom_lock"
+            android:maxLines="5"
+            android:background="@color/white"
+            android:drawableStart="@drawable/ic_baseline_location_on_24"
             android:drawablePadding="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
-            app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
-            app:layout_constraintTop_toBottomOf="@id/editTextNumber_login_username"/>
-
-        <ImageView
-            android:id="@+id/imageView_register_password_eye"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_remove_red_eye_24"
-            android:layout_marginTop="235dp"
-            android:layout_marginStart="242dp"
             />
+
+
+
+
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button_register_reg"
+        android:id="@+id/button_reg_retailer"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -146,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@id/cardview_login" />
 
     <Button
-        android:id="@+id/button_register_cancel"
+        android:id="@+id/button_reg_retailer_cancel"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -155,9 +111,9 @@
         android:textColor="@color/colorTextPurple"
         android:textSize="20dp"
         android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="@+id/button_register_reg"
-        app:layout_constraintStart_toStartOf="@id/button_register_reg"
-        app:layout_constraintTop_toBottomOf="@id/button_register_reg" />
+        app:layout_constraintEnd_toEndOf="@+id/button_reg_retailer"
+        app:layout_constraintStart_toStartOf="@id/button_reg_retailer"
+        app:layout_constraintTop_toBottomOf="@id/button_reg_retailer" />
 
     <ProgressBar
         android:id="@+id/progressBar_reg"
