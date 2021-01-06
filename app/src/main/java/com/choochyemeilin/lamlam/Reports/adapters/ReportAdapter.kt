@@ -10,8 +10,7 @@ import com.choochyemeilin.lamlam.Reports.objects.ReportsObject
 import kotlinx.android.synthetic.main.reports_item_layout.view.*
 
 class ReportAdapter(
-    //private val arrayList: ArrayList<ReportsObject>
-    private val arrayList: MutableMap<String, Int>
+    private var arrayList: MutableMap<String, Int>
 ) : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>(){
 
     class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -34,5 +33,4 @@ class ReportAdapter(
     override fun getItemCount(): Int {
         return arrayList.size
     }
-
 }

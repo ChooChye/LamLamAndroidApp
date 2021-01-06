@@ -3,8 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/sort"
+        android:id="@+id/reports_menu_sortAlpha"
+        android:icon="@drawable/ic_baseline_sort_by_alpha_24"
+        app:showAsAction="always"
+        android:title="SORT BY ALPHABETS"/>
+    <item
+        android:id="@+id/reports_menu_sort"
         android:icon="@drawable/ic_baseline_sort_24"
         app:showAsAction="always"
-        android:title="SORT"/>
+        android:title="SORT BY QUANTITIES"/>
 </menu>

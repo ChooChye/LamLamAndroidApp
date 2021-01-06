@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         //start activity
         Handler().postDelayed( {
             if(Utils.checkUserAuth()){
-                val intent = Intent(this, Home::class.java)
+                val intent = Intent(this, Reports::class.java)
                 startActivity(intent)
                 finish()
             }else{
