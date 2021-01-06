@@ -59,7 +59,11 @@ class Reports : AppCompatActivity() {
                         reports_rv.adapter = ReportAdapter(arr)
                         reports_rv.layoutManager = LinearLayoutManager(applicationContext)
                         reports_rv.setHasFixedSize(true)
-                        reports_tv_message.visibility = View.GONE
+                        if(arr.isEmpty()){
+                            reports_tv_message.text = "No results found"
+                        }else{
+                            reports_tv_message.visibility = View.GONE
+                        }
                     }
                 })
             }else{

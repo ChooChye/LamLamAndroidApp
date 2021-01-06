@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Home.Home
+import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.Reports.Reports
 import com.choochyemeilin.lamlam.helpers.Utils
 
@@ -33,9 +34,15 @@ class MainActivity : AppCompatActivity() {
 
         //start activity
         Handler().postDelayed( {
-            val intent = Intent(this, Home::class.java)
-            startActivity(intent)
-            finish()
+            if(Utils.checkUserAuth()){
+                val intent = Intent(this, Home::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+                finish()
+            }
         }, TIME_OUT)
     }
 }

@@ -12,10 +12,9 @@ import androidx.core.content.ContextCompat.startActivity
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import java.util.*
-
+import kotlin.collections.ArrayList
 
 
 object Utils {
@@ -69,11 +68,80 @@ object Utils {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun getUser(){
-        val user = fbAuth.currentUser
-
+    fun getStaffID(callback : FbCallback) : Int{
+        val user = fbAuth.currentUser?.email
+        var staffID  = 0
         val myRef: DatabaseReference = database.getReference("User")
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(dss in snapshot.children){
+                    val staffEmail = dss.child("staffEmail").value.toString()
+                    if(user == staffEmail){
+                        val staffID = dss.child("staffID").value.toString().toInt()
+                        callback.onCallbackGetUserID(staffID!!)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                log("Error has occurred #9372 | ${error.message}")
+            }
+        })
+        return staffID
+    }
 
+    fun getRetailerID(callback : FbCallback) : Int{
+        val user = fbAuth.currentUser?.email
+        var retailerID  = 0
+        val myRef: DatabaseReference = database.getReference("User")
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(dss in snapshot.children){
+                    val staffEmail = dss.child("staffEmail").value.toString()
+                    if(user == staffEmail){
+                        val retailerID = dss.child("retailerID").value.toString().toInt()
+
+                        callback.onCallbackGetUserID(retailerID)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Utils.log("Error has occurred #9372 | ${error.message}")
+            }
+        })
+        return retailerID
+    }
+
+    fun getRetailerInfo(callback : FbCallback){
+        val user = fbAuth.currentUser?.email
+        var retailerID : Int? = 0
+
+        getRetailerID(object : FbCallback{
+            override fun onCallbackGetUserID(uid: Int) {
+                super.onCallbackGetUserID(uid)
+                retailerID =  uid
+            }
+        })
+
+        val myRef: DatabaseReference = database.getReference("Retailers")
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(dss in snapshot.children){
+                    val dbRetailerID = dss.child("retailerID").value.toString().toInt()
+                    if(retailerID == dbRetailerID){
+                        val retailerName = dss.child("retailerName").value.toString()
+                        val retailerAddress = dss.child("retailerAddress").value.toString()
+                        val arr : ArrayList<Retailers> = ArrayList()
+                        arr.add(Retailers(dbRetailerID, retailerName, retailerAddress))
+                        callback.onCallbackRetailer(arr)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Utils.log("Error has occurred #9373 | ${error.message}")
+            }
+        })
     }
 
     fun checkUserAuth() : Boolean{
@@ -83,10 +151,5 @@ object Utils {
             status = true
         }
         return status
-    }
-
-    fun forceLogin(context : Context){
-        val intent = Intent(context, Login::class.java)
-        startActivity(context, intent,  null)
     }
 }
