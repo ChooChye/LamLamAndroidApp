@@ -36,6 +36,7 @@ class Reports : AppCompatActivity() {
     private lateinit var mEndDateListenerStart: OnDateSetListener
 
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
+    private var retailerID : Int? = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +46,13 @@ class Reports : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("REPORTS")
         supportActionBar?.elevation = 0f
+
+        Utils.getRetailerID(object : FbCallback{
+            override fun onCallbackGetUserID(uid: Int) {
+                super.onCallbackGetUserID(uid)
+                retailerID = uid
+            }
+        })
 
         pickStartDate()
         pickEndDate()
@@ -86,16 +94,19 @@ class Reports : AppCompatActivity() {
                     mutableList.clear()
                     for (dss in snapshot.children) {
                         dss.children.forEach {
-                            val product = it.child("productName")
-                            product.children.forEach {
-                                val key = it.key.toString()
-                                val qty = it.value.toString().toInt()
-                                if (mutableList.containsKey(key)) {
-                                    val oldValue = mutableList[key].toString().toInt()
-                                    mutableList[key] = oldValue + qty
+                            val dbRID = it.child("retailerID").value.toString().toInt()
+                            if(retailerID == dbRID){
+                                val product = it.child("productName")
+                                product.children.forEach {
+                                    val key = it.key.toString()
+                                    val qty = it.value.toString().toInt()
+                                    if (mutableList.containsKey(key)) {
+                                        val oldValue = mutableList[key].toString().toInt()
+                                        mutableList[key] = oldValue + qty
 
-                                }else{
-                                    mutableList[key] = qty
+                                    }else{
+                                        mutableList[key] = qty
+                                    }
                                 }
                             }
                         }

@@ -33,7 +33,7 @@ class LoanAppForm2 : AppCompatActivity() {
     private var arrayList: ArrayList<SelectedProducts> = ArrayList()
     private var loanID: Int = genLoanID()
     private var rID : Int = 0
-    var staffID : String? = ""
+    var staffID : Int? = 0
 
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("Loans")
@@ -52,7 +52,7 @@ class LoanAppForm2 : AppCompatActivity() {
         Utils.getStaffID(object : FbCallback {
             override fun onCallbackGetUserID(uid: Int) {
                 super.onCallbackGetUserID(uid)
-                staffID = uid.toString()
+                staffID = uid
             }
         })
         setupSelectedProducts()
@@ -78,7 +78,7 @@ class LoanAppForm2 : AppCompatActivity() {
 
 
         //Create Class
-        val loanApplication = LoanApplication(loan_id, loanDate, status, products, staffID!!, rID.toString())
+        val loanApplication = LoanApplication(loan_id, loanDate, status, products, staffID!!, rID)
         myRef.child(formattedDate).child(formattedTime).setValue(loanApplication)
             .addOnSuccessListener {
                 startActivity(Intent(this, LoanAppForm3::class.java))

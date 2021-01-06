@@ -7,16 +7,16 @@ class LoanApplication {
     var productName : MutableMap<String, Int> = mutableMapOf()
     var status : String = "pending"
     var dateStatus : String? = null
-    var staffID : String? = null
-    var retailerID : String? = null
+    var staffID : Int? = null
+    var retailerID : Int? = 0
 
     constructor(
         loan_id: Int?,
         loanDate: String?,
         status: String,
         product_name: MutableMap<String, Int>,
-        staffID : String,
-        retailerID : String
+        staffID : Int,
+        retailerID : Int
     ) {
         this.loanID = loan_id
         this.loanDate = loanDate
