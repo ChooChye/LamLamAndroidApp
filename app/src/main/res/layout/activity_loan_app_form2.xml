@@ -28,17 +28,17 @@
             app:layout_constraintTop_toBottomOf="@+id/introText" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/loanAppform2_tv_retailerAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Maluri, 55100 Kuala Lumpur, Federal Territory of Kuala Lumpur"
-            app:layout_constraintEnd_toEndOf="@+id/textView5"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintEnd_toEndOf="@+id/loanAppform2_tv_retailerName"
+            app:layout_constraintStart_toStartOf="@+id/loanAppform2_tv_retailerName"
+            app:layout_constraintTop_toBottomOf="@+id/loanAppform2_tv_retailerName" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/loanAppform2_tv_retailerName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

@@ -18,7 +18,9 @@ import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.Search.Search
+import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Lcg
+import com.choochyemeilin.lamlam.helpers.Retailers
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
@@ -31,12 +33,10 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var arrayList:ArrayList<HomeItem> ? = null
     private var gridView: GridView? = null
     private var languageAdapter: HomeAdapter? = null
-    private var lcg : Lcg = Lcg()
-    private var utils : Utils = Utils
+    //private var lcg : Lcg = Lcg()
 
     lateinit var toggle: ActionBarDrawerToggle
     
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -76,21 +76,6 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
 
-
-        //val welcome = findViewById<TextView>(R.id.welcome_user)
-
-        /*val str : String = "T"
-
-        var chars = str.toCharArray()
-        var i = 0;
-        *//*var n = mutableListOf<Int>();
-        while(i < 8){
-            n.add(i, chars[i].toInt() xor lcg.next().toInt())
-            i++
-        }*//*
-        val binary = chars[0].toInt()
-        val finalBinary = String.format("%8s", Integer.toBinaryString(binary)).replace(' ', '0')
-        welcome.text = lcg.toBinary(chars).toString()*/
 
     }
 
