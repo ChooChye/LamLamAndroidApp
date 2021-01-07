@@ -6,20 +6,21 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import com.choochyemeilin.lamlam.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.choochyemeilin.lamlam.Loans.Classes.SelectedProducts
-import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Reports.adapters.ReportAdapter
-import com.choochyemeilin.lamlam.Reports.objects.ReportsObject
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_reports.*
+import okhttp3.internal.notifyAll
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class Reports : AppCompatActivity() {
 
@@ -36,7 +37,10 @@ class Reports : AppCompatActivity() {
     private lateinit var mEndDateListenerStart: OnDateSetListener
 
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
+    private var rList: MutableMap<String, Int> = mutableMapOf()
     private var retailerID : Int? = 0
+
+    private var sortByQty = 0 // 0 = Highest, 1 = Lowest
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +51,7 @@ class Reports : AppCompatActivity() {
         supportActionBar?.setTitle("REPORTS")
         supportActionBar?.elevation = 0f
 
-        Utils.getRetailerID(object : FbCallback{
+        Utils.getRetailerID(object : FbCallback {
             override fun onCallbackGetUserID(uid: Int) {
                 super.onCallbackGetUserID(uid)
                 retailerID = uid
@@ -64,12 +68,13 @@ class Reports : AppCompatActivity() {
                 getData(object : FbCallback {
                     override fun push(arr: MutableMap<String, Int>) {
                         super.push(arr)
+                        rList = arr
                         reports_rv.adapter = ReportAdapter(arr)
                         reports_rv.layoutManager = LinearLayoutManager(applicationContext)
                         reports_rv.setHasFixedSize(true)
-                        if(arr.isEmpty()){
+                        if (arr.isEmpty()) {
                             reports_tv_message.text = "No results found"
-                        }else{
+                        } else {
                             reports_tv_message.visibility = View.GONE
                         }
                     }
@@ -77,6 +82,62 @@ class Reports : AppCompatActivity() {
             }else{
                 Utils.toast(applicationContext, "Please select a Start & End date", 1)
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.report_filters, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.reports_menu_sort -> sortDataByQty()
+            R.id.reports_menu_sortAlpha -> sortDataByAlpha()
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        this.finish()
+        return true
+    }
+
+    private fun sortDataByQty(){
+        if(sortByQty == 0){
+            sortByQty = 1
+            val sorted = mutableList.toList().sortedBy { col ->col.second}.toMap()
+            val map = sorted.toMutableMap()
+            reports_rv.adapter = ReportAdapter(map)
+            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+            reports_rv.setHasFixedSize(true)
+        }else{
+            sortByQty = 0
+            val sorted = mutableList.toList().sortedByDescending { col ->col.second}.toMap()
+            val map = sorted.toMutableMap()
+            reports_rv.adapter = ReportAdapter(map)
+            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+            reports_rv.setHasFixedSize(true)
+        }
+    }
+
+    private fun sortDataByAlpha(){
+        if(sortByQty == 0){
+            sortByQty = 1
+            val sorted = mutableList.toList().sortedBy { col ->col.first}.toMap()
+            val map = sorted.toMutableMap()
+            reports_rv.adapter = ReportAdapter(map)
+            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+            reports_rv.setHasFixedSize(true)
+        }else{
+            sortByQty = 0
+            val sorted = mutableList.toList().sortedByDescending { col ->col.first}.toMap()
+            val map = sorted.toMutableMap()
+            reports_rv.adapter = ReportAdapter(map)
+            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+            reports_rv.setHasFixedSize(true)
         }
     }
 
@@ -95,23 +156,25 @@ class Reports : AppCompatActivity() {
                     for (dss in snapshot.children) {
                         dss.children.forEach {
                             val dbRID = it.child("retailerID").value.toString().toInt()
-                            if(retailerID == dbRID){
-                                val product = it.child("productName")
-                                product.children.forEach {
-                                    val key = it.key.toString()
-                                    val qty = it.value.toString().toInt()
-                                    if (mutableList.containsKey(key)) {
-                                        val oldValue = mutableList[key].toString().toInt()
-                                        mutableList[key] = oldValue + qty
+                            val status = it.child("status").value.toString()
+                            if (retailerID == dbRID) {
+                                if(status.toUpperCase() == "APPROVED"){
+                                    val product = it.child("productName")
+                                    product.children.forEach {
+                                        val key = it.key.toString()
+                                        val qty = it.value.toString().toInt()
+                                        if (mutableList.containsKey(key)) {
+                                            val oldValue = mutableList[key].toString().toInt()
+                                            mutableList[key] = oldValue + qty
 
-                                    }else{
-                                        mutableList[key] = qty
+                                        } else {
+                                            mutableList[key] = qty
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                    Utils.log(mutableList.toString())
                     callback.push(mutableList)
                 }
 
@@ -199,11 +262,4 @@ class Reports : AppCompatActivity() {
             dialog.show()
         }
     }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        this.finish()
-        return true
-    }
-
 }
