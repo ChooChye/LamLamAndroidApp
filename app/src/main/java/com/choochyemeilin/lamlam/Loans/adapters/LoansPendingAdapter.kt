@@ -65,6 +65,7 @@ class LoansPendingAdapter(
         })
         val data = dataList[position]
         var msg = "Date Applied : ${data.loanDate}\n\n" +
+
                 "Products Requested : \n"
         val prodName = data.productName
 
