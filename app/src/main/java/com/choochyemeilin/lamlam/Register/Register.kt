@@ -38,7 +38,7 @@ class Register : AppCompatActivity() {
     private var myRef: DatabaseReference = databaseReference.getReference("Staff ID")
     private var userRef: DatabaseReference = databaseReference.getReference("User")
     private var roleRef: DatabaseReference = databaseReference.getReference("Role")
-
+    private var staffRef: DatabaseReference = databaseReference.getReference("Staff ID")
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,18 +90,18 @@ class Register : AppCompatActivity() {
                 editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
             ) {
 
-                roleRef.addValueEventListener(object : ValueEventListener {
+                staffRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for (dss in snapshot.children) {
-                            dss.children.forEach {
-                                val id = it.child("Staff ID").value
+                            //dss.children.forEach {
+                                val id = dss.value
                                 if (id.toString() == editTextNumber_register_staffID.text.toString()) {
                                     register(
                                         editTextTextEmailAddress_register_email.text.trim().toString(),
                                         editTextTextPassword_register_password.text.trim().toString()
                                     )
                                 }
-                            }
+                         //   }
                         }
                     }
 
@@ -152,10 +152,13 @@ class Register : AppCompatActivity() {
                 textView4.text=nameResult
 
               if(options.get(position).equals("LamLam PV128")){
+                  textView_rid.text="1001"
                   result.text="G.20, PV128, Jalan Genting Kelang, Taman Danau Kota, 53100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur"
               }else if(options.get(position).equals("LamLam GM Plaza")){
+                  textView_rid.text="1002"
                   result.text="15, Lorong Haji Taib 5, Chow Kit, 50350 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur"
               }else{
+                  textView_rid.text=""
                   result.text=""
               }
          //       result.text=options.get(position)
@@ -199,7 +202,7 @@ class Register : AppCompatActivity() {
                     val currentUser = auth.currentUser
                     val uid = currentUser?.uid
                     val rname=textView4.text.toString()
-                   val raddress=textView_register_retailer_address.text.toString()
+                   val rid=textView_rid.text.toString()
 
 
                     if (uid != null) {
@@ -211,8 +214,7 @@ class Register : AppCompatActivity() {
                                 staffEmail,
                                 phoneNumber,
                                 pw,
-                                rname,
-                                raddress
+                                rid
                             )
                         )
                     }
