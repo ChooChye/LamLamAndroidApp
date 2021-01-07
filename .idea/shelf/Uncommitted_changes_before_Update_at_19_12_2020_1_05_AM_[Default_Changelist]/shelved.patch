@@ -1,0 +1,618 @@
+Index: app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/ReturnItems.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.ReturnItems\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.choochyemeilin.lamlam.R\r\n\r\n// TODO: Rename parameter arguments, choose names that match\r\n// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\n/**\r\n * A simple [Fragment] subclass.\r\n * Use the [ReturnItems.newInstance] factory method to\r\n * create an instance of this fragment.\r\n */\r\nclass ReturnItems : Fragment() {\r\n    // TODO: Rename and change types of parameters\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_return_items, container, false)\r\n    }\r\n\r\n    companion object {\r\n        /**\r\n         * Use this factory method to create a new instance of\r\n         * this fragment using the provided parameters.\r\n         *\r\n         * @param param1 Parameter 1.\r\n         * @param param2 Parameter 2.\r\n         * @return A new instance of fragment ReturnItems.\r\n         */\r\n        // TODO: Rename and change types and number of parameters\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            ReturnItems().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/ReturnItems.kt	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
++++ app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/ReturnItems.kt	(date 1608113123742)
+@@ -1,60 +1,14 @@
+ package com.choochyemeilin.lamlam.ReturnItems
+ 
++import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+-import androidx.fragment.app.Fragment
+-import android.view.LayoutInflater
+-import android.view.View
+-import android.view.ViewGroup
+ import com.choochyemeilin.lamlam.R
+ 
+-// TODO: Rename parameter arguments, choose names that match
+-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
++private const val CAMERA_REQUEST_CODE = 101
+ 
+-/**
+- * A simple [Fragment] subclass.
+- * Use the [ReturnItems.newInstance] factory method to
+- * create an instance of this fragment.
+- */
+-class ReturnItems : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
+-
++class ReturnItems : AppCompatActivity() {
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        arguments?.let {
+-            param1 = it.getString(ARG_PARAM1)
+-            param2 = it.getString(ARG_PARAM2)
+-        }
+-    }
+-
+-    override fun onCreateView(
+-        inflater: LayoutInflater, container: ViewGroup?,
+-        savedInstanceState: Bundle?
+-    ): View? {
+-        // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_return_items, container, false)
+-    }
+-
+-    companion object {
+-        /**
+-         * Use this factory method to create a new instance of
+-         * this fragment using the provided parameters.
+-         *
+-         * @param param1 Parameter 1.
+-         * @param param2 Parameter 2.
+-         * @return A new instance of fragment ReturnItems.
+-         */
+-        // TODO: Rename and change types and number of parameters
+-        @JvmStatic
+-        fun newInstance(param1: String, param2: String) =
+-            ReturnItems().apply {
+-                arguments = Bundle().apply {
+-                    putString(ARG_PARAM1, param1)
+-                    putString(ARG_PARAM2, param2)
+-                }
+-            }
++        setContentView(R.layout.activity_return_items)
+     }
+ }
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM_[Default_Changelist]1/shelved.patch
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM_[Default_Changelist]1/shelved.patch	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM_[Default_Changelist]1/shelved.patch	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
+@@ -1,161 +0,0 @@
+-Index: app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.choochyemeilin.lamlam.Home\r\n\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.StrictMode\r\nimport android.view.MenuItem\r\nimport android.view.View\r\nimport android.widget.AdapterView\r\nimport android.widget.GridView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.Scan.Scan\r\nimport com.choochyemeilin.lamlam.helpers.Lcg\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport kotlinx.android.synthetic.main.activity_home.*\r\n\r\nimport org.json.JSONArray\r\nimport org.json.JSONObject\r\n\r\nclass Home : AppCompatActivity(), AdapterView.OnItemClickListener {\r\n\r\n    private var arrayList:ArrayList<HomeItem> ? = null\r\n    private var gridView: GridView? = null\r\n    private var languageAdapter: HomeAdapter? = null\r\n    private var lcg : Lcg = Lcg()\r\n    private var utils : Utils = Utils\r\n\r\n    lateinit var toggle: ActionBarDrawerToggle\r\n    \r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_home)\r\n        StrictMode.enableDefaults() //Enable thread policy to call internet service with one or more applications\r\n        //Init Var\r\n\r\n        //Navigation Bar\r\n        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)\r\n        drawerLayout.addDrawerListener(toggle)\r\n        toggle.syncState()\r\n\r\n        supportActionBar?.setDisplayHomeAsUpEnabled(true)\r\n        supportActionBar?.setTitle(R.string.app_name)\r\n        supportActionBar?.elevation = 0f\r\n\r\n\r\n        nav_view.setNavigationItemSelectedListener {\r\n            when(it.itemId){\r\n                R.id.mItem1 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 1\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n                R.id.mItem2 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 2\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n                /*\r\n                R.id.mItem3 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 3\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n                 */\r\n\r\n\r\n            }\r\n            true\r\n        }\r\n\r\n\r\n\r\n        gridView = findViewById(R.id.homeGridLayout)\r\n        arrayList = ArrayList()\r\n        arrayList = setDataList()\r\n        languageAdapter = HomeAdapter(applicationContext, arrayList!!)\r\n        gridView?.adapter = languageAdapter\r\n        gridView?.onItemClickListener = this\r\n\r\n\r\n        //val welcome = findViewById<TextView>(R.id.welcome_user)\r\n\r\n        /*val str : String = \"T\"\r\n\r\n        var chars = str.toCharArray()\r\n        var i = 0;\r\n        *//*var n = mutableListOf<Int>();\r\n        while(i < 8){\r\n            n.add(i, chars[i].toInt() xor lcg.next().toInt())\r\n            i++\r\n        }*//*\r\n        val binary = chars[0].toInt()\r\n        val finalBinary = String.format(\"%8s\", Integer.toBinaryString(binary)).replace(' ', '0')\r\n        welcome.text = lcg.toBinary(chars).toString()*/\r\n    }\r\n\r\n\r\n    private fun setDataList() : ArrayList<HomeItem>{\r\n        var arrayList:ArrayList<HomeItem> = ArrayList()\r\n\r\n        arrayList.add(HomeItem(R.drawable.qr_code, \"SCAN\"))\r\n        arrayList.add(HomeItem(R.drawable.magnifier, \"SEARCH\"))\r\n        arrayList.add(HomeItem(R.drawable.loan, \"LOANS\"))\r\n        arrayList.add(HomeItem(R.drawable.business_report, \"REPORTS\"))\r\n        arrayList.add(HomeItem(R.drawable.exchange, \"RETURN ITEMS\"))\r\n\r\n        return arrayList\r\n    }\r\n\r\n    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {\r\n        when (p2) {\r\n            0 -> {\r\n                Toast.makeText(applicationContext, \"SCAN\", Toast.LENGTH_SHORT).show()\r\n                val intent = Intent(this, Scan::class.java)\r\n                startActivity(intent)\r\n            }\r\n            1 -> {\r\n                Toast.makeText(applicationContext, \"SEARCH\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            2 -> {\r\n                Toast.makeText(applicationContext, \"LOANS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            3 -> {\r\n                Toast.makeText(applicationContext, \"REPORTS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n\r\n    //Navigation Drawer\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        if(toggle.onOptionsItemSelected(item)){\r\n            return true\r\n        }\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(revision 9085ce82905e615aafc7592ecd2695dae5c79025)
+-+++ app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(date 1607504152287)
+-@@ -60,14 +60,18 @@
+-                     Toast.LENGTH_SHORT
+-                 ).show()
+- 
+--                /*
+-+
+-                 R.id.mItem3 -> Toast.makeText(
+-                     applicationContext,
+-                     "Clicked Item 3",
+-                     Toast.LENGTH_SHORT
+-                 ).show()
+- 
+--                 */
+-+                R.id.mItem4 -> Toast.makeText(
+-+                    applicationContext,
+-+                    "Clicked Item 4",
+-+                    Toast.LENGTH_SHORT
+-+                ).show()
+- 
+- 
+-             }
+-Index: app/src/main/java/com/choochyemeilin/lamlam/Login/Login.kt
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.choochyemeilin.lamlam.Login\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport com.choochyemeilin.lamlam.R\r\n\r\nclass Login : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n    }\r\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/choochyemeilin/lamlam/Login/Login.kt	(revision 9085ce82905e615aafc7592ecd2695dae5c79025)
+-+++ app/src/main/java/com/choochyemeilin/lamlam/Login/Login.kt	(date 1607509145625)
+-@@ -1,12 +1,37 @@
+- package com.choochyemeilin.lamlam.Login
+- 
+-+import android.content.Intent
+- import androidx.appcompat.app.AppCompatActivity
+- import android.os.Bundle
+- import com.choochyemeilin.lamlam.R
+-+import com.google.firebase.auth.FirebaseAuth
+-+import com.google.firebase.auth.FirebaseUser
+-+import kotlinx.android.synthetic.main.activity_login.*
+- 
+- class Login : AppCompatActivity() {
+-+
+-+    private lateinit var auth: FirebaseAuth
+-+
+-     override fun onCreate(savedInstanceState: Bundle?) {
+-+
+-         super.onCreate(savedInstanceState)
+-         setContentView(R.layout.activity_login)
+-+        auth = FirebaseAuth.getInstance()
+-+
+-+        button_login_signin.setOnClickListener{
+-+            startActivity(Intent(this,SignUpActivity::class.java))
+-+            finish()
+-+        }
+-+    }
+-+
+-+    public override fun onStart() {
+-+        super.onStart()
+-+        // Check if user is signed in (non-null) and update UI accordingly.
+-+        val currentUser = auth.currentUser
+-+        updateUI(currentUser)
+-+    }
+-+
+-+    fun updateUI(currentUser: FirebaseUser?){
+-+
+-     }
+- }
+-\ No newline at end of file
+-Index: app/src/main/res/navigation/nav_graph.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/nav_graph\"\r\n    app:startDestination=\"@id/FirstFragment\">\r\n\r\n    <fragment\r\n        android:id=\"@+id/FirstFragment\"\r\n        android:name=\"com.choochyemeilin.lamlam.Register.FirstFragment\"\r\n        android:label=\"@string/first_fragment_label\"\r\n        tools:layout=\"@layout/fragment_first\">\r\n\r\n        <action\r\n            android:id=\"@+id/action_FirstFragment_to_SecondFragment\"\r\n            app:destination=\"@id/SecondFragment\" />\r\n    </fragment>\r\n    <fragment\r\n        android:id=\"@+id/SecondFragment\"\r\n        android:name=\"com.choochyemeilin.lamlam.Register.SecondFragment\"\r\n        android:label=\"@string/second_fragment_label\"\r\n        tools:layout=\"@layout/fragment_second\">\r\n\r\n        <action\r\n            android:id=\"@+id/action_SecondFragment_to_FirstFragment\"\r\n            app:destination=\"@id/FirstFragment\" />\r\n    </fragment>\r\n\r\n    <activity\r\n        android:id=\"@+id/mItem4\"\r\n        android:name=\"com.choochyemeilin.lamlam.Login.Login\"\r\n        android:label=\"activity_login\"\r\n        tools:layout=\"@layout/activity_login\" >\r\n        <action\r\n            android:id=\"@+id/action_Login_to_Register\"\r\n            app:destination=\"@id/nav_register/>\"\r\n        />\r\n    </activity>\r\n\r\n    <activity\r\n        android:id=\"@+id/nav_register\"\r\n        android:name=\"com.choochyemeilin.lamlam.Register.Register\"\r\n        android:label=\"activity_register\"\r\n        tools:layout=\"@layout/activity_register\" />\r\n</navigation>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/res/navigation/nav_graph.xml	(revision 9085ce82905e615aafc7592ecd2695dae5c79025)
+-+++ app/src/main/res/navigation/nav_graph.xml	(date 1607503163441)
+-@@ -31,10 +31,7 @@
+-         android:name="com.choochyemeilin.lamlam.Login.Login"
+-         android:label="activity_login"
+-         tools:layout="@layout/activity_login" >
+--        <action
+--            android:id="@+id/action_Login_to_Register"
+--            app:destination="@id/nav_register/>"
+--        />
+-+
+-     </activity>
+- 
+-     <activity
+-Index: app/src/main/java/com/choochyemeilin/lamlam/Login/SignUpActivity.kt
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/choochyemeilin/lamlam/Login/SignUpActivity.kt	(date 1607510762782)
+-+++ app/src/main/java/com/choochyemeilin/lamlam/Login/SignUpActivity.kt	(date 1607510762782)
+-@@ -0,0 +1,53 @@
+-+package com.choochyemeilin.lamlam.Login
+-+
+-+import android.content.Intent
+-+import androidx.appcompat.app.AppCompatActivity
+-+import android.os.Bundle
+-+import android.util.Patterns
+-+import android.widget.Toast
+-+import com.google.firebase.auth.FirebaseAuth
+-+import kotlinx.android.synthetic.main.activity_login.*
+-+import java.util.regex.Pattern
+-+
+-+class SignUpActivity : AppCompatActivity() {
+-+    private lateinit var auth: FirebaseAuth
+-+
+-+    override fun onCreate(savedInstanceState: Bundle?) {
+-+        super.onCreate(savedInstanceState)
+-+        auth = FirebaseAuth.getInstance()
+-+
+-+        button_login_signin.setOnClickListener {
+-+            SignUpUser()
+-+        }
+-+
+-+    }
+-+
+-+    private fun SignUpUser(){
+-+        if(editTextNumber_login_username.text.toString().isEmpty()){
+-+            editTextNumber_login_username.error="Please enter staff ID"
+-+            editTextNumber_login_username.requestFocus()
+-+            return
+-+        }
+-+
+-+        if(editTextTextPassword_login_password.text.toString().isEmpty()){
+-+            editTextTextPassword_login_password.error="Please enter password"
+-+            editTextTextPassword_login_password.requestFocus()
+-+            return
+-+        }
+-+
+-+
+-+
+-+        auth.createUserWithEmailAndPassword(editTextNumber_login_username.text.toString(), editTextTextPassword_login_password.text.toString())
+-+            .addOnCompleteListener(this) { task ->
+-+                if (task.isSuccessful) {
+-+                    startActivity(Intent(this, Login::class.java))
+-+                    finish()
+-+                } else {
+-+                 Toast.makeText(baseContext,"Sign up failed. Please try again....", Toast.LENGTH_SHORT).show()
+-+                }
+-+
+-+                // ...
+-+            }
+-+    }
+-+
+-+}
+-\ No newline at end of file
+Index: app/src/main/res/layout/fragment_return_items.xml
+===================================================================
+--- app/src/main/res/layout/fragment_return_items.xml	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
++++ app/src/main/res/layout/fragment_return_items.xml	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
+@@ -1,33 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:orientation="vertical"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    tools:context=".ReturnItems.ReturnItems">
+-
+-    <com.budiyev.android.codescanner.CodeScannerView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:id="@+id/returnItems_scanner_view"
+-        app:autoFocusButtonColor="@android:color/white"
+-        app:autoFocusButtonVisible="true"
+-        app:flashButtonColor="@android:color/white"
+-        app:flashButtonVisible="true"
+-        app:maskColor="#52000000"/>
+-
+-    <TextView
+-        android:id="@+id/returnItems_scanner_text"
+-        android:layout_width="match_parent"
+-        android:layout_height="35dp"
+-        android:layout_alignBottom="@id/returnItems_scanner_view"
+-        android:text="Place a QR code to Return Items"
+-        android:textSize="20dp"
+-        android:gravity="center"
+-        android:textStyle="bold"
+-        android:background="@color/white"
+-        android:textColor="@android:color/black"
+-         />
+-
+-</RelativeLayout>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM__Default_Changelist_1.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM__Default_Changelist_1.xml	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM__Default_Changelist_1.xml	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM_[Default_Changelist]1" date="1607579685626" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_12_2020_1_52_PM_[Default_Changelist]1/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 10/12/2020 1:52 PM [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.choochyemeilin.lamlam\">\r\n\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n\r\n    <uses-permission android:name=\"android.permission.VIBRATE\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        android:theme=\"@style/AppTheme\"\r\n        android:screenOrientation=\"portrait\"\r\n        tools:targetApi=\"m\">\r\n        <uses-library android:name=\"org.apache.http.legacy\" android:required=\"false\"/>\r\n        \r\n        <activity\r\n            android:name=\".Scan.Scan\"\r\n            android:screenOrientation=\"portrait\" />\r\n\r\n        <activity\r\n            android:name=\".Home.Home\"\r\n            android:label=\"@string/title_activity_home\"\r\n            android:theme=\"@style/AppTheme\"\r\n            android:screenOrientation=\"portrait\"\r\n            />\r\n        <activity\r\n            android:name=\".Login.Login\"\r\n            android:theme=\"@style/AppTheme.NoActionBar\"\r\n            />\r\n        <activity\r\n            android:name=\".Register.Register\"\r\n            android:theme=\"@style/AppTheme.NoActionBar\"\r\n            />\r\n\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
++++ app/src/main/AndroidManifest.xml	(date 1608113525284)
+@@ -4,9 +4,8 @@
+     package="com.choochyemeilin.lamlam">
+ 
+     <uses-permission android:name="android.permission.CAMERA" />
+-    <uses-permission android:name="android.permission.INTERNET"/>
++    <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+-
+     <uses-permission android:name="android.permission.VIBRATE" />
+ 
+     <application
+@@ -14,32 +13,34 @@
+         android:icon="@mipmap/ic_launcher"
+         android:label="@string/app_name"
+         android:roundIcon="@mipmap/ic_launcher_round"
++        android:screenOrientation="portrait"
+         android:supportsRtl="true"
+-        android:usesCleartextTraffic="true"
+         android:theme="@style/AppTheme"
+-        android:screenOrientation="portrait"
++        android:usesCleartextTraffic="true"
+         tools:targetApi="m">
+-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+-        
++        <activity android:name=".ReturnItems.MyStocks"></activity>
++
++        <uses-library
++            android:name="org.apache.http.legacy"
++            android:required="false" />
++
+         <activity
+             android:name=".Scan.Scan"
+             android:screenOrientation="portrait" />
+-
+         <activity
+             android:name=".Home.Home"
+             android:label="@string/title_activity_home"
+-            android:theme="@style/AppTheme"
+             android:screenOrientation="portrait"
+-            />
++            android:theme="@style/AppTheme" />
+         <activity
+             android:name=".Login.Login"
+-            android:theme="@style/AppTheme.NoActionBar"
+-            />
++            android:theme="@style/AppTheme.NoActionBar" />
+         <activity
+             android:name=".Register.Register"
+-            android:theme="@style/AppTheme.NoActionBar"
+-            />
+-
++            android:theme="@style/AppTheme.NoActionBar" />
++        <activity
++            android:name=".ReturnItems.ReturnItems"
++            android:screenOrientation="portrait" />
+         <activity android:name=".MainActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+Index: app/src/main/res/layout/activity_my_stocks.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_my_stocks.xml	(date 1608113628206)
++++ app/src/main/res/layout/activity_my_stocks.xml	(date 1608113628206)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".ReturnItems.MyStocks">
++
++    <androidx.recyclerview.widget.RecyclerView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Register\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.text.TextUtils\r\nimport android.text.method.HideReturnsTransformationMethod\r\nimport android.text.method.PasswordTransformationMethod\r\nimport android.view.View\r\nimport android.widget.*\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.FirebaseDatabase\r\nimport kotlinx.android.synthetic.main.activity_login.*\r\nimport kotlinx.android.synthetic.main.activity_register.*\r\nimport java.util.HashMap\r\n\r\nclass Register : AppCompatActivity() {\r\n    var auth: FirebaseAuth = FirebaseAuth.getInstance()\r\n    var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()\r\n    private var utils = Utils\r\n    private var passwordLock=false\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_register)\r\n\r\n        button_register_reg.setOnClickListener{\r\n            if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())){\r\n                editTextNumber_register_staffID.setError(\"Please enter Staff ID\")\r\n\r\n            }else if(TextUtils.isEmpty(editText_register_name.text.toString())){\r\n                editText_register_name.setError(\"Please enter Name\")\r\n\r\n            }else if(TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())){\r\n                editTextTextEmailAddress_register_email.setError(\"Please enter Email\")\r\n\r\n            }else if(TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())){\r\n                editTextNumber_register_phoneNo.setError(\"Please enter Phone Number\")\r\n\r\n            }else if(TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())){\r\n                editTextTextPassword_register_password.setError(\"Please enter Password\")\r\n\r\n            }\r\n\r\n            // add authentication user\r\n            if(editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty()||\r\n                editTextTextPassword_register_password.text.trim().toString().isNotEmpty()){\r\n                register(editTextTextEmailAddress_register_email.text.trim().toString(),\r\n                    editTextTextPassword_register_password.text.trim().toString())\r\n            }\r\n\r\n        }\r\n\r\n        button_register_cancel.setOnClickListener{\r\n            startActivity(Intent(this, Login::class.java))\r\n            finish()\r\n        }\r\n\r\n        imageView_register_password_eye.setOnClickListener{\r\n            passwordLock=!passwordLock\r\n            showPassword(passwordLock)\r\n        }\r\n        showPassword(passwordLock)\r\n    }\r\n\r\n\r\n    //Registers the user\r\n    private fun register(email:String, password:String){\r\n\r\n        utils.closeKeyboard(findViewById(R.id.activity_register))\r\n\r\n        /*\r\n        var staffID=editTextNumber_register_staffID.toString().toInt()\r\n        var staffName=editText_register_name.toString()\r\n        var staffEmail=editTextTextEmailAddress_register_email.toString()\r\n        var phoneNumber=editTextNumber_register_phoneNo.toString().toInt()\r\n        var pw=editTextTextPassword_register_password.toString()\r\n\r\n         */\r\n\r\n        //Start progress\r\n        val progress: ProgressBar = progressBar_reg\r\n        progress.visibility = View.VISIBLE\r\n\r\n     //   val email=findViewById<EditText>(R.id.editTextTextEmailAddress_register_email)\r\n     //   val password=findViewById<EditText>(R.id.editTextTextPassword_register_password)\r\n\r\n        //Firebase\r\n        auth.createUserWithEmailAndPassword(email,password)\r\n            .addOnCompleteListener {\r\n                if (it.isSuccessful){\r\n                    val currentUser=auth.currentUser\r\n                   // val currentUserDb=databaseReference.reference.child(currentUser?.uid!!)\r\n                   //  val currentUserDb=databaseReference.reference.child(\"User\")\r\n                 // val   currentUserDb=databaseReference.reference.child(editTextNumber_register_staffID.text.toString())\r\n                    val currentUserDb=databaseReference.reference.child(\"User\").child(currentUser?.uid!!)\r\n\r\n                    currentUserDb?.child(\"Staff ID\")?.setValue(editTextNumber_register_staffID.text.toString())\r\n                    currentUserDb?.child(\"Name\")?.setValue(editText_register_name.text.toString())\r\n                    currentUserDb?.child(\"Email\")?.setValue(editTextTextEmailAddress_register_email.text.toString())\r\n                    currentUserDb?.child(\"Phone Number\")?.setValue(editTextNumber_register_phoneNo.text.toString())\r\n                    currentUserDb?.child(\"Password\")?.setValue(editTextTextPassword_register_password.text.toString())\r\n\r\n\r\n                 //   database.child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNumber,pw))\r\n                    Toast.makeText(this@Register, \"Registration Success\", Toast.LENGTH_LONG).show()\r\n                    startActivity(Intent(this, Login::class.java))\r\n                    finish()\r\n                }else{\r\n                    Toast.makeText(this@Register, \"Registration failed. Please try again\", Toast.LENGTH_LONG).show()\r\n                }\r\n            }\r\n    }\r\n\r\n     fun showPassword(isShow:Boolean){\r\n        if(isShow){\r\n            editTextTextPassword_register_password.transformationMethod=\r\n                HideReturnsTransformationMethod.getInstance()\r\n            imageView_register_password_eye.setImageResource(R.drawable.ic_baseline_visibility_off_24)\r\n        }else{\r\n            editTextTextPassword_register_password.transformationMethod= PasswordTransformationMethod.getInstance()\r\n            imageView_register_password_eye.setImageResource(R.drawable.ic_baseline_remove_red_eye_24)\r\n        }\r\n         editTextTextPassword_register_password.setSelection(editTextTextPassword_register_password.text.toString().length)\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
++++ app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt	(date 1608110643828)
+@@ -1,6 +1,7 @@
+ package com.choochyemeilin.lamlam.Register
+ 
+ import android.content.Intent
++import android.os.Build
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.text.TextUtils
+@@ -8,13 +9,17 @@
+ import android.text.method.PasswordTransformationMethod
+ import android.view.View
+ import android.widget.*
++import androidx.annotation.RequiresApi
+ import com.choochyemeilin.lamlam.Login.Login
+ import com.choochyemeilin.lamlam.R
+ import com.choochyemeilin.lamlam.helpers.Utils
+ import com.google.firebase.auth.FirebaseAuth
++import com.google.firebase.database.DatabaseReference
+ import com.google.firebase.database.FirebaseDatabase
+ import kotlinx.android.synthetic.main.activity_login.*
+ import kotlinx.android.synthetic.main.activity_register.*
++import java.time.LocalDateTime
++import java.time.format.DateTimeFormatter
+ import java.util.HashMap
+ 
+ class Register : AppCompatActivity() {
+@@ -22,35 +27,44 @@
+     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
+     private var utils = Utils
+     private var passwordLock=false
++    private var myRef: DatabaseReference = databaseReference.getReference("User")
+ 
++
++    @RequiresApi(Build.VERSION_CODES.O)
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_register)
+ 
+         button_register_reg.setOnClickListener{
+-            if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())){
+-                editTextNumber_register_staffID.setError("Please enter Staff ID")
++
++                if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())) {
++                    editTextNumber_register_staffID.setError("Please enter Staff ID")
+ 
+-            }else if(TextUtils.isEmpty(editText_register_name.text.toString())){
+-                editText_register_name.setError("Please enter Name")
++                } else if (TextUtils.isEmpty(editText_register_name.text.toString())) {
++                    editText_register_name.setError("Please enter Name")
+ 
+-            }else if(TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())){
+-                editTextTextEmailAddress_register_email.setError("Please enter Email")
++                } else if (TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())) {
++                    editTextTextEmailAddress_register_email.setError("Please enter Email")
+ 
+-            }else if(TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())){
+-                editTextNumber_register_phoneNo.setError("Please enter Phone Number")
++                } else if (TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())) {
++                    editTextNumber_register_phoneNo.setError("Please enter Phone Number")
+ 
+-            }else if(TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())){
+-                editTextTextPassword_register_password.setError("Please enter Password")
+-
+-            }
++                } else if (TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())) {
++                    editTextTextPassword_register_password.setError("Please enter Password")
++                }
++
+ 
+             // add authentication user
+-            if(editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty()||
+-                editTextTextPassword_register_password.text.trim().toString().isNotEmpty()){
+-                register(editTextTextEmailAddress_register_email.text.trim().toString(),
+-                    editTextTextPassword_register_password.text.trim().toString())
+-            }
++                if (
++                    editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty() ||
++                    editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
++                ) {
++
++                    register(
++                        editTextTextEmailAddress_register_email.text.trim().toString(),
++                        editTextTextPassword_register_password.text.trim().toString()
++                    )
++                }
+ 
+         }
+ 
+@@ -68,18 +82,11 @@
+ 
+ 
+     //Registers the user
++    @RequiresApi(Build.VERSION_CODES.O)
+     private fun register(email:String, password:String){
+ 
+-        utils.closeKeyboard(findViewById(R.id.activity_register))
++      //  utils.closeKeyboard(findViewById(R.id.activity_register))
+ 
+-        /*
+-        var staffID=editTextNumber_register_staffID.toString().toInt()
+-        var staffName=editText_register_name.toString()
+-        var staffEmail=editTextTextEmailAddress_register_email.toString()
+-        var phoneNumber=editTextNumber_register_phoneNo.toString().toInt()
+-        var pw=editTextTextPassword_register_password.toString()
+-
+-         */
+ 
+         //Start progress
+         val progress: ProgressBar = progressBar_reg
+@@ -93,17 +100,30 @@
+             .addOnCompleteListener {
+                 if (it.isSuccessful){
+                     val currentUser=auth.currentUser
++                    val userID="User ID : "
++                    val staffID=editTextNumber_register_staffID.text.toString().toInt()
++                    val staffName=editText_register_name.text.toString()
++                    val  staffEmail=editTextTextEmailAddress_register_email.text.toString()
++                    val phoneNo=editTextNumber_register_phoneNo.text.toString().toInt()
++                    val pw=editTextTextPassword_register_password.text.toString()
++
+                    // val currentUserDb=databaseReference.reference.child(currentUser?.uid!!)
+-                   //  val currentUserDb=databaseReference.reference.child("User")
+-                 // val   currentUserDb=databaseReference.reference.child(editTextNumber_register_staffID.text.toString())
+-                    val currentUserDb=databaseReference.reference.child("User").child(currentUser?.uid!!)
++                 //   val currentUserDb=databaseReference.reference.child("User").child(currentUser?.uid!!)
++                    val current = LocalDateTime.now()
++                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
++                    val formattedDate = current.format(formatter)
++                    myRef.child(formattedDate).child(userID).child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNo,pw))
++
+ 
++
++/*
+                     currentUserDb?.child("Staff ID")?.setValue(editTextNumber_register_staffID.text.toString())
+                     currentUserDb?.child("Name")?.setValue(editText_register_name.text.toString())
+                     currentUserDb?.child("Email")?.setValue(editTextTextEmailAddress_register_email.text.toString())
+                     currentUserDb?.child("Phone Number")?.setValue(editTextNumber_register_phoneNo.text.toString())
+                     currentUserDb?.child("Password")?.setValue(editTextTextPassword_register_password.text.toString())
+ 
++ */
+ 
+                  //   database.child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNumber,pw))
+                     Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
+Index: app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocks.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocks.kt	(date 1608113628267)
++++ app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocks.kt	(date 1608113628267)
+@@ -0,0 +1,12 @@
++package com.choochyemeilin.lamlam.ReturnItems
++
++import androidx.appcompat.app.AppCompatActivity
++import android.os.Bundle
++import com.choochyemeilin.lamlam.R
++
++class MyStocks : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        setContentView(R.layout.activity_my_stocks)
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Home\r\n\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.StrictMode\r\nimport android.view.MenuItem\r\nimport android.view.View\r\nimport android.widget.AdapterView\r\nimport android.widget.GridView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.navigation.fragment.FragmentNavigator\r\nimport androidx.navigation.fragment.NavHostFragment.findNavController\r\nimport androidx.navigation.ui.AppBarConfiguration\r\nimport androidx.navigation.ui.setupActionBarWithNavController\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.Register.Register\r\nimport com.choochyemeilin.lamlam.ReturnItems.ReturnItems\r\nimport com.choochyemeilin.lamlam.Scan.Scan\r\n//import com.choochyemeilin.lamlam.Search.Search\r\nimport com.choochyemeilin.lamlam.helpers.Lcg\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.DatabaseReference\r\nimport com.google.firebase.database.FirebaseDatabase\r\nimport kotlinx.android.synthetic.main.activity_home.*\r\n\r\nimport org.json.JSONArray\r\nimport org.json.JSONObject\r\n\r\nclass Home : AppCompatActivity(), AdapterView.OnItemClickListener {\r\n\r\n    private var arrayList:ArrayList<HomeItem> ? = null\r\n    private var gridView: GridView? = null\r\n    private var languageAdapter: HomeAdapter? = null\r\n    private var lcg : Lcg = Lcg()\r\n    private var utils : Utils = Utils\r\n\r\n    lateinit var toggle: ActionBarDrawerToggle\r\n    \r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_home)\r\n        //Init Var\r\n\r\n        //Navigation Bar\r\n        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)\r\n        drawerLayout.addDrawerListener(toggle)\r\n        toggle.syncState()\r\n\r\n        supportActionBar?.setDisplayHomeAsUpEnabled(true)\r\n        supportActionBar?.setTitle(R.string.app_name)\r\n        supportActionBar?.elevation = 0f\r\n\r\n        nav_view.setNavigationItemSelectedListener {\r\n            when(it.itemId){\r\n                R.id.mItem1 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 1\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n                R.id.mItem2 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 2\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n\r\n                R.id.mItem3 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 3\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n               // R.id.mItem4 -> startActivity(Intent(this,Register::class.java))\r\n\r\n            }\r\n            true\r\n        }\r\n\r\n\r\n        fun jsonTest(){\r\n            ArrayList<String>()\r\n        }\r\n\r\n        //logout\r\n        nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {\r\n            logout()\r\n            return@setOnMenuItemClickListener true\r\n        }\r\n\r\n        gridView = findViewById(R.id.homeGridLayout)\r\n        arrayList = ArrayList()\r\n        arrayList = setDataList()\r\n        languageAdapter = HomeAdapter(applicationContext, arrayList!!)\r\n        gridView?.adapter = languageAdapter\r\n        gridView?.onItemClickListener = this\r\n\r\n\r\n        //val welcome = findViewById<TextView>(R.id.welcome_user)\r\n\r\n        /*val str : String = \"T\"\r\n\r\n        var chars = str.toCharArray()\r\n        var i = 0;\r\n        *//*var n = mutableListOf<Int>();\r\n        while(i < 8){\r\n            n.add(i, chars[i].toInt() xor lcg.next().toInt())\r\n            i++\r\n        }*//*\r\n        val binary = chars[0].toInt()\r\n        val finalBinary = String.format(\"%8s\", Integer.toBinaryString(binary)).replace(' ', '0')\r\n        welcome.text = lcg.toBinary(chars).toString()*/\r\n    }\r\n\r\n    //Logout Methods\r\n    private fun logout(){\r\n\r\n        FirebaseAuth.getInstance().signOut()\r\n        Toast.makeText(this, \"Signed Out\", Toast.LENGTH_SHORT).show()\r\n        val intent : Intent = Intent(this, Login::class.java)\r\n        startActivity(intent)\r\n    }\r\n\r\n    private fun setDataList() : ArrayList<HomeItem>{\r\n        var arrayList:ArrayList<HomeItem> = ArrayList()\r\n\r\n        arrayList.add(HomeItem(R.drawable.qr_code, \"SCAN\"))\r\n        arrayList.add(HomeItem(R.drawable.magnifier, \"SEARCH\"))\r\n        arrayList.add(HomeItem(R.drawable.loan, \"LOANS\"))\r\n        arrayList.add(HomeItem(R.drawable.business_report, \"REPORTS\"))\r\n        arrayList.add(HomeItem(R.drawable.exchange, \"RETURN ITEMS\"))\r\n\r\n        return arrayList\r\n    }\r\n\r\n    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {\r\n        when (p2) {\r\n            0 -> {\r\n                val intent = Intent(this, Scan::class.java)\r\n                startActivity(intent)\r\n            }\r\n            /*\r\n            1 -> {\r\n                val intent = Intent(this, Search::class.java)\r\n                startActivity(intent)\r\n            }\r\n\r\n             */\r\n            1 -> {\r\n                Toast.makeText(applicationContext, \"SEARCH\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            2 -> {\r\n                Toast.makeText(applicationContext, \"LOANS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            3 -> {\r\n                Toast.makeText(applicationContext, \"REPORTS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            4 -> {\r\n               val intent = Intent(this, ReturnItems::class.java)\r\n                startActivity(intent)\r\n                Toast.makeText(applicationContext, \"RETURN ITEMS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n\r\n    //Navigation Drawer\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        if(toggle.onOptionsItemSelected(item)){\r\n            return true\r\n        }\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(revision 0630dc93988a93b1560cbf4d7c01997f904ee15c)
++++ app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(date 1608107086374)
+@@ -162,9 +162,10 @@
+                 Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
+             }
+             4 -> {
+-               val intent = Intent(this, ReturnItems::class.java)
++                Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
++                val intent = Intent(this, ReturnItems::class.java)
+                 startActivity(intent)
+-                Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
++                
+             }
+         }
+     }
+Index: app/src/main/res/layout/activity_return_items.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_return_items.xml	(date 1608113123768)
++++ app/src/main/res/layout/activity_return_items.xml	(date 1608113123768)
+@@ -0,0 +1,36 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    tools:context=".ReturnItems.ReturnItems">
++
++    <com.budiyev.android.codescanner.CodeScannerView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:id="@+id/return_scanner_view"
++        app:autoFocusButtonColor="@android:color/white"
++        app:autoFocusButtonVisible="true"
++        app:flashButtonColor="@android:color/white"
++        app:flashButtonVisible="true"
++        app:maskColor="#52000000">
++
++
++    </com.budiyev.android.codescanner.CodeScannerView>
++
++    <TextView
++        android:id="@+id/textView"
++        android:layout_width="match_parent"
++
++        android:gravity="center"
++        android:textSize="22dp"
++        android:textStyle="bold"
++        android:text="Place a QR code to Return Items"
++        android:background="@color/colorAccent"
++        android:layout_height="42dp"
++        android:layout_alignBottom="@id/return_scanner_view"
++        />
++
++</RelativeLayout>
+\ No newline at end of file

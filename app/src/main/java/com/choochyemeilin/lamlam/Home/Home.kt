@@ -18,12 +18,11 @@ import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.Search.Search
-import com.choochyemeilin.lamlam.helpers.FbCallback
-import com.choochyemeilin.lamlam.helpers.Lcg
-import com.choochyemeilin.lamlam.helpers.Retailers
-import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.nav_header.*
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -36,7 +35,11 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     //private var lcg : Lcg = Lcg()
 
     lateinit var toggle: ActionBarDrawerToggle
-    
+
+    var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    val currentUser=auth.currentUser
+    val uid = currentUser?.uid
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -55,7 +58,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             when(it.itemId){
                 R.id.mItem1 -> Toast.makeText(
                     applicationContext,
-                    "Clicked Item 1",
+                    "My Profile",
                     Toast.LENGTH_SHORT
                 ).show()
                 R.id.mItem2 -> {
@@ -76,7 +79,9 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
 
-
+        if(currentUser!=null){
+            changeName()
+        }
     }
 
     //Logout Methods
@@ -111,11 +116,47 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         }
     }
 
+
     //Navigation Drawer
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)){
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun changeName(){
+
+        var userRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("User")
+        var query : Query =userRef.orderByChild("staffName")
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (dss in snapshot.children) {
+                    //var name=dss.getValue().toString()
+                        var cu= currentUser?.email.toString()
+                        if(cu==dss.child("staffEmail").value.toString()){
+
+                            var role1=dss.child("role").value.toString()
+                            var name=dss.child("staffName").value.toString().toUpperCase()
+
+
+                            if(role1=="admin"){
+                                welcome_user.text="Welcome, "+name+"("+role1+")"
+                            }else{
+                                welcome_user.text="Welcome, "+name
+                            }
+                            textView_drawer_name.text=name
+                        }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                utils.log("$error")
+            }
+
+        })
     }
 }

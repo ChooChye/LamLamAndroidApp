@@ -1,0 +1,848 @@
+Index: app/src/main/res/layout/activity_forgot_password.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@drawable/splash_screen_bg\"\r\n    tools:context=\".Login.ForgotPasswordActivity\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView1\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"130dp\"\r\n        android:layout_marginBottom=\"400dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:srcCompat=\"@drawable/logo\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/text_forgotpw_resetpw\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"RESET PASSWORD\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"28dp\"\r\n        android:textStyle=\"bold\"\r\n\r\n        app:layout_constraintEnd_toEndOf=\"@+id/imageView1\"\r\n        app:layout_constraintStart_toStartOf=\"@id/imageView1\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/imageView1\"\r\n        />\r\n\r\n    <androidx.cardview.widget.CardView\r\n        android:id=\"@+id/cardview_login\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"170dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n\r\n        app:cardCornerRadius=\"20dp\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/text_forgotpw_resetpw\"\r\n        app:layout_constraintStart_toStartOf=\"@id/text_forgotpw_resetpw\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/text_forgotpw_resetpw\">\r\n\r\n\r\n        <EditText\r\n            android:id=\"@+id/editText_forgotpw_email\"\r\n            android:layout_width=\"280dp\"\r\n            android:layout_height=\"47dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginBottom=\"50dp\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textEmailAddress\"\r\n            android:hint=\"Email\"\r\n            android:background=\"@color/white\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_email\"\r\n            android:drawablePadding=\"15dp\"\r\n            app:layout_constraintEnd_toEndOf=\"@+id/cardview_login\"\r\n            app:layout_constraintStart_toStartOf=\"@id/cardview_login\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/cardview_login\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/editTextTextPassword_forgotpw_password\"\r\n            android:layout_width=\"280dp\"\r\n            android:layout_height=\"47dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:background=\"@color/white\"\r\n            android:ems=\"10\"\r\n            android:hint=\"@string/prompt_password\"\r\n            android:inputType=\"textPassword\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_lock\"\r\n            android:drawablePadding=\"15dp\"\r\n            app:layout_constraintEnd_toEndOf=\"@+id/editTextNumber_login_username\"\r\n            app:layout_constraintStart_toStartOf=\"@id/editTextNumber_login_username\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/editTextNumber_login_username\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/editTextTextPassword_forgotpw_confirmpw\"\r\n            android:layout_width=\"280dp\"\r\n            android:layout_height=\"47dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"50dp\"\r\n            android:background=\"@color/white\"\r\n            android:ems=\"10\"\r\n            android:hint=\"Confirm Password\"\r\n            android:inputType=\"textPassword\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_lock\"\r\n            android:drawablePadding=\"15dp\"\r\n            app:layout_constraintEnd_toEndOf=\"@+id/editTextNumber_login_username\"\r\n            app:layout_constraintStart_toStartOf=\"@id/editTextNumber_login_username\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/editTextNumber_login_username\"/>\r\n    </androidx.cardview.widget.CardView>\r\n\r\n\r\n\r\n    <Button\r\n        android:id=\"@+id/button_forgotpw_resetpw\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"38dp\"\r\n        android:background=\"@drawable/button_green\"\r\n        android:text=\"RESET PASSWORD\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"20dp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/cardview_login\"\r\n        app:layout_constraintStart_toStartOf=\"@id/cardview_login\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/cardview_login\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button_forgotpw_cancel\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:background=\"@drawable/button_white\"\r\n        android:text=\"CANCEL\"\r\n        android:textColor=\"@color/colorTextPurple\"\r\n        android:textSize=\"20dp\"\r\n        android:textStyle=\"normal\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/button_forgotpw_resetpw\"\r\n        app:layout_constraintStart_toStartOf=\"@id/button_forgotpw_resetpw\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/button_forgotpw_resetpw\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_forgot_password.xml	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/res/layout/activity_forgot_password.xml	(date 1607978015346)
+@@ -1,129 +1,11 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/editText_login_forgotpw"
++    android:layout_marginStart="20dp"
++    android:layout_marginEnd="20dp"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:background="@drawable/splash_screen_bg"
+-    tools:context=".Login.ForgotPasswordActivity">
+-
+-    <ImageView
+-        android:id="@+id/imageView1"
+-        android:layout_width="200dp"
+-        android:layout_height="130dp"
+-        android:layout_marginBottom="400dp"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        app:srcCompat="@drawable/logo" />
+-
+-    <TextView
+-        android:id="@+id/text_forgotpw_resetpw"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="RESET PASSWORD"
+-        android:textColor="@color/white"
+-        android:textSize="28dp"
+-        android:textStyle="bold"
+-
+-        app:layout_constraintEnd_toEndOf="@+id/imageView1"
+-        app:layout_constraintStart_toStartOf="@id/imageView1"
+-        app:layout_constraintTop_toBottomOf="@id/imageView1"
+-        />
+-
+-    <androidx.cardview.widget.CardView
+-        android:id="@+id/cardview_login"
+-        android:layout_width="300dp"
+-        android:layout_height="170dp"
+-        android:layout_marginTop="16dp"
+-
+-        app:cardCornerRadius="20dp"
+-        app:layout_constraintEnd_toEndOf="@+id/text_forgotpw_resetpw"
+-        app:layout_constraintStart_toStartOf="@id/text_forgotpw_resetpw"
+-        app:layout_constraintTop_toBottomOf="@id/text_forgotpw_resetpw">
+-
+-
+-        <EditText
+-            android:id="@+id/editText_forgotpw_email"
+-            android:layout_width="280dp"
+-            android:layout_height="47dp"
+-            android:layout_gravity="center"
+-            android:layout_marginBottom="50dp"
+-            android:ems="10"
+-            android:inputType="textEmailAddress"
+-            android:hint="Email"
+-            android:background="@color/white"
+-            android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_email"
+-            android:drawablePadding="15dp"
+-            app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+-            app:layout_constraintStart_toStartOf="@id/cardview_login"
+-            app:layout_constraintTop_toBottomOf="@id/cardview_login"/>
+-
+-        <EditText
+-            android:id="@+id/editTextTextPassword_forgotpw_password"
+-            android:layout_width="280dp"
+-            android:layout_height="47dp"
+-            android:layout_gravity="center"
+-            android:background="@color/white"
+-            android:ems="10"
+-            android:hint="@string/prompt_password"
+-            android:inputType="textPassword"
+-            android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_lock"
+-            android:drawablePadding="15dp"
+-            app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
+-            app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
+-            app:layout_constraintTop_toBottomOf="@id/editTextNumber_login_username"/>
+-
+-        <EditText
+-            android:id="@+id/editTextTextPassword_forgotpw_confirmpw"
+-            android:layout_width="280dp"
+-            android:layout_height="47dp"
+-            android:layout_gravity="center"
+-            android:layout_marginTop="50dp"
+-            android:background="@color/white"
+-            android:ems="10"
+-            android:hint="Confirm Password"
+-            android:inputType="textPassword"
+-            android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_lock"
+-            android:drawablePadding="15dp"
+-            app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
+-            app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
+-            app:layout_constraintTop_toBottomOf="@id/editTextNumber_login_username"/>
+-    </androidx.cardview.widget.CardView>
+-
+-
+-
+-    <Button
+-        android:id="@+id/button_forgotpw_resetpw"
+-        android:layout_width="300dp"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="38dp"
+-        android:background="@drawable/button_green"
+-        android:text="RESET PASSWORD"
+-        android:textColor="@color/white"
+-        android:textSize="20dp"
+-        android:textStyle="bold"
+-        app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+-        app:layout_constraintStart_toStartOf="@id/cardview_login"
+-        app:layout_constraintTop_toBottomOf="@id/cardview_login" />
+-
+-    <Button
+-        android:id="@+id/button_forgotpw_cancel"
+-        android:layout_width="300dp"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="20dp"
+-        android:background="@drawable/button_white"
+-        android:text="CANCEL"
+-        android:textColor="@color/colorTextPurple"
+-        android:textSize="20dp"
+-        android:textStyle="normal"
+-        app:layout_constraintEnd_toEndOf="@+id/button_forgotpw_resetpw"
+-        app:layout_constraintStart_toStartOf="@id/button_forgotpw_resetpw"
+-        app:layout_constraintTop_toBottomOf="@id/button_forgotpw_resetpw" />
+-
++    android:layout_height="wrap_content"
++   />
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/choochyemeilin/lamlam/Login/Login.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Login\r\n\r\nimport android.content.Intent\r\nimport android.net.Uri\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.widget.Toast\r\nimport com.choochyemeilin.lamlam.Home.Home\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.Register.Register\r\nimport com.google.android.gms.tasks.OnCompleteListener\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.FirebaseUser\r\nimport kotlinx.android.synthetic.main.activity_login.*\r\nimport kotlinx.coroutines.Dispatchers\r\nimport kotlinx.coroutines.GlobalScope\r\nimport kotlinx.coroutines.launch\r\nimport kotlinx.coroutines.withContext\r\nimport java.lang.Exception\r\n\r\nclass Login : AppCompatActivity() {\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n   // private var firstTimeUser=true\r\n  //  private var fileUri: Uri?=null\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n        auth = FirebaseAuth.getInstance()\r\n\r\n        val currentUser=auth.currentUser\r\n        textView_login_register.setOnClickListener{\r\n            startActivity(Intent(this,Register::class.java))\r\n        }\r\n        button_login_signin.setOnClickListener{\r\n\r\n            if(currentUser != null){\r\n                val name : String? = currentUser.displayName\r\n                val email : String? = currentUser.email\r\n                Log.d(\"Login\", \"Login user success\")\r\n                //Navigate to Home\r\n                startActivity(Intent(this,Home::class.java))\r\n                finish()\r\n            }else{\r\n\r\n               Toast.makeText(this, \"Invalid email or password\",Toast.LENGTH_LONG).show()\r\n                Log.d(\"Login\", \"No user found\")\r\n            }\r\n        }\r\n\r\n        text_login_forgotpw.setOnClickListener{\r\n            startActivity(Intent(this,ForgotPasswordActivity::class.java))\r\n            finish()\r\n        }\r\n\r\n\r\n\r\n    }\r\n/*\r\n    public override fun onStart() {\r\n        super.onStart()\r\n        // Check if user is signed in (non-null) and update UI accordingly.\r\n        val currentUser = auth.currentUser\r\n        updateUI(currentUser)\r\n    }\r\n\r\n    fun updateUI(currentUser: FirebaseUser?){\r\n\r\n    }\r\n\r\n\r\n */\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Login/Login.kt	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/java/com/choochyemeilin/lamlam/Login/Login.kt	(date 1607977456407)
+@@ -1,11 +1,16 @@
+ package com.choochyemeilin.lamlam.Login
+ 
++import android.content.DialogInterface
+ import android.content.Intent
+ import android.net.Uri
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
++import android.text.TextUtils
+ import android.util.Log
++import android.util.Patterns
++import android.widget.EditText
+ import android.widget.Toast
++import androidx.appcompat.app.AlertDialog
+ import com.choochyemeilin.lamlam.Home.Home
+ import com.choochyemeilin.lamlam.R
+ import com.choochyemeilin.lamlam.Register.Register
+@@ -13,11 +18,13 @@
+ import com.google.firebase.auth.FirebaseAuth
+ import com.google.firebase.auth.FirebaseUser
+ import kotlinx.android.synthetic.main.activity_login.*
++import kotlinx.android.synthetic.main.activity_register.*
+ import kotlinx.coroutines.Dispatchers
+ import kotlinx.coroutines.GlobalScope
+ import kotlinx.coroutines.launch
+ import kotlinx.coroutines.withContext
+ import java.lang.Exception
++import java.util.regex.Matcher
+ 
+ class Login : AppCompatActivity() {
+ 
+@@ -32,12 +39,15 @@
+         setContentView(R.layout.activity_login)
+         auth = FirebaseAuth.getInstance()
+ 
+-        val currentUser=auth.currentUser
++     //   val currentUser=auth.currentUser
+         textView_login_register.setOnClickListener{
+             startActivity(Intent(this,Register::class.java))
+         }
++
+         button_login_signin.setOnClickListener{
+ 
++            login()
++/*
+             if(currentUser != null){
+                 val name : String? = currentUser.displayName
+                 val email : String? = currentUser.email
+@@ -50,28 +60,79 @@
+                Toast.makeText(this, "Invalid email or password",Toast.LENGTH_LONG).show()
+                 Log.d("Login", "No user found")
+             }
++ */
++
+         }
+ 
+         text_login_forgotpw.setOnClickListener{
+-            startActivity(Intent(this,ForgotPasswordActivity::class.java))
+-            finish()
++    //        startActivity(Intent(this,ForgotPasswordActivity::class.java))
++    //        finish()
++            val builder=AlertDialog.Builder(this)
++            builder.setTitle("Forgot Password")
++            val view=layoutInflater.inflate(R.layout.activity_forgot_password,null)
++            val email=view.findViewById<EditText>(R.id.editText_login_forgotpw)
++            builder.setView(view)
++            builder.setPositiveButton("Reset",DialogInterface.OnClickListener{ _, _ ->
++                forgotPassword(email)
++            })
++            builder.setNegativeButton("Close",DialogInterface.OnClickListener { _, _ ->
++                builder.show()
++            })
++        }
++    }
++
++    fun login(){
++        val email:String=editText_login_email.text.toString()
++        val password:String=editTextTextPassword_login_password.text.toString()
++        val currentUser=auth.currentUser
++
++
++        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
++            if (TextUtils.isEmpty(editText_login_email.text.toString())){
++                editText_login_email.setError("Please enter Email")
++                editText_login_email.requestFocus()
++            }else if(TextUtils.isEmpty(editTextTextPassword_login_password.text.toString())){
++                editTextTextPassword_login_password.setError("Please enter Password")
++                editTextTextPassword_login_password.requestFocus()
++            }
++            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show()
++        } else{
++
++            //Sign IN
++            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener { task ->
++                if(task.isSuccessful) {
++                    Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
++                    val intent = Intent(this, Home::class.java)
++                    startActivity(intent)
++                    finish()
++                }else {
++                    Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
++
++                }
++            })
+         }
++    }
+ 
++    fun forgotPassword(email:EditText){
++        if(editText_login_email.text.toString().isEmpty()){
++            return
++        }
+ 
++        if (!Patterns.EMAIL_ADDRESS.matcher(editText_login_email.text.toString()).matches()){
++            return
++        }
+ 
+-    }
+-/*
+-    public override fun onStart() {
+-        super.onStart()
+-        // Check if user is signed in (non-null) and update UI accordingly.
+-        val currentUser = auth.currentUser
+-        updateUI(currentUser)
++        auth.sendPasswordResetEmail(email.text.toString())
++            .addOnCompleteListener {task ->
++                if (task.isSuccessful){
++                    Toast.makeText(this,"Email Sent",Toast.LENGTH_SHORT).show()
++                }
++            }
+     }
+ 
+-    fun updateUI(currentUser: FirebaseUser?){
++
+ 
+-    }
++}
+ 
+ 
+- */
+-}
+\ No newline at end of file
++
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Login.Login\"\r\n    android:background=\"@drawable/splash_screen_bg\"\r\n    style=\"@style/AppTheme.NoActionBar\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"130dp\"\r\n        android:layout_marginBottom=\"400dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:srcCompat=\"@drawable/logo\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/text_login_signin\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"SIGN IN\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"28dp\"\r\n        android:textStyle=\"bold\"\r\n\r\n        app:layout_constraintEnd_toEndOf=\"@+id/imageView\"\r\n        app:layout_constraintStart_toStartOf=\"@id/imageView\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/imageView\"\r\n        />\r\n\r\n    <androidx.cardview.widget.CardView\r\n        android:id=\"@+id/cardview_login\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"110dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n\r\n        app:cardCornerRadius=\"20dp\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/text_login_signin\"\r\n        app:layout_constraintStart_toStartOf=\"@id/text_login_signin\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/text_login_signin\">\r\n\r\n\r\n        <EditText\r\n            android:id=\"@+id/editText_login_email\"\r\n            android:layout_width=\"280dp\"\r\n            android:layout_height=\"47dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginBottom=\"25dp\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textEmailAddress\"\r\n            android:hint=\"Email\"\r\n            android:background=\"@color/white\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_email\"\r\n            android:drawablePadding=\"15dp\"\r\n            app:layout_constraintEnd_toEndOf=\"@+id/cardview_login\"\r\n            app:layout_constraintStart_toStartOf=\"@id/cardview_login\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/cardview_login\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/editTextTextPassword_login_password\"\r\n            android:layout_width=\"280dp\"\r\n            android:layout_height=\"47dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"22dp\"\r\n            android:background=\"@color/white\"\r\n            android:ems=\"10\"\r\n            android:hint=\"@string/prompt_password\"\r\n            android:inputType=\"textPassword\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_lock\"\r\n            android:drawablePadding=\"15dp\"\r\n            app:layout_constraintEnd_toEndOf=\"@+id/editTextNumber_login_username\"\r\n            app:layout_constraintStart_toStartOf=\"@id/editTextNumber_login_username\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/editTextNumber_login_username\"/>\r\n    </androidx.cardview.widget.CardView>\r\n\r\n    <TextView\r\n        android:id=\"@+id/text_login_forgotpw\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:text=\"Forgot Password\"\r\n\r\n        android:textColor=\"@color/white\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/cardview_login\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/cardview_login\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button_login_signin\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"38dp\"\r\n        android:background=\"@drawable/button_green\"\r\n        android:text=\"SIGN IN NOW\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"20dp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/cardview_login\"\r\n        app:layout_constraintStart_toStartOf=\"@id/cardview_login\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/cardview_login\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView_login_register\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:text=\"Register an account\"\r\n        android:textSize=\"17dp\"\r\n        android:textColor=\"@color/white\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/button_login_signin\"\r\n        app:layout_constraintStart_toStartOf=\"@id/button_login_signin\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/button_login_signin\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_login.xml	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/res/layout/activity_login.xml	(date 1607972075096)
+@@ -56,7 +56,7 @@
+             android:hint="Email"
+             android:background="@color/white"
+             android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_email"
++            android:drawableStart="@drawable/custom_email"
+             android:drawablePadding="15dp"
+             app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+             app:layout_constraintStart_toStartOf="@id/cardview_login"
+@@ -73,7 +73,7 @@
+             android:hint="@string/prompt_password"
+             android:inputType="textPassword"
+             android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_lock"
++            android:drawableStart="@drawable/custom_lock"
+             android:drawablePadding="15dp"
+             app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
+             app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
+Index: app/src/main/res/layout/activity_register.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Register.Register\"\r\n    style=\"@style/AppTheme.NoActionBar\"\r\n    android:background=\"@drawable/splash_screen_bg\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"130dp\"\r\n        android:layout_marginBottom=\"520dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:srcCompat=\"@drawable/logo\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/text_register_reg\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"REGISTER\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"28dp\"\r\n        android:textStyle=\"bold\"\r\n\r\n        app:layout_constraintEnd_toEndOf=\"@+id/imageView\"\r\n        app:layout_constraintStart_toStartOf=\"@id/imageView\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/imageView\"\r\n        />\r\n\r\n    <androidx.cardview.widget.CardView\r\n        android:id=\"@+id/cardview_login\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"280dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n        app:cardCornerRadius=\"20dp\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/text_register_reg\"\r\n        app:layout_constraintStart_toStartOf=\"@id/text_register_reg\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/text_register_reg\">\r\n\r\n\r\n        <EditText\r\n            android:id=\"@+id/editTextNumber_register_staffID\"\r\n            android:layout_width=\"275dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginBottom=\"110dp\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"number\"\r\n            android:hint=\"Staff ID\"\r\n            android:textSize=\"18sp\"\r\n            android:background=\"@color/white\"\r\n            android:drawableStart=\"@drawable/ic_staff_id\"\r\n            android:drawablePadding=\"14dp\"\r\n            />\r\n\r\n        <EditText\r\n            android:id=\"@+id/editText_register_name\"\r\n            android:layout_width=\"275dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginBottom=\"55dp\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textPersonName\"\r\n            android:hint=\"Name\"\r\n            android:textSize=\"18sp\"\r\n            android:background=\"@color/white\"\r\n            android:drawableStart=\"@drawable/ic_baseline_account_circle_24\"\r\n            android:drawablePadding=\"15dp\"\r\n            />\r\n\r\n        <EditText\r\n            android:id=\"@+id/editTextTextEmailAddress_register_email\"\r\n            android:layout_width=\"275dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textEmailAddress\"\r\n            android:hint=\"Email\"\r\n            android:background=\"@color/white\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_email\"\r\n            android:drawablePadding=\"15dp\"\r\n            />\r\n\r\n        <EditText\r\n            android:id=\"@+id/editTextNumber_register_phoneNo\"\r\n            android:layout_width=\"275dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"52dp\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"number\"\r\n            android:hint=\"H/P No.\"\r\n            android:background=\"@color/white\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_call_24\"\r\n            android:drawablePadding=\"15dp\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/editTextTextPassword_register_password\"\r\n            android:layout_width=\"275dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"108dp\"\r\n            android:background=\"@color/white\"\r\n            android:ems=\"10\"\r\n            android:hint=\"@string/prompt_password\"\r\n            android:inputType=\"textPassword\"\r\n            android:textSize=\"18sp\"\r\n            android:drawableStart=\"@drawable/ic_baseline_lock\"\r\n            android:drawablePadding=\"15dp\"\r\n            app:layout_constraintEnd_toEndOf=\"@+id/editTextNumber_login_username\"\r\n            app:layout_constraintStart_toStartOf=\"@id/editTextNumber_login_username\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/editTextNumber_login_username\"/>\r\n    </androidx.cardview.widget.CardView>\r\n\r\n    <Button\r\n        android:id=\"@+id/button_register_reg\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:background=\"@drawable/button_green\"\r\n        android:text=\"REGISTER NOW\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"20dp\"\r\n        android:textStyle=\"normal\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/cardview_login\"\r\n        app:layout_constraintStart_toStartOf=\"@id/cardview_login\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/cardview_login\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button_register_cancel\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:background=\"@drawable/button_white\"\r\n        android:text=\"CANCEL\"\r\n        android:textColor=\"@color/colorTextPurple\"\r\n        android:textSize=\"20dp\"\r\n        android:textStyle=\"normal\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/button_register_reg\"\r\n        app:layout_constraintStart_toStartOf=\"@id/button_register_reg\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/button_register_reg\" />\r\n\r\n    <ProgressBar\r\n        android:id=\"@+id/progressBar_reg\"\r\n        style=\"?android:attr/progressBarStyle\"\r\n        android:layout_width=\"122dp\"\r\n        android:layout_height=\"118dp\"\r\n        android:background=\"@null\"\r\n        android:visibility=\"invisible\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_register.xml	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/res/layout/activity_register.xml	(date 1607975337509)
+@@ -50,14 +50,14 @@
+             android:layout_height="45dp"
+             android:layout_gravity="center"
+             android:layout_marginBottom="110dp"
++            android:background="@color/white"
++            android:drawableStart="@drawable/custom_staff_id"
++            android:drawablePadding="14dp"
+             android:ems="10"
+-            android:inputType="number"
+             android:hint="Staff ID"
+-            android:textSize="18sp"
+-            android:background="@color/white"
+-            android:drawableStart="@drawable/ic_staff_id"
+-            android:drawablePadding="14dp"
+-            />
++            android:maxLength="7"
++            android:inputType="number"
++            android:textSize="18sp" />
+ 
+         <EditText
+             android:id="@+id/editText_register_name"
+@@ -70,7 +70,7 @@
+             android:hint="Name"
+             android:textSize="18sp"
+             android:background="@color/white"
+-            android:drawableStart="@drawable/ic_baseline_account_circle_24"
++            android:drawableStart="@drawable/custom_account_circle"
+             android:drawablePadding="15dp"
+             />
+ 
+@@ -84,7 +84,7 @@
+             android:hint="Email"
+             android:background="@color/white"
+             android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_email"
++            android:drawableStart="@drawable/custom_email"
+             android:drawablePadding="15dp"
+             />
+ 
+@@ -99,7 +99,7 @@
+             android:hint="H/P No."
+             android:background="@color/white"
+             android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_call_24"
++            android:drawableStart="@drawable/custom_phone"
+             android:drawablePadding="15dp"/>
+ 
+         <EditText
+@@ -113,7 +113,7 @@
+             android:hint="@string/prompt_password"
+             android:inputType="textPassword"
+             android:textSize="18sp"
+-            android:drawableStart="@drawable/ic_baseline_lock"
++            android:drawableStart="@drawable/custom_lock"
+             android:drawablePadding="15dp"
+             app:layout_constraintEnd_toEndOf="@+id/editTextNumber_login_username"
+             app:layout_constraintStart_toStartOf="@id/editTextNumber_login_username"
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.choochyemeilin.lamlam\">\r\n\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n\r\n    <uses-permission android:name=\"android.permission.VIBRATE\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        android:theme=\"@style/AppTheme\"\r\n        android:screenOrientation=\"portrait\"\r\n        tools:targetApi=\"m\">\r\n        <uses-library android:name=\"org.apache.http.legacy\" android:required=\"false\"/>\r\n        \r\n        <activity\r\n            android:name=\".Scan.Scan\"\r\n            android:screenOrientation=\"portrait\" />\r\n        <activity\r\n            android:name=\".Home.Home\"\r\n            android:label=\"@string/title_activity_home\"\r\n            android:theme=\"@style/AppTheme\"\r\n            android:screenOrientation=\"portrait\"\r\n            />\r\n        <activity\r\n            android:name=\".Login.Login\"\r\n            android:theme=\"@style/AppTheme.NoActionBar\"\r\n            />\r\n        <activity\r\n            android:name=\".Register.Register\"\r\n            android:theme=\"@style/AppTheme.NoActionBar\"\r\n            />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/AndroidManifest.xml	(date 1607972584199)
+@@ -24,6 +24,7 @@
+         <activity
+             android:name=".Scan.Scan"
+             android:screenOrientation="portrait" />
++
+         <activity
+             android:name=".Home.Home"
+             android:label="@string/title_activity_home"
+@@ -38,6 +39,7 @@
+             android:name=".Register.Register"
+             android:theme="@style/AppTheme.NoActionBar"
+             />
++
+         <activity android:name=".MainActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+Index: app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Register\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.text.TextUtils\r\nimport android.view.View\r\nimport android.view.inputmethod.InputMethodManager\r\nimport android.widget.*\r\nimport androidx.navigation.findNavController\r\nimport com.choochyemeilin.lamlam.Login.ForgotPasswordActivity\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.DatabaseReference\r\nimport com.google.firebase.database.FirebaseDatabase\r\nimport kotlinx.android.synthetic.main.activity_login.*\r\nimport kotlinx.android.synthetic.main.activity_register.*\r\nimport java.util.HashMap\r\n\r\nclass Register : AppCompatActivity() {\r\n    var auth: FirebaseAuth = FirebaseAuth.getInstance()\r\n    var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()\r\n    private var utils = Utils\r\n\r\n   // var database= FirebaseDatabase.getInstance().reference\r\n\r\n  //  private var fStore         : FirebaseFirestore = FirebaseFirestore.getInstance()\r\n   // private var fAuth          : FirebaseAuth = FirebaseAuth.getInstance()\r\n  //  private var fData          : FirebaseDatabase = FirebaseDatabase.getInstance()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_register)\r\n\r\n       // databaseReference.reference.child(\"profile\")\r\n        button_register_reg.setOnClickListener{\r\n            if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())){\r\n                editTextNumber_register_staffID.setError(\"Please enter Staff ID\")\r\n\r\n            }else if(TextUtils.isEmpty(editText_register_name.text.toString())){\r\n                editText_register_name.setError(\"Please enter Name\")\r\n\r\n            }else if(TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())){\r\n                editTextTextEmailAddress_register_email.setError(\"Please enter Email\")\r\n\r\n            }else if(TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())){\r\n                editTextNumber_register_phoneNo.setError(\"Please enter Phone Number\")\r\n\r\n            }else if(TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())){\r\n                editTextTextPassword_register_password.setError(\"Please enter Password\")\r\n\r\n            }\r\n\r\n            // add authentication user\r\n            if(editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty()||\r\n                editTextTextPassword_register_password.text.trim().toString().isNotEmpty()){\r\n                register(editTextTextEmailAddress_register_email.text.trim().toString(),\r\n                    editTextTextPassword_register_password.text.trim().toString())\r\n            }\r\n\r\n        }\r\n\r\n        button_register_cancel.setOnClickListener{\r\n            startActivity(Intent(this, Login::class.java))\r\n            finish()\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n    //Registers the user\r\n    private fun register(email:String, password:String){\r\n        /*\r\n        utils.closeKeyboard()\r\n         */\r\n\r\n        closeKeyBoard()\r\n\r\n        /*\r\n        var staffID=editTextNumber_register_staffID.toString().toInt()\r\n        var staffName=editText_register_name.toString()\r\n        var staffEmail=editTextTextEmailAddress_register_email.toString()\r\n        var phoneNumber=editTextNumber_register_phoneNo.toString().toInt()\r\n        var pw=editTextTextPassword_register_password.toString()\r\n\r\n         */\r\n\r\n        //Start progress\r\n        val progress: ProgressBar = progressBar_reg\r\n        progress.visibility = View.VISIBLE\r\n\r\n     //   val email=findViewById<EditText>(R.id.editTextTextEmailAddress_register_email)\r\n     //   val password=findViewById<EditText>(R.id.editTextTextPassword_register_password)\r\n\r\n        //Firebase\r\n        auth.createUserWithEmailAndPassword(email,password)\r\n            .addOnCompleteListener {\r\n                if (it.isSuccessful){\r\n                    val currentUser=auth.currentUser\r\n                   // val currentUserDb=databaseReference.reference.child(currentUser?.uid!!)\r\n                   //  val currentUserDb=databaseReference.reference.child(\"User\")\r\n                 // val   currentUserDb=databaseReference.reference.child(editTextNumber_register_staffID.text.toString())\r\n                    val currentUserDb=databaseReference.reference.child(\"User\").child(currentUser?.uid!!)\r\n\r\n                    currentUserDb?.child(\"Staff ID\")?.setValue(editTextNumber_register_staffID.text.toString())\r\n                    currentUserDb?.child(\"Name\")?.setValue(editText_register_name.text.toString())\r\n                    currentUserDb?.child(\"Email\")?.setValue(editTextTextEmailAddress_register_email.text.toString())\r\n                    currentUserDb?.child(\"Phone Number\")?.setValue(editTextNumber_register_phoneNo.text.toString())\r\n                    currentUserDb?.child(\"Password\")?.setValue(editTextTextPassword_register_password.text.toString())\r\n\r\n\r\n\r\n                 //   database.child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNumber,pw))\r\n                    Toast.makeText(this@Register, \"Registration Success\", Toast.LENGTH_LONG).show()\r\n                    startActivity(Intent(this, Login::class.java))\r\n                    finish()\r\n                }else{\r\n                    Toast.makeText(this@Register, \"Registration failed. Please try again\", Toast.LENGTH_LONG).show()\r\n                }\r\n            }\r\n    }\r\n\r\n    //Hiding the keyboard\r\n    private fun closeKeyBoard() {\r\n        val view = this.currentFocus\r\n        if (view != null) {\r\n            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager\r\n            imm.hideSoftInputFromWindow(view.windowToken, 0)\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/java/com/choochyemeilin/lamlam/Register/Register.kt	(date 1607978015472)
+@@ -2,14 +2,15 @@
+ 
+ import android.content.Context
+ import android.content.Intent
++import android.os.Build
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.text.TextUtils
+ import android.view.View
+ import android.view.inputmethod.InputMethodManager
+ import android.widget.*
++import androidx.annotation.RequiresApi
+ import androidx.navigation.findNavController
+-import com.choochyemeilin.lamlam.Login.ForgotPasswordActivity
+ import com.choochyemeilin.lamlam.Login.Login
+ import com.choochyemeilin.lamlam.R
+ import com.choochyemeilin.lamlam.helpers.Utils
+@@ -18,19 +19,17 @@
+ import com.google.firebase.database.FirebaseDatabase
+ import kotlinx.android.synthetic.main.activity_login.*
+ import kotlinx.android.synthetic.main.activity_register.*
++import java.time.LocalDateTime
++import java.time.format.DateTimeFormatter
+ import java.util.HashMap
+ 
+ class Register : AppCompatActivity() {
+     var auth: FirebaseAuth = FirebaseAuth.getInstance()
+     var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
++    private var myRef: DatabaseReference = databaseReference.getReference("User")
+     private var utils = Utils
+ 
+-   // var database= FirebaseDatabase.getInstance().reference
+-
+-  //  private var fStore         : FirebaseFirestore = FirebaseFirestore.getInstance()
+-   // private var fAuth          : FirebaseAuth = FirebaseAuth.getInstance()
+-  //  private var fData          : FirebaseDatabase = FirebaseDatabase.getInstance()
+-
++    @RequiresApi(Build.VERSION_CODES.O)
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_register)
+@@ -39,18 +38,23 @@
+         button_register_reg.setOnClickListener{
+             if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())){
+                 editTextNumber_register_staffID.setError("Please enter Staff ID")
++                editTextNumber_register_staffID.requestFocus()
+ 
+             }else if(TextUtils.isEmpty(editText_register_name.text.toString())){
+                 editText_register_name.setError("Please enter Name")
++                editText_register_name.requestFocus()
+ 
+             }else if(TextUtils.isEmpty(editTextTextEmailAddress_register_email.text.toString())){
+                 editTextTextEmailAddress_register_email.setError("Please enter Email")
++                editTextTextEmailAddress_register_email.requestFocus()
+ 
+             }else if(TextUtils.isEmpty(editTextNumber_register_phoneNo.text.toString())){
+                 editTextNumber_register_phoneNo.setError("Please enter Phone Number")
++                editTextNumber_register_phoneNo.requestFocus()
+ 
+             }else if(TextUtils.isEmpty(editTextTextPassword_register_password.text.toString())){
+                 editTextTextPassword_register_password.setError("Please enter Password")
++                editTextTextPassword_register_password.requestFocus()
+ 
+             }
+ 
+@@ -73,6 +77,7 @@
+ 
+ 
+     //Registers the user
++    @RequiresApi(Build.VERSION_CODES.O)
+     private fun register(email:String, password:String){
+         /*
+         utils.closeKeyboard()
+@@ -101,18 +106,23 @@
+             .addOnCompleteListener {
+                 if (it.isSuccessful){
+                     val currentUser=auth.currentUser
+-                   // val currentUserDb=databaseReference.reference.child(currentUser?.uid!!)
+-                   //  val currentUserDb=databaseReference.reference.child("User")
+-                 // val   currentUserDb=databaseReference.reference.child(editTextNumber_register_staffID.text.toString())
+-                    val currentUserDb=databaseReference.reference.child("User").child(currentUser?.uid!!)
++/*
++                 //   val currentUserDb=databaseReference.child(currentUser?.uid!!)
+ 
++                    /*
+                     currentUserDb?.child("Staff ID")?.setValue(editTextNumber_register_staffID.text.toString())
+                     currentUserDb?.child("Name")?.setValue(editText_register_name.text.toString())
+                     currentUserDb?.child("Email")?.setValue(editTextTextEmailAddress_register_email.text.toString())
+                     currentUserDb?.child("Phone Number")?.setValue(editTextNumber_register_phoneNo.text.toString())
+                     currentUserDb?.child("Password")?.setValue(editTextTextPassword_register_password.text.toString())
++                     */
+ 
+-
++ */
++                    writeNewUser(editTextNumber_register_staffID.text.toString(),
++                        editText_register_name.text.toString(),
++                        editTextTextEmailAddress_register_email.text.toString(),
++                        editTextNumber_register_phoneNo.text.toString().toInt(),
++                        editTextTextPassword_register_password.text.toString())
+ 
+                  //   database.child(staffID.toString()).setValue(Staff(staffName,staffEmail,phoneNumber,pw))
+                     Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
+@@ -124,6 +134,20 @@
+             }
+     }
+ 
++    @RequiresApi(Build.VERSION_CODES.O)
++    private fun writeNewUser(userId: String, staffName: String, staffEmail: String, phoneNumber: Int, pw:String) {
++        val userId1="User ID : "
++        val user = Staff(staffName,staffEmail,phoneNumber,pw)
++        val current = LocalDateTime.now()
++        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
++        val formattedDate = current.format(formatter)
++
++        myRef.child(formattedDate).child(userId1).child(userId).setValue(user)
++
++    }
++
++
++
+     //Hiding the keyboard
+     private fun closeKeyBoard() {
+         val view = this.currentFocus
+Index: app/src/main/java/com/choochyemeilin/lamlam/Login/ForgotPasswordActivity.kt
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Login/ForgotPasswordActivity.kt	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/java/com/choochyemeilin/lamlam/Login/ForgotPasswordActivity.kt	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
+@@ -1,71 +0,0 @@
+-package com.choochyemeilin.lamlam.Login
+-
+-import androidx.appcompat.app.AppCompatActivity
+-import android.os.Bundle
+-import com.choochyemeilin.lamlam.R
+-
+-import android.text.TextUtils
+-import android.widget.Button
+-import android.widget.EditText
+-import android.widget.Toast
+-import com.google.android.gms.tasks.OnCompleteListener
+-import com.google.firebase.auth.FirebaseAuth
+-import kotlinx.android.synthetic.main.activity_forgot_password.*
+-import kotlinx.android.synthetic.main.activity_login.*
+-
+-
+-class ForgotPasswordActivity : AppCompatActivity() {
+-    private lateinit var auth: FirebaseAuth
+-
+-    private lateinit var emailEt: EditText
+-
+-    private lateinit var resetPasswordBtn: Button
+-    private lateinit var cancel: Button
+-
+-    override fun onCreate(savedInstanceState: Bundle?) {
+-        super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_forgot_password)
+-
+-        auth = FirebaseAuth.getInstance()
+-
+-        emailEt = findViewById(R.id.editText_forgotpw_email)
+-
+-        resetPasswordBtn = findViewById(R.id.button_forgotpw_resetpw)
+-        cancel = findViewById(R.id.button_forgotpw_cancel)
+-
+-        cancel.setOnClickListener {
+-            finish()
+-        }
+-        resetPasswordBtn.setOnClickListener {
+-            var email: String = emailEt.text.toString()
+-            if (TextUtils.isEmpty(email)) {
+-                Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show()
+-            } else {
+-                auth.sendPasswordResetEmail(email)
+-                    .addOnCompleteListener(this, OnCompleteListener { task ->
+-                        if (task.isSuccessful) {
+-                            Toast.makeText(this, "Reset link sent to your email", Toast.LENGTH_LONG)
+-                                .show()
+-                        } else {
+-                            Toast.makeText(this, "Unable to send reset mail", Toast.LENGTH_LONG)
+-                                .show()
+-                        }
+-                    })
+-            }
+-        }
+-
+-        auth.currentUser?.updatePassword(editTextTextPassword_forgotpw_password.text.toString())
+-            ?.addOnCompleteListener(this, OnCompleteListener { task ->
+-                if (task.isSuccessful) {
+-                    Toast.makeText(this, "Password changes successfully", Toast.LENGTH_LONG)
+-                        .show()
+-                    finish()
+-                } else {
+-                    Toast.makeText(this, "password not changed", Toast.LENGTH_LONG)
+-                        .show()
+-                }
+-            })
+-    }
+-
+-
+-}
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_baseline_call_24_focus.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_baseline_call_24_focus.xml	(date 1607971355690)
++++ app/src/main/res/drawable/ic_baseline_call_24_focus.xml	(date 1607971355690)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    >
++  <path
++      android:fillColor="@color/colorPrimary"
++      android:pathData="M20.01,15.38c-1.23,0 -2.42,-0.2 -3.53,-0.56 -0.35,-0.12 -0.74,-0.03 -1.01,0.24l-1.57,1.97c-2.83,-1.35 -5.48,-3.9 -6.89,-6.83l1.95,-1.66c0.27,-0.28 0.35,-0.67 0.24,-1.02 -0.37,-1.11 -0.56,-2.3 -0.56,-3.53 0,-0.54 -0.45,-0.99 -0.99,-0.99H4.19C3.65,3 3,3.24 3,3.99 3,13.28 10.73,21 20.01,21c0.71,0 0.99,-0.63 0.99,-1.18v-3.45c0,-0.54 -0.45,-0.99 -0.99,-0.99z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_baseline_email_focus.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_baseline_email_focus.xml	(date 1607971313641)
++++ app/src/main/res/drawable/ic_baseline_email_focus.xml	(date 1607971313641)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    >
++  <path
++      android:fillColor="@color/colorPrimary"
++      android:pathData="M20,4L4,4c-1.1,0 -1.99,0.9 -1.99,2L2,18c0,1.1 0.9,2 2,2h16c1.1,0 2,-0.9 2,-2L22,6c0,-1.1 -0.9,-2 -2,-2zM20,8l-8,5 -8,-5L4,6l8,5 8,-5v2z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_baseline_account_circle_24_focus.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_baseline_account_circle_24_focus.xml	(date 1607971478213)
++++ app/src/main/res/drawable/ic_baseline_account_circle_24_focus.xml	(date 1607971478213)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    >
++  <path
++      android:fillColor="@color/colorPrimary"
++      android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM12,5c1.66,0 3,1.34 3,3s-1.34,3 -3,3 -3,-1.34 -3,-3 1.34,-3 3,-3zM12,19.2c-2.5,0 -4.71,-1.28 -6,-3.22 0.03,-1.99 4,-3.08 6,-3.08 1.99,0 5.97,1.09 6,3.08 -1.29,1.94 -3.5,3.22 -6,3.22z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_staff_id_focus.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_staff_id_focus.xml	(date 1607971453920)
++++ app/src/main/res/drawable/ic_staff_id_focus.xml	(date 1607971453920)
+@@ -0,0 +1,21 @@
++<vector android:height="24dp" android:viewportHeight="512"
++    android:viewportWidth="512" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M144.4,11.7c0.9,11.4 2.2,16.4 6.2,24.3 4.1,8.3 11.1,16.9 19.4,23.9 3.6,3 6.7,5.8 6.8,6.3 0.2,0.4 -9,0.8 -20.5,0.8 -23,-0 -27,0.7 -37.6,6.3 -7,3.7 -16.5,13.5 -20.1,20.9 -5.9,12.1 -5.7,3.5 -5.4,197.6l0.3,177.7 2.3,5.9c6.1,16.2 17.1,26.9 33.2,32.2 5.2,1.8 12.1,1.9 122.5,2.2 79,0.2 119.3,-0.1 124,-0.8 19.4,-2.9 36.1,-17.9 41,-36.5 1.3,-5.2 1.5,-27.3 1.5,-184.5 0,-193.5 0.3,-182.9 -5.4,-194.4 -5.5,-11.1 -17.1,-20.8 -29.3,-24.6 -5.7,-1.7 -9.3,-2 -27.9,-2 -13.6,-0 -21.4,-0.4 -21.4,-1 0,-0.6 0.4,-1 0.8,-1 2.1,-0 16.6,-14.8 21,-21.4 6.8,-10.2 9.3,-17.8 9.9,-30.4l0.6,-10.2 -10,-0 -10.1,-0 -0.4,8.7c-0.3,5.9 -1.1,10.3 -2.5,13.3 -5.3,11.7 -18.2,23.9 -34,32.2 -7,3.7 -18.6,8.8 -20,8.8 -0.2,-0 -0.3,-6.5 -0.3,-14.5 0,-15.4 -0.9,-19.3 -4.9,-21.5 -1.2,-0.6 -12.3,-1 -28.6,-1l-26.7,-0 -2.9,2.9 -2.9,2.9 0,15.6c0,8.6 -0.2,15.6 -0.5,15.6 -1.2,-0 -13.6,-5 -18.5,-7.5 -15.5,-7.8 -30.1,-21 -35.8,-32.5 -2.8,-5.6 -3.2,-7.3 -3.2,-14.7l0,-8.3 -10.6,-0 -10.7,-0 0.7,8.7zM269,77.5l0,28.5 -13,-0 -13,-0 0,-28.5 0,-28.5 13,-0 13,-0 0,28.5zM223,103.1c0,9.1 0.4,16.9 1,18 2.4,4.5 5.4,4.9 32.6,4.9l25.6,-0 3.4,-3.4 3.4,-3.4 0,-16.1 0,-16.2 44.3,0.3c50.6,0.3 48.1,-0.1 57,9.8 8.4,9.3 7.8,-7.5 7.5,193l-0.3,178.5 -3,5.3c-3.5,6.4 -7.1,9.6 -14.5,13.1l-5.5,2.6 -119,-0 -119,-0 -5.7,-2.8c-6.5,-3.2 -12.1,-8.9 -15.2,-15.6l-2.1,-4.6 0,-178.5 0,-178.5 2.1,-4.6c3.1,-6.7 7.8,-11.4 14.6,-14.9l6.1,-3 43.4,-0 43.3,-0 0,16.1z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M245.5,146c-39.5,4.3 -72.4,33.8 -82.2,73.8 -1.1,4.5 -1.6,11.1 -1.6,20.2 0,14.9 1.2,21.6 6.3,34.9 10.8,28.1 38.6,51.4 68.5,57.6 9.4,2 27.5,2.2 36,0.6 38.6,-7.7 68.1,-36.6 75.9,-74.5 2,-9.7 2,-27.5 0,-37.2 -8.4,-40.7 -42.1,-71.1 -83.4,-75.4 -5.6,-0.5 -10.7,-0.9 -11.4,-0.9 -0.6,0.1 -4.2,0.5 -8.1,0.9zM272.6,167.6c24.3,5.1 45.8,25 54.2,50.2 2.3,6.7 2.6,9.4 2.6,21.7 0.1,15.9 -1.7,23.7 -8.1,35.5 -3.6,6.7 -9.8,15 -11.2,15 -0.4,-0 -1.3,-1.9 -2,-4.3 -3.3,-10.8 -11.5,-22.6 -21.4,-30.3l-3.8,-2.9 2.5,-3.4c6.7,-9 8,-23.9 3.1,-34.8 -3.2,-7.4 -11,-15.2 -18.2,-18.5 -3.8,-1.8 -6.7,-2.2 -14.3,-2.3 -8.3,-0 -10.2,0.3 -15.2,2.7 -7.3,3.4 -14.3,10.4 -17.6,17.6 -5.1,11.3 -3.7,26.5 3.3,35.7l2.5,3.3 -3.4,2.2c-8.5,5.2 -18.2,18.8 -22.2,30.9l-1.7,5.4 -2.9,-3.4c-4.8,-5.7 -10.6,-16.1 -13.2,-23.5 -9.4,-26.9 -2.6,-56.6 17.8,-77 18.3,-18.2 42.9,-25.3 69.2,-19.8zM262.6,214.6c9.8,4.7 11.9,17.2 4.2,25.1 -6.3,6.5 -16.1,6.4 -22.5,-0.3 -11.7,-12.4 2.9,-32.1 18.3,-24.8zM269,268.7c6,2.6 11.9,7.7 15.6,13.5 3.2,4.9 6.4,14.9 6.4,19.6 0,3.8 -0.2,4 -5.8,6.5 -17.7,8 -42.6,7.7 -59.8,-0.5l-4.9,-2.3 0.4,-5c1.1,-15.9 13.4,-31 27.8,-34.1 7.2,-1.6 13.2,-0.9 20.3,2.3z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M165.9,365.9c-8.4,1.7 -13,8.3 -10.9,16 1.2,4.7 4.5,7.7 14.1,12.7 7.4,3.9 9.8,6.9 7.9,10.3 -2.1,3.9 -9.1,4.2 -14.4,0.6 -4.5,-3.1 -4.7,-3.1 -7.6,-0 -2.3,2.5 -2.3,2.5 -0.4,4.6 7.2,8.2 26.4,7.5 30.8,-1 2.2,-4.1 2,-10.9 -0.3,-14.7 -1.2,-1.9 -4.5,-4.4 -9.2,-6.8 -11.8,-6.2 -14.5,-9.7 -9.7,-13 3,-2.2 6.6,-2 10.6,0.4 3.4,2.1 5.5,1.8 8,-1.3 0.9,-1.1 0.7,-1.8 -1.1,-3.4 -4.5,-4.1 -11.1,-5.7 -17.8,-4.4z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M193,369.5l0,3.5 7,-0 7,-0 0.2,21.2 0.3,21.3 4.8,0.3 4.7,0.3 0,-21.5 0,-21.6 7.5,-0 7.5,-0 0,-3.5 0,-3.5 -19.5,-0 -19.5,-0 0,3.5z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M249,366.4c0,0.2 -3.8,11.5 -8.5,25.1l-8.5,24.6 5.2,-0.3c5.1,-0.3 5.2,-0.3 6.6,-4.6l1.4,-4.3 8.6,0.3 8.5,0.3 1.5,4.2c1.4,4.3 1.4,4.3 6.4,4.3 4.7,-0 4.9,-0.1 4.2,-2.3 -0.4,-1.2 -4.2,-12.3 -8.4,-24.7l-7.7,-22.5 -4.7,-0.3c-2.5,-0.2 -4.6,-0.1 -4.6,0.2zM257.1,389.8c1.5,4.8 2.5,9 2.2,9.4 -0.8,1.4 -11.3,0.9 -11.3,-0.5 0,-2.2 5.3,-18.7 5.9,-18.2 0.3,0.3 1.7,4.5 3.2,9.3z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M283.2,390.7l0.3,24.8 4.7,0.3 4.7,0.3 0.3,-10.3 0.3,-10.3 10.8,-0.3 10.7,-0.3 0,-3.4 0,-3.4 -10.7,-0.3 -10.8,-0.3 -0.3,-6.8 -0.3,-6.7 11.6,-0 11.5,-0 0,-4 0,-4 -16.5,-0 -16.5,-0 0.2,24.7z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M326,391l0,25 5,-0 5,-0 0,-10.5 0,-10.5 11,-0 11,-0 0,-3.5 0,-3.5 -11,-0 -11,-0 0,-7 0,-7 11.5,-0 11.5,-0 0,-4 0,-4 -16.5,-0 -16.5,-0 0,25z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M151.4,436.9c-6,3.7 -6.6,12.7 -1.1,16.6 3.3,2.3 66.7,2.2 70.2,-0.1 3.6,-2.4 4.9,-7.4 3.1,-11.7 -2.7,-6.5 -3.8,-6.7 -38.3,-6.7 -28.4,-0 -31,0.2 -33.9,1.9z" android:strokeColor="#00000000"/>
++    <path android:fillColor="@color/colorPrimary"
++        android:pathData="M248.4,436.6c-6,2.9 -7.3,10.7 -2.5,15.5l2.9,2.9 55.2,-0 55.2,-0 2.9,-2.9c5.1,-5.1 3.3,-13.7 -3.3,-16 -2.1,-0.7 -20.6,-1.1 -55.2,-1.1 -44.8,-0 -52.5,0.3 -55.2,1.6z" android:strokeColor="#00000000"/>
++</vector>
+Index: app/src/main/res/drawable/custom_account_circle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/custom_account_circle.xml	(date 1607971814395)
++++ app/src/main/res/drawable/custom_account_circle.xml	(date 1607971814395)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++
++    <item android:state_focused="true"
++        android:drawable="@drawable/ic_baseline_account_circle_24_focus"/>
++
++    <item android:state_focused="false"
++        android:drawable="@drawable/ic_baseline_account_circle_24"/>
++
++</selector>
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_baseline_lock_focus.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_baseline_lock_focus.xml	(date 1607971514747)
++++ app/src/main/res/drawable/ic_baseline_lock_focus.xml	(date 1607971514747)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    >
++  <path
++      android:fillColor="@color/colorPrimary"
++      android:pathData="M18,8h-1L17,6c0,-2.76 -2.24,-5 -5,-5S7,3.24 7,6v2L6,8c-1.1,0 -2,0.9 -2,2v10c0,1.1 0.9,2 2,2h12c1.1,0 2,-0.9 2,-2L20,10c0,-1.1 -0.9,-2 -2,-2zM12,17c-1.1,0 -2,-0.9 -2,-2s0.9,-2 2,-2 2,0.9 2,2 -0.9,2 -2,2zM15.1,8L8.9,8L8.9,6c0,-1.71 1.39,-3.1 3.1,-3.1 1.71,0 3.1,1.39 3.1,3.1v2z"/>
++</vector>
+Index: app/src/main/res/drawable/custom_staff_id.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/custom_staff_id.xml	(date 1607971974071)
++++ app/src/main/res/drawable/custom_staff_id.xml	(date 1607971974071)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:state_focused="true"
++        android:drawable="@drawable/ic_staff_id_focus"/>
++
++    <item android:state_focused="false"
++        android:drawable="@drawable/ic_staff_id"/>
++</selector>
+\ No newline at end of file
+Index: app/src/main/res/drawable/custom_email.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/custom_email.xml	(date 1607971918933)
++++ app/src/main/res/drawable/custom_email.xml	(date 1607971918933)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:state_focused="true"
++        android:drawable="@drawable/ic_baseline_email_focus"/>
++
++    <item android:state_focused="false"
++        android:drawable="@drawable/ic_baseline_email"/>
++</selector>
+\ No newline at end of file
+Index: app/src/main/res/drawable/custom_phone.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/custom_phone.xml	(date 1607971959585)
++++ app/src/main/res/drawable/custom_phone.xml	(date 1607971959585)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:state_focused="true"
++        android:drawable="@drawable/ic_baseline_call_24_focus"/>
++
++    <item android:state_focused="false"
++        android:drawable="@drawable/ic_baseline_call_24"/>
++</selector>
+\ No newline at end of file
+Index: app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.Home\r\n\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.StrictMode\r\nimport android.view.MenuItem\r\nimport android.view.View\r\nimport android.widget.AdapterView\r\nimport android.widget.GridView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.navigation.fragment.FragmentNavigator\r\nimport androidx.navigation.fragment.NavHostFragment.findNavController\r\nimport androidx.navigation.ui.AppBarConfiguration\r\nimport androidx.navigation.ui.setupActionBarWithNavController\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.Register.Register\r\nimport com.choochyemeilin.lamlam.ReturnItems.ReturnItems\r\nimport com.choochyemeilin.lamlam.Scan.Scan\r\n//import com.choochyemeilin.lamlam.Search.Search\r\nimport com.choochyemeilin.lamlam.helpers.Lcg\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.DatabaseReference\r\nimport com.google.firebase.database.FirebaseDatabase\r\nimport kotlinx.android.synthetic.main.activity_home.*\r\n\r\nimport org.json.JSONArray\r\nimport org.json.JSONObject\r\n\r\nclass Home : AppCompatActivity(), AdapterView.OnItemClickListener {\r\n\r\n    private var arrayList:ArrayList<HomeItem> ? = null\r\n    private var gridView: GridView? = null\r\n    private var languageAdapter: HomeAdapter? = null\r\n    private var lcg : Lcg = Lcg()\r\n    private var utils : Utils = Utils\r\n\r\n    lateinit var toggle: ActionBarDrawerToggle\r\n    \r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_home)\r\n        //Init Var\r\n\r\n        //Navigation Bar\r\n        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)\r\n        drawerLayout.addDrawerListener(toggle)\r\n        toggle.syncState()\r\n\r\n        supportActionBar?.setDisplayHomeAsUpEnabled(true)\r\n        supportActionBar?.setTitle(R.string.app_name)\r\n        supportActionBar?.elevation = 0f\r\n\r\n        nav_view.setNavigationItemSelectedListener {\r\n            when(it.itemId){\r\n                R.id.mItem1 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 1\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n                R.id.mItem2 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 2\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n\r\n                R.id.mItem3 -> Toast.makeText(\r\n                    applicationContext,\r\n                    \"Clicked Item 3\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n\r\n               // R.id.mItem4 -> startActivity(Intent(this,Register::class.java))\r\n\r\n            }\r\n            true\r\n        }\r\n\r\n\r\n        //logout\r\n        nav_view.menu.findItem(R.id.mItem4).setOnMenuItemClickListener {\r\n            logout()\r\n            return@setOnMenuItemClickListener true\r\n        }\r\n\r\n        gridView = findViewById(R.id.homeGridLayout)\r\n        arrayList = ArrayList()\r\n        arrayList = setDataList()\r\n        languageAdapter = HomeAdapter(applicationContext, arrayList!!)\r\n        gridView?.adapter = languageAdapter\r\n        gridView?.onItemClickListener = this\r\n\r\n\r\n        //val welcome = findViewById<TextView>(R.id.welcome_user)\r\n\r\n        /*val str : String = \"T\"\r\n\r\n        var chars = str.toCharArray()\r\n        var i = 0;\r\n        *//*var n = mutableListOf<Int>();\r\n        while(i < 8){\r\n            n.add(i, chars[i].toInt() xor lcg.next().toInt())\r\n            i++\r\n        }*//*\r\n        val binary = chars[0].toInt()\r\n        val finalBinary = String.format(\"%8s\", Integer.toBinaryString(binary)).replace(' ', '0')\r\n        welcome.text = lcg.toBinary(chars).toString()*/\r\n    }\r\n\r\n    //Logout Methods\r\n    private fun logout(){\r\n\r\n        FirebaseAuth.getInstance().signOut()\r\n        Toast.makeText(this, \"Signed Out\", Toast.LENGTH_SHORT).show()\r\n        val intent : Intent = Intent(this, Login::class.java)\r\n        startActivity(intent)\r\n    }\r\n\r\n    private fun setDataList() : ArrayList<HomeItem>{\r\n        var arrayList:ArrayList<HomeItem> = ArrayList()\r\n\r\n        arrayList.add(HomeItem(R.drawable.qr_code, \"SCAN\"))\r\n        arrayList.add(HomeItem(R.drawable.magnifier, \"SEARCH\"))\r\n        arrayList.add(HomeItem(R.drawable.loan, \"LOANS\"))\r\n        arrayList.add(HomeItem(R.drawable.business_report, \"REPORTS\"))\r\n        arrayList.add(HomeItem(R.drawable.exchange, \"RETURN ITEMS\"))\r\n\r\n        return arrayList\r\n    }\r\n\r\n    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {\r\n        when (p2) {\r\n            0 -> {\r\n                val intent = Intent(this, Scan::class.java)\r\n                startActivity(intent)\r\n            }\r\n            /*\r\n            1 -> {\r\n                val intent = Intent(this, Search::class.java)\r\n                startActivity(intent)\r\n            }\r\n\r\n             */\r\n            1 -> {\r\n                Toast.makeText(applicationContext, \"SEARCH\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            2 -> {\r\n                Toast.makeText(applicationContext, \"LOANS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            3 -> {\r\n                Toast.makeText(applicationContext, \"REPORTS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            4 -> {\r\n               val intent = Intent(this, ReturnItems::class.java)\r\n                startActivity(intent)\r\n               // Toast.makeText(applicationContext, \"RETURN ITEMS\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n\r\n    //Navigation Drawer\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        if(toggle.onOptionsItemSelected(item)){\r\n            return true\r\n        }\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/java/com/choochyemeilin/lamlam/Home/Home.kt	(date 1607975190108)
+@@ -160,7 +160,7 @@
+             4 -> {
+                val intent = Intent(this, ReturnItems::class.java)
+                 startActivity(intent)
+-               // Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
++                Toast.makeText(applicationContext, "RETURN ITEMS", Toast.LENGTH_SHORT).show()
+             }
+         }
+     }
+Index: app/src/main/res/drawable/custom_lock.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/custom_lock.xml	(date 1607971938814)
++++ app/src/main/res/drawable/custom_lock.xml	(date 1607971938814)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:state_focused="true"
++        android:drawable="@drawable/ic_baseline_lock_focus"/>
++
++    <item android:state_focused="false"
++        android:drawable="@drawable/ic_baseline_lock"/>
++</selector>
+\ No newline at end of file
+Index: app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.widget.ImageView\r\nimport android.widget.ProgressBar\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.choochyemeilin.lamlam.Home.Home\r\nimport com.choochyemeilin.lamlam.Login.Login\r\nimport com.choochyemeilin.lamlam.Register.Register\r\nimport com.choochyemeilin.lamlam.ReturnItems.ReturnItems\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\n\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    private var utils = Utils\r\n    private var TIME_OUT: Long = 2000\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n        supportActionBar!!.hide() //Remove Action Bar\r\n\r\n        //Declare Var\r\n        var logo    = findViewById<ImageView>(R.id.splash_screen_logo)\r\n        var pBar    = findViewById<ProgressBar>(R.id.splash_screen_progressBar)\r\n\r\n\r\n        //Declare Animation\r\n        utils.declareAnim(this)\r\n\r\n        logo.startAnimation(utils.fadeInTop)\r\n        pBar.startAnimation(utils.fadeInBottom)\r\n\r\n        //start activity\r\n        Handler().postDelayed(Runnable {\r\n            val intent = Intent(this, Register::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }, TIME_OUT)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt	(revision f6cbf787748f9317e96068cd0e6aa6542772ce91)
++++ app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt	(date 1607964912915)
+@@ -35,7 +35,7 @@
+ 
+         //start activity
+         Handler().postDelayed(Runnable {
+-            val intent = Intent(this, Register::class.java)
++            val intent = Intent(this, Login::class.java)
+             startActivity(intent)
+             finish()
+         }, TIME_OUT)

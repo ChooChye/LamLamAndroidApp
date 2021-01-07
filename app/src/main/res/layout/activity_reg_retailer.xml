@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Register.RegRetailer"
+    android:background="@drawable/splash_screen_bg">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="520dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/text_register_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REGISTER RETAILER"
+        android:textColor="@color/white"
+        android:textSize="28dp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_login"
+        android:layout_width="300dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/text_register_reg"
+        app:layout_constraintStart_toStartOf="@id/text_register_reg"
+        app:layout_constraintTop_toBottomOf="@id/text_register_reg">
+
+
+        <EditText
+            android:id="@+id/editText_reg_retailer_name"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="105dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Retailer Name"
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:drawableStart="@drawable/custom_account_circle"
+            android:drawablePadding="15dp"
+            />
+
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="55dp"
+            />
+
+        <EditText
+            android:id="@+id/editText_reg_retailer_address"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:inputType="textPostalAddress"
+            android:hint="Address"
+            android:textSize="18sp"
+            android:maxLines="5"
+            android:background="@color/white"
+            android:drawableStart="@drawable/ic_baseline_location_on_24"
+            android:drawablePadding="15dp"
+            />
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button_reg_retailer"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_green"
+        android:text="REGISTER NOW"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/cardview_login"
+        app:layout_constraintStart_toStartOf="@id/cardview_login"
+        app:layout_constraintTop_toBottomOf="@id/cardview_login" />
+
+    <Button
+        android:id="@+id/button_reg_retailer_cancel"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_white"
+        android:text="CANCEL"
+        android:textColor="@color/colorTextPurple"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/button_reg_retailer"
+        app:layout_constraintStart_toStartOf="@id/button_reg_retailer"
+        app:layout_constraintTop_toBottomOf="@id/button_reg_retailer" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_reg"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="122dp"
+        android:layout_height="118dp"
+        android:background="@null"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
