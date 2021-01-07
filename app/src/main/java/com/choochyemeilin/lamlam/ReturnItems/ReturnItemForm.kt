@@ -1,5 +1,6 @@
 package com.choochyemeilin.lamlam.ReturnItems
 
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -59,10 +60,7 @@ class ReturnItemForm : AppCompatActivity() {
                 if (data != null) { //[{"category":"Tops","desc":"Tzu Pink Sweatshirt with Hoodie","image":"pink_sweatshirt.jpg","price":"39.00","product_name":"Tzu Pink Sweatshirt","qty":"1","id":"-MOyCeFDbzM2wbtV8Ied"}]
                     updateDB(data)
                 }
-
-
             }
-
         }
     }
 
@@ -130,9 +128,20 @@ class ReturnItemForm : AppCompatActivity() {
 
             }
             .addOnFailureListener {
-           //     showDialog("Firebase error")
+                showDialog("Firebase error")
             }
 
+    }
+
+    private fun showDialog(msg: String) {
+        var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        builder
+            .setTitle("INFORMATION")
+            .setMessage(msg)
+            .setNegativeButton("OK") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            .show()
     }
 
     override fun onSupportNavigateUp(): Boolean {
