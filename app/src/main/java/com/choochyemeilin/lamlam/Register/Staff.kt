@@ -10,19 +10,20 @@ class Staff {
     var retailerName=""
     var retailerAddress=""
 
-    constructor( staffID:Int, staffName: String, staffEmail:String, phoneNumber:Int,pw:String){
+    constructor( staffID:Int, staffName: String, staffEmail:String, phoneNumber:Int,pw:String
+                 ,retailerName:String,retailerAddress:String){
 
         this.staffID=staffID
         this.staffName=staffName
         this.staffEmail=staffEmail
         this.phoneNumber=phoneNumber
         this.pw=pw
-
-    }
-
-    constructor(retailerName:String,retailerAddress:String){
         this.retailerName=retailerName
-
         this.retailerAddress=retailerAddress
     }
+
+   /* constructor(retailerName:String,retailerAddress:String){
+        this.retailerName=retailerName
+        this.retailerAddress=retailerAddress
+    }*/
 }

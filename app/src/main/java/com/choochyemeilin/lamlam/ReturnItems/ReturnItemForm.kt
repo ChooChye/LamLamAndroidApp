@@ -33,7 +33,7 @@ class ReturnItemForm : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = "Return Items Information"
 
-        val data = intent.getStringExtra("data")
+       /* val data = intent.getStringExtra("data")
         try {
             var data1: List<Products>? = null
             val json = data
@@ -43,11 +43,26 @@ class ReturnItemForm : AppCompatActivity() {
             Utils.log(data1[0].product_name.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
-        }
+        }*/
+
 
         button_return_now.setOnClickListener {
-            val jsonData = "[$it]"
-            updateDB(jsonData)
+            if(return_qty.text.isEmpty()){
+                utils.toast(this,"Please enter quantity",1)
+            }else{
+
+                //!!!!!!!!!!!!!!PENDING PENDING PENDING!!!!!!!!!!!!!!!!!!!!!!!
+
+                val data = intent.getStringExtra("data")
+                //androidx.appcompat.widget.AppCompatButton{d82bddb VFED..C.. ...P.... 330,413-750,545 #7f080066 app:id/button_return_now}
+
+                if (data != null) { //[{"category":"Tops","desc":"Tzu Pink Sweatshirt with Hoodie","image":"pink_sweatshirt.jpg","price":"39.00","product_name":"Tzu Pink Sweatshirt","qty":"1","id":"-MOyCeFDbzM2wbtV8Ied"}]
+                    updateDB(data)
+                }
+
+
+            }
+
         }
     }
 
@@ -88,13 +103,16 @@ class ReturnItemForm : AppCompatActivity() {
 
                 //val prodDesc = data!![0].desc
                 val prodName = data[0].product_name
-                val prodQty = data[0].qty  //NEED TO GET ReturnItemForm QUANTITY
-
-                val oldStatus = data[0].status
+                val prodQty = return_qty.text.toString()  //NEED TO GET ReturnItemForm QUANTITY
+                data[0].qty=return_qty.text.toString()
+                val remark=return_remarks.text.toString()
+                //  val oldStatus = data[0].status
                 val status="IN STOCK"
-                oldStatus.equals(status)
+              //  oldStatus.equals(status)
+                data[0].status="In Stock"
                 //     val returnDate = data[0].returnDate
                 val current = LocalDateTime.now()
+                data[0].returnDate= current.toString()
                 //     val remarks=  // NEED TO GET ReturnItemForm REMARKS
 
                 val msg = String.format(
@@ -104,8 +122,8 @@ class ReturnItemForm : AppCompatActivity() {
                             "Quantity : %s\n" +
                             "Status : %s\n" +
                             "Return Date : %s\n\n" +
-                            "Remarks : \n\n" +
-                            "Successfully Recorded", id, cat, prodName, prodQty, status, current
+                            "Remarks : %s\n\n" +
+                            "Successfully Recorded", id, cat, prodName, prodQty, status, current,remark
                 )
               //  showDialog(msg)
 

@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.Login.Login
+import com.choochyemeilin.lamlam.Register.RegRetailer
 import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.Register.RegisterNewRole
 import com.choochyemeilin.lamlam.ReturnItems.MyStocks

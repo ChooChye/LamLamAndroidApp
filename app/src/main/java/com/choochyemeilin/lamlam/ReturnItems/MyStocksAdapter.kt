@@ -36,20 +36,20 @@ class MyStocksAdapter (
         var productRef: DatabaseReference = databaseReference.getReference("Products")
 
         val products: Products = arrayList.get(position)
-/*
-        // PENDING PENDING PENDING!!!!!
+
+       /* // PENDING PENDING PENDING!!!!!
         holder.itemView.textView_stock_name.text = products.product_name
         holder.itemView.textView_stock_qty.text = products.qty
         holder.itemView.textView_stock_date.text = products.returnDate
+*/
 
- */
         loansRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dss in snapshot.children) {
                     val productItem : Products? = dss.getValue(Products::class.java)
                     dss.children.forEach {
                         val status = it.child("status").value
-                        if (status.toString() == "approved") {
+                        if (status.toString() == "pending") {
                             val loopName=it.child("productName")
 
                             loopName.children.forEach{
@@ -68,8 +68,9 @@ class MyStocksAdapter (
                                 val img=productRef.orderByChild("image")
                                 val pqty=qty.getValue().toString()
 
-                          //      val pimg= img.toString()
-                            //    holder.itemView.image_mystock.setImageResource(pimg)
+                                val pimg= img.toString()
+                                holder.itemView.image_mystock
+
 
 
                             }

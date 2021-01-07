@@ -32,11 +32,11 @@ class RegRetailer : AppCompatActivity() {
         setContentView(R.layout.activity_reg_retailer)
 
         button_reg_retailer.setOnClickListener {
-            register()
+         //   register()
         }
     }
 
-    //Registers the user
+  /*  //Registers the user
     @RequiresApi(Build.VERSION_CODES.O)
     private fun register() {
 
@@ -73,5 +73,5 @@ class RegRetailer : AppCompatActivity() {
                     finish()
 
 
-    }
+    }*/
 }

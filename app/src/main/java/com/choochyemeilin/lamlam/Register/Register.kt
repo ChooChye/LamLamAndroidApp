@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.Products
@@ -29,7 +30,11 @@ class Register : AppCompatActivity() {
     private var utils = Utils
     private var passwordLock = false
 
-    //  private var id=true
+    //spinner
+    lateinit var option:Spinner
+    lateinit var result:TextView
+
+    //  get reference
     private var myRef: DatabaseReference = databaseReference.getReference("Staff ID")
     private var userRef: DatabaseReference = databaseReference.getReference("User")
     private var roleRef: DatabaseReference = databaseReference.getReference("Role")
@@ -84,6 +89,7 @@ class Register : AppCompatActivity() {
                 editTextTextEmailAddress_register_email.text.trim().toString().isNotEmpty() ||
                 editTextTextPassword_register_password.text.trim().toString().isNotEmpty()
             ) {
+
                 roleRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for (dss in snapshot.children) {
@@ -91,10 +97,8 @@ class Register : AppCompatActivity() {
                                 val id = it.child("Staff ID").value
                                 if (id.toString() == editTextNumber_register_staffID.text.toString()) {
                                     register(
-                                        editTextTextEmailAddress_register_email.text.trim()
-                                            .toString(),
-                                        editTextTextPassword_register_password.text.trim()
-                                            .toString()
+                                        editTextTextEmailAddress_register_email.text.trim().toString(),
+                                        editTextTextPassword_register_password.text.trim().toString()
                                     )
                                 }
                             }
@@ -132,6 +136,41 @@ class Register : AppCompatActivity() {
             showPassword(passwordLock)
         }
         showPassword(passwordLock)
+
+        //spinner
+        option=findViewById(R.id.spinner_register_retailer_name)as Spinner
+        result=findViewById(R.id.textView_register_retailer_address)as TextView
+
+        val options= arrayOf("---Select Retailer Name----","LamLam PV128","LamLam GM Plaza")
+
+        option.adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,options)
+
+        option.onItemSelectedListener=object :AdapterView.OnItemClickListener,
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                val nameResult=options.get(position)
+                textView4.text=nameResult
+
+              if(options.get(position).equals("LamLam PV128")){
+                  result.text="G.20, PV128, Jalan Genting Kelang, Taman Danau Kota, 53100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur"
+              }else if(options.get(position).equals("LamLam GM Plaza")){
+                  result.text="15, Lorong Haji Taib 5, Chow Kit, 50350 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur"
+              }else{
+                  result.text=""
+              }
+         //       result.text=options.get(position)
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                result.text=""
+            }
+
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                TODO("Not yet implemented")
+            }
+
+        }
     }
 
 
@@ -150,7 +189,7 @@ class Register : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(this@Register, "User Registration Success", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
                     //    val userID="User ID : "
                     val staffID = editTextNumber_register_staffID.text.toString().toInt()
                     val staffName = editText_register_name.text.toString()
@@ -159,6 +198,8 @@ class Register : AppCompatActivity() {
                     val pw = editTextTextPassword_register_password.text.toString()
                     val currentUser = auth.currentUser
                     val uid = currentUser?.uid
+                    val rname=textView4.text.toString()
+                   val raddress=textView_register_retailer_address.text.toString()
 
 
                     if (uid != null) {
@@ -169,7 +210,9 @@ class Register : AppCompatActivity() {
                                 staffName,
                                 staffEmail,
                                 phoneNumber,
-                                pw
+                                pw,
+                                rname,
+                                raddress
                             )
                         )
                     }
@@ -234,18 +277,7 @@ class Register : AppCompatActivity() {
                         editTextNumber_register_staffID.setError("Staff ID is not in the database")
                         editTextNumber_register_staffID.requestFocus()
                     }
-
-                    //  textRegStaffID.equals(id)
-/*
-                  if (!id.equals(textRegStaffID)){
-                     editTextNumber_register_staffID.setError("Staff ID is not in the database")
-                     editTextNumber_register_staffID.requestFocus()
-
-                  }
-      */
                 }
-
-
             }
         })
         return true
