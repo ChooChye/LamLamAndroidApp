@@ -91,6 +91,28 @@ object Utils {
         return staffID
     }
 
+    fun getUserRole(callback: FbCallback) : String{
+        val user = fbAuth.currentUser?.email
+        var role  = "staff"
+        val myRef: DatabaseReference = database.getReference("User")
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dss in snapshot.children) {
+                    val staffEmail = dss.child("staffEmail").value.toString()
+                    if (user == staffEmail) {
+                        val uRole = dss.child("role").value.toString()
+                        callback.onCallbackGetUserEmail(uRole)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                log("Error has occurred #9370 | ${error.message}")
+            }
+        })
+        return role
+    }
+
     fun getRetailerID(callback: FbCallback) : Int{
         val user = fbAuth.currentUser?.email
         var retailerID  = 0

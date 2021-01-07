@@ -44,7 +44,7 @@ class SearchAdapter(
     private fun loadImage(holder: ViewHolder, getImage : String) {
         var image : String
         val storage = FirebaseStorage.getInstance()
-        val gsReference = storage.reference.child("products/" + getImage)
+        val gsReference = storage.reference.child("products/$getImage")
         gsReference.downloadUrl.addOnSuccessListener { Uri ->
             image = Uri.toString()
             Picasso.get().load(image).into(holder.itemView.search_layout_image)

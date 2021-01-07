@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.loans_pending_list_layout.view.*
@@ -18,7 +19,7 @@ class LoansPendingAdapter(
     private val dataList: List<LoanApplication>
 ) : RecyclerView.Adapter<LoansPendingAdapter.ViewHolder>() {
     private var utils: Utils = Utils
-
+    private var role = ""
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.loan_tv_title
         val date = itemView.loan_tv_date
@@ -55,12 +56,20 @@ class LoansPendingAdapter(
     private fun showDialog(context: Context, position: Int) {
 
         var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)
-        val role = "admin".toLowerCase()
+
+        Utils.getUserRole(object: FbCallback{
+            override fun onCallbackGetUserEmail(user: String) {
+                super.onCallbackGetUserEmail(user)
+                role = user
+            }
+        })
         val data = dataList[position]
         var msg = "Date Applied : ${data.loanDate}\n\n" +
                 "Products Requested : \n"
+        val prodName = data.productName
+
         for (i in 0 until data.productName.size) {
-            msg += "$i - ${data}\n"
+            //msg += "$i - $prodName (${qty})\n"
         }
         builder
             .setTitle("LOAN ID #${dataList[position].loanID}")

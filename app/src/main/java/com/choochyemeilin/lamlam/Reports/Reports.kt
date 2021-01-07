@@ -156,17 +156,20 @@ class Reports : AppCompatActivity() {
                     for (dss in snapshot.children) {
                         dss.children.forEach {
                             val dbRID = it.child("retailerID").value.toString().toInt()
+                            val status = it.child("status").value.toString()
                             if (retailerID == dbRID) {
-                                val product = it.child("productName")
-                                product.children.forEach {
-                                    val key = it.key.toString()
-                                    val qty = it.value.toString().toInt()
-                                    if (mutableList.containsKey(key)) {
-                                        val oldValue = mutableList[key].toString().toInt()
-                                        mutableList[key] = oldValue + qty
+                                if(status.toUpperCase() == "APPROVED"){
+                                    val product = it.child("productName")
+                                    product.children.forEach {
+                                        val key = it.key.toString()
+                                        val qty = it.value.toString().toInt()
+                                        if (mutableList.containsKey(key)) {
+                                            val oldValue = mutableList[key].toString().toInt()
+                                            mutableList[key] = oldValue + qty
 
-                                    } else {
-                                        mutableList[key] = qty
+                                        } else {
+                                            mutableList[key] = qty
+                                        }
                                     }
                                 }
                             }
