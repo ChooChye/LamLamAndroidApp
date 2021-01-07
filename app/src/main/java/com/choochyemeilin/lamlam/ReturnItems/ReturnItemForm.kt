@@ -1,5 +1,6 @@
 package com.choochyemeilin.lamlam.ReturnItems
 
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -23,6 +24,7 @@ class ReturnItemForm : AppCompatActivity() {
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("Return History")
+    private var mutableList: MutableMap<String, Int> = mutableMapOf()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,17 +35,17 @@ class ReturnItemForm : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = "Return Items Information"
 
-       /* val data = intent.getStringExtra("data")
-        try {
-            var data1: List<Products>? = null
-            val json = data
-             data1=readJSON(json!!)
+        /* val data = intent.getStringExtra("data")
+         try {
+             var data1: List<Products>? = null
+             val json = data
+              data1=readJSON(json!!)
 
-            Utils.log(data1.toString())
-            Utils.log(data1[0].product_name.toString())
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }*/
+             Utils.log(data1.toString())
+             Utils.log(data1[0].product_name.toString())
+         } catch (e: JSONException) {
+             e.printStackTrace()
+         }*/
 
 
         button_return_now.setOnClickListener {
@@ -59,10 +61,7 @@ class ReturnItemForm : AppCompatActivity() {
                 if (data != null) { //[{"category":"Tops","desc":"Tzu Pink Sweatshirt with Hoodie","image":"pink_sweatshirt.jpg","price":"39.00","product_name":"Tzu Pink Sweatshirt","qty":"1","id":"-MOyCeFDbzM2wbtV8Ied"}]
                     updateDB(data)
                 }
-
-
             }
-
         }
     }
 
@@ -86,6 +85,8 @@ class ReturnItemForm : AppCompatActivity() {
         val formattedTime = current.format(formatter2)
         val formattedSec = current.format(formatter3)
 
+
+
         try {
             data = readJSON(jsonData)
 
@@ -100,7 +101,10 @@ class ReturnItemForm : AppCompatActivity() {
             .addOnSuccessListener {
                 val cat = data!![0].category
                 val id = data[0].id
-
+                val desc=data[0].desc
+                val price=data[0].price
+                val image=data[0].image
+                val loanDate=data[0].loanDate
                 //val prodDesc = data!![0].desc
                 val prodName = data[0].product_name
                 val prodQty = return_qty.text.toString()  //NEED TO GET ReturnItemForm QUANTITY
@@ -108,7 +112,7 @@ class ReturnItemForm : AppCompatActivity() {
                 val remark=return_remarks.text.toString()
                 //  val oldStatus = data[0].status
                 val status="IN STOCK"
-              //  oldStatus.equals(status)
+                //  oldStatus.equals(status)
                 data[0].status="In Stock"
                 //     val returnDate = data[0].returnDate
                 val current = LocalDateTime.now()
@@ -125,17 +129,47 @@ class ReturnItemForm : AppCompatActivity() {
                             "Remarks : %s\n\n" +
                             "Successfully Recorded", id, cat, prodName, prodQty, status, current,remark
                 )
-              //  showDialog(msg)
+                showDialog(msg)
+
+                myRef.child(formattedDate).child(formattedTime).child(formattedSec)
+                    .setValue(Products(
+                        id,
+                        cat,
+                        prodName,
+                        desc,
+                        price,
+                        prodQty,
+                        image,
+                        status,
+                        loanDate,
+                        current.toString(),
+                        remark
+                    ))
 
                 Toast.makeText(this, "Items Return Successfully", Toast.LENGTH_LONG).show()
 
             }
             .addOnFailureListener {
-           //     showDialog("Firebase error")
+                showDialog("Firebase error")
             }
 
     }
 
+    private fun showDialog(msg: String) {
+        var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        builder
+            .setTitle("INFORMATION")
+            .setMessage(msg)
+            .setNegativeButton("OK") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            .show()
+    }
+
+    operator fun <K, V> Map<out K, V>.get(key: K): V?{
+
+        return null
+    }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         this.finish()

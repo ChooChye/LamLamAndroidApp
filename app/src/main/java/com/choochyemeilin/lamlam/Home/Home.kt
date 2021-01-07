@@ -154,7 +154,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                utils.log("$error")
+                Utils.log("$error")
             }
 
         })

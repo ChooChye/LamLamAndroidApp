@@ -33,7 +33,7 @@ import kotlin.jvm.java as java1
      lateinit var mRecyclerView: RecyclerView
 
      var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-     private var myRef: DatabaseReference = database.getReference("Categories")
+     private var myRef: DatabaseReference = database.getReference("Products")
      private lateinit var arrayList: ArrayList<Products>
     private var utils : Utils = Utils
      private lateinit var auth: FirebaseAuth
@@ -60,8 +60,8 @@ import kotlin.jvm.java as java1
     private fun StocksRecyclerView(){
 
         //----------ORIGINAL------------
-       var query : Query = myRef.child("Tops").orderByChild("product_name")
-    //    var query : Query = myRef.child("2021-01-07").orderByChild("productName")
+   //    var query : Query = myRef.child("Tops").orderByChild("product_name")
+       var query : Query = myRef.orderByChild("product_name")
 
    //     var query : Query = myRef
         query.addValueEventListener(object : ValueEventListener {
@@ -77,15 +77,16 @@ import kotlin.jvm.java as java1
                             val productItem: Products? = dss.getValue(Products::class.java1)
                             if (productItem != null) {
                                 arrayList.add(productItem)
+
+                                val myAdapter = MyStocksAdapter(applicationContext, arrayList)
+                                list_view_recycle.adapter = myAdapter
+                                list_view_recycle.layoutManager = LinearLayoutManager(
+                                    applicationContext, LinearLayoutManager.VERTICAL,
+                                    false
+                                )
+                                myAdapter.notifyDataSetChanged()
                             }
 
-                        val myAdapter = MyStocksAdapter(applicationContext, arrayList)
-                        list_view_recycle.adapter = myAdapter
-                        list_view_recycle.layoutManager = LinearLayoutManager(
-                            applicationContext, LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                        myAdapter.notifyDataSetChanged()
 
                     }
 
