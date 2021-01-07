@@ -7,19 +7,19 @@ class Staff {
     var staffEmail=""
     var phoneNumber=0
     var pw=""
-    var retailerName=""
-    var retailerAddress=""
+    var retailerID=""
+    var role="staff"
 
     constructor( staffID:Int, staffName: String, staffEmail:String, phoneNumber:Int,pw:String
-                 ,retailerName:String,retailerAddress:String){
+                 ,retailerID:String){
 
         this.staffID=staffID
         this.staffName=staffName
         this.staffEmail=staffEmail
         this.phoneNumber=phoneNumber
         this.pw=pw
-        this.retailerName=retailerName
-        this.retailerAddress=retailerAddress
+        this.retailerID=retailerID
+
     }
 
    /* constructor(retailerName:String,retailerAddress:String){

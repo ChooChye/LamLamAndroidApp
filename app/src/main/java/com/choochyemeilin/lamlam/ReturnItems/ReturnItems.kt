@@ -96,7 +96,7 @@ class ReturnItems : AppCompatActivity() {
         }
     }
 
-    //Update Database after scanning
+/*    //Update Database after scanning
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDB(jsonData: String) {
         var data: List<Products>? = null
@@ -153,7 +153,7 @@ class ReturnItems : AppCompatActivity() {
                 showDialog("Firebase error")
             }
 
-    }
+    }*/
 
     //Vibrate when scanning
     private fun hapticFeedback() {

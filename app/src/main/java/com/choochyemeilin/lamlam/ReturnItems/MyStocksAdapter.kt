@@ -37,11 +37,11 @@ class MyStocksAdapter (
 
         val products: Products = arrayList.get(position)
 
-       /* // PENDING PENDING PENDING!!!!!
+        // PENDING PENDING PENDING!!!!!
         holder.itemView.textView_stock_name.text = products.product_name
         holder.itemView.textView_stock_qty.text = products.qty
         holder.itemView.textView_stock_date.text = products.returnDate
-*/
+
 
         loansRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -69,9 +69,9 @@ class MyStocksAdapter (
                                 val pqty=qty.getValue().toString()
 
                                 val pimg= img.toString()
+                            }
                                 holder.itemView.image_mystock
                             }*/
-
                             val date=it.child("returnDate").value
                             holder.itemView.textView_stock_date.text = date.toString()
                         }
