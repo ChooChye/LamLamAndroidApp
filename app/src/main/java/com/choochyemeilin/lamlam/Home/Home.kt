@@ -29,7 +29,7 @@ import org.json.JSONObject
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
-    private var arrayList:ArrayList<HomeItem> ? = null
+    private var arrayList: ArrayList<HomeItem>? = null
     private var gridView: GridView? = null
     private var languageAdapter: HomeAdapter? = null
     //private var lcg : Lcg = Lcg()
@@ -37,7 +37,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     lateinit var toggle: ActionBarDrawerToggle
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    val currentUser=auth.currentUser
+    val currentUser = auth.currentUser
     val uid = currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,19 +55,14 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         supportActionBar?.elevation = 0f
 
         nav_view.setNavigationItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.mItem1 -> Toast.makeText(
                     applicationContext,
                     "My Profile",
                     Toast.LENGTH_SHORT
                 ).show()
-                R.id.mItem2 -> {
-                    startActivity(Intent(this, MyStocks::class.java))
-                    finish()
-                }
-
+                R.id.mItem2 -> startActivity(Intent(this, MyStocks::class.java))
                 R.id.mItem3 -> logout()
-
             }
             true
         }
@@ -79,13 +74,13 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
 
-        if(currentUser!=null){
+        if (currentUser != null) {
             changeName()
         }
     }
 
     //Logout Methods
-    private fun logout(){
+    private fun logout() {
 
         FirebaseAuth.getInstance().signOut()
         Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show()
@@ -94,8 +89,8 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         finish()
     }
 
-    private fun setDataList() : ArrayList<HomeItem>{
-        val arrayList:ArrayList<HomeItem> = ArrayList()
+    private fun setDataList(): ArrayList<HomeItem> {
+        val arrayList: ArrayList<HomeItem> = ArrayList()
 
         arrayList.add(HomeItem(R.drawable.qr_code, "SCAN"))
         arrayList.add(HomeItem(R.drawable.magnifier, "SEARCH"))
@@ -119,44 +114,45 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     //Navigation Drawer
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
+        if (toggle.onOptionsItemSelected(item)) {
             return true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun changeName(){
-
+    private fun changeName() {
+        //textView_drawer_name.text = "TEST"
         var userRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("User")
-        var query : Query =userRef.orderByChild("staffName")
+        var query: Query = userRef.orderByChild("staffName")
 
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for (dss in snapshot.children) {
                     //var name=dss.getValue().toString()
-                        var cu= currentUser?.email.toString()
-                        if(cu==dss.child("staffEmail").value.toString()){
+                    var cu = currentUser?.email.toString()
+                    if (cu == dss.child("staffEmail").value.toString()) {
 
-                            var role1=dss.child("role").value.toString()
-                            var name=dss.child("staffName").value.toString().toUpperCase()
+                        var role1 = dss.child("role").value.toString()
+                        var name = dss.child("staffName").value.toString().toUpperCase()
 
 
-                            if(role1=="admin"){
-                                welcome_user.text="Welcome, "+name+"("+role1+")"
-                            }else{
-                                welcome_user.text="Welcome, "+name
-                            }
-                            textView_drawer_name.text=name
+                        if (role1 == "admin") {
+                            welcome_user.text = "Welcome, " + name + "(" + role1 + ")"
+                            //textView_drawer_name.text = name
+                        } else {
+                            welcome_user.text = "Welcome, " + name
+                            //textView_drawer_name.text = name
                         }
+
+                    }
 
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Utils.log("$error")
+                Utils.log("${error.message}")
             }
-
         })
     }
 }

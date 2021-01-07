@@ -38,7 +38,6 @@ class LoansPending : Fragment() {
                             pendingLoans.add(i)
                         }
                     }
-
                     view.loansPending_rv.adapter = LoansPendingAdapter(pendingLoans)
                     view.loansPending_rv.layoutManager = LinearLayoutManager(view.context)
                     view.loansPending_rv.setHasFixedSize(true)
@@ -74,8 +73,9 @@ class LoansPending : Fragment() {
                         val product = it.child("productName")
                         val products: MutableMap<String, Int> = mutableMapOf()
                         for (i in 0 until product.childrenCount) {
-                            val prodName = product.child(i.toString()).value
-                            products[prodName.toString()] = 0
+                            val prodName = product.value
+                            Utils.log("test = " + prodName.toString())
+                            //products[prodName.toString()] = 0
                             //products.add(product.child(i.toString()).value.toString())
                         }
                         val item = LoanApplication(loanID, date, status, products)

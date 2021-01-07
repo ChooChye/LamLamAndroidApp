@@ -18,16 +18,17 @@ import kotlinx.android.synthetic.main.loans_pending_list_layout.view.*
 class LoansPendingAdapter(
     private val dataList: List<LoanApplication>
 ) : RecyclerView.Adapter<LoansPendingAdapter.ViewHolder>() {
-    private var utils: Utils = Utils
-    private var role = ""
+
+    private var role = "staff"
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.loan_tv_title
         val date = itemView.loan_tv_date
         val status = itemView.loan_tv_status
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.loans_pending_list_layout, parent, false)
         return ViewHolder(itemView)
@@ -36,6 +37,12 @@ class LoansPendingAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Utils.getUserRole(object : FbCallback {
+            override fun onCallbackGetUserEmail(user: String) {
+                super.onCallbackGetUserEmail(user)
+                role = user
+            }
+        })
         val currentItem = dataList[position]
         val context = holder.itemView.context
         holder.title.text = "#${currentItem.loanID}"
@@ -57,18 +64,12 @@ class LoansPendingAdapter(
 
         var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)
 
-        Utils.getUserRole(object: FbCallback{
-            override fun onCallbackGetUserEmail(user: String) {
-                super.onCallbackGetUserEmail(user)
-                role = user
-            }
-        })
+
         val data = dataList[position]
         var msg = "Date Applied : ${data.loanDate}\n\n" +
 
                 "Products Requested : \n"
-        val prodName = data.productName
-
+        Utils.log(data.productName.toString())
         for (i in 0 until data.productName.size) {
             //msg += "$i - $prodName (${qty})\n"
         }
@@ -97,7 +98,7 @@ class LoansPendingAdapter(
 
     }
 
-    private fun actionLoan(loanID: Int, status : String) {
+    private fun actionLoan(loanID: Int, status: String) {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("Loans")
 
@@ -107,9 +108,10 @@ class LoansPendingAdapter(
                     dss.children.forEach {
                         val key = dss.key.toString()
                         val dbLoanID = it.child("loanID").value
-                        if(dbLoanID.toString().toInt() == loanID.toString().toInt()){
+                        if (dbLoanID.toString().toInt() == loanID.toString().toInt()) {
                             //update value
-                            myRef.child(key).child(it.key.toString()).child("status").setValue(status.toLowerCase())
+                            myRef.child(key).child(it.key.toString()).child("status")
+                                .setValue(status.toLowerCase())
                         }
                     }
                 }

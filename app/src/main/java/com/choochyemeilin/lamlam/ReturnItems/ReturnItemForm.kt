@@ -94,7 +94,6 @@ class ReturnItemForm : AppCompatActivity() {
             utils.log("Error #897 | $e")
         }
         //utils.log("TEST readJSON = $data");
-
         val process =
             myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
         process
@@ -166,10 +165,6 @@ class ReturnItemForm : AppCompatActivity() {
             .show()
     }
 
-    operator fun <K, V> Map<out K, V>.get(key: K): V?{
-
-        return null
-    }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         this.finish()

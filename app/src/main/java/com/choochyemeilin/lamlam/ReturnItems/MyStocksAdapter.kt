@@ -64,13 +64,14 @@ class MyStocksAdapter (
                             val pname=productRef.orderByChild("product_name")
                              val qty=it.child("productName")
 
-                            if (qty.equals(pname)){
+                            /*if (qty.equals(pname)){
                                 val img=productRef.orderByChild("image")
                                 val pqty=qty.getValue().toString()
 
                                 val pimg= img.toString()
-
                             }
+                                holder.itemView.image_mystock
+                            }*/
                             val date=it.child("returnDate").value
                             holder.itemView.textView_stock_date.text = date.toString()
                         }

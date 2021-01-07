@@ -106,39 +106,36 @@ class Reports : AppCompatActivity() {
     }
 
     private fun sortDataByQty(){
+        var map : MutableMap<String, Int>
         if(sortByQty == 0){
             sortByQty = 1
             val sorted = mutableList.toList().sortedBy { col ->col.second}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
         }else{
             sortByQty = 0
             val sorted = mutableList.toList().sortedByDescending { col ->col.second}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
+
         }
+        reports_rv.adapter = ReportAdapter(map)
+        reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+        reports_rv.setHasFixedSize(true)
     }
 
     private fun sortDataByAlpha(){
+        var map : MutableMap<String, Int>
         if(sortByQty == 0){
             sortByQty = 1
             val sorted = mutableList.toList().sortedBy { col ->col.first}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
         }else{
             sortByQty = 0
             val sorted = mutableList.toList().sortedByDescending { col ->col.first}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
         }
+        reports_rv.adapter = ReportAdapter(map)
+        reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+        reports_rv.setHasFixedSize(true)
     }
 
     private fun getData(callback: FbCallback) {
@@ -158,7 +155,7 @@ class Reports : AppCompatActivity() {
                             val dbRID = it.child("retailerID").value.toString().toInt()
                             val status = it.child("status").value.toString()
                             if (retailerID == dbRID) {
-                                if(status.toUpperCase() == "APPROVED"){
+                                if(status.toUpperCase() == "PENDING"){
                                     val product = it.child("productName")
                                     product.children.forEach {
                                         val key = it.key.toString()
