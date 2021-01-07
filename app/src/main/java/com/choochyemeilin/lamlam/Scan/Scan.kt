@@ -133,8 +133,8 @@ class Scan : AppCompatActivity() {
                         "Category : %s\n" +
                         "Product Name : %s\n" +
                         "Price : %s\n" +
-                        "Quantity : %s\n\n" +
-                        "Successfully Recorded", id, cat, prodName, prodPrice, prodQty)
+//                        "Quantity : %s\n\n" +
+                        "Successfully Recorded", id, cat, prodName, prodPrice)
                 showDialog(msg)
 
             }
