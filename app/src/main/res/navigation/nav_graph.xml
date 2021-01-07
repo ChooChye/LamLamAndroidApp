@@ -15,5 +15,4 @@
         android:label="Register"
         tools:layout="@layout/activity_register" />
 
-
 </navigation>

@@ -9,6 +9,7 @@ class Products {
     var desc: String? = null
     var price: String = ""
     var qty: String = ""
+    var image: String = ""
     var status: String? = null
     var loanDate: String? = null
     var returnDate: String? = null
@@ -25,6 +26,7 @@ class Products {
         desc: String?,
         price: String,
         qty: String,
+        image: String,
         status: String?,
         loanDate: String?,
         returnDate: String?,
@@ -36,11 +38,13 @@ class Products {
         this.desc = desc
         this.price = price
         this.qty = qty
+        this.image = image
         this.status = status
         this.loanDate = loanDate
         this.returnDate = returnDate
         this.image=image
     }
+
 
 
 }

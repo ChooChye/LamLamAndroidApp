@@ -1,10 +1,8 @@
 package com.choochyemeilin.lamlam.Home
 
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.StrictMode
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -12,23 +10,17 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
+import com.choochyemeilin.lamlam.Loans.Loans
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
-import com.choochyemeilin.lamlam.Register.Register
+import com.choochyemeilin.lamlam.Reports.Reports
 import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.Search.Search
-//import com.choochyemeilin.lamlam.Search.Search
-import com.choochyemeilin.lamlam.helpers.Lcg
-import com.choochyemeilin.lamlam.helpers.Products
-import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.nav_header.*
 
@@ -40,10 +32,10 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     private var arrayList:ArrayList<HomeItem> ? = null
     private var gridView: GridView? = null
     private var languageAdapter: HomeAdapter? = null
-    private var lcg : Lcg = Lcg()
-    private var utils : Utils = Utils
+    //private var lcg : Lcg = Lcg()
 
     lateinit var toggle: ActionBarDrawerToggle
+
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     val currentUser=auth.currentUser
     val uid = currentUser?.uid
@@ -66,12 +58,12 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
             when(it.itemId){
                 R.id.mItem1 -> Toast.makeText(
                     applicationContext,
-                    "Clicked Item 1",
+                    "My Profile",
                     Toast.LENGTH_SHORT
                 ).show()
                 R.id.mItem2 -> {
-                    val intent : Intent = Intent(this, MyStocks::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, MyStocks::class.java))
+                    finish()
                 }
 
                 R.id.mItem3 -> logout()
@@ -87,27 +79,9 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         gridView?.adapter = languageAdapter
         gridView?.onItemClickListener = this
 
-
-
         if(currentUser!=null){
             changeName()
         }
-
-
-        //val welcome = findViewById<TextView>(R.id.welcome_user)
-
-        /*val str : String = "T"
-
-        var chars = str.toCharArray()
-        var i = 0;
-        *//*var n = mutableListOf<Int>();
-        while(i < 8){
-            n.add(i, chars[i].toInt() xor lcg.next().toInt())
-            i++
-        }*//*
-        val binary = chars[0].toInt()
-        val finalBinary = String.format("%8s", Integer.toBinaryString(binary)).replace(' ', '0')
-        welcome.text = lcg.toBinary(chars).toString()*/
     }
 
     //Logout Methods
@@ -115,12 +89,13 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         FirebaseAuth.getInstance().signOut()
         Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show()
-        val intent : Intent = Intent(this, Login::class.java)
+        val intent = Intent(this, Login::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun setDataList() : ArrayList<HomeItem>{
-        var arrayList:ArrayList<HomeItem> = ArrayList()
+        val arrayList:ArrayList<HomeItem> = ArrayList()
 
         arrayList.add(HomeItem(R.drawable.qr_code, "SCAN"))
         arrayList.add(HomeItem(R.drawable.magnifier, "SEARCH"))
@@ -133,26 +108,11 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         when (p2) {
-            0 -> {
-                val intent = Intent(this, Scan::class.java)
-                startActivity(intent)
-            }
-
-            1 -> {
-                val intent = Intent(this, Search::class.java)
-                startActivity(intent)
-            }
-            2 -> {
-                Toast.makeText(applicationContext, "LOANS", Toast.LENGTH_SHORT).show()
-            }
-            3 -> {
-                Toast.makeText(applicationContext, "REPORTS", Toast.LENGTH_SHORT).show()
-            }
-            4 -> {
-               val intent = Intent(this, ReturnItems::class.java)
-                startActivity(intent)
-
-            }
+            0 -> startActivity(Intent(this, Scan::class.java))
+            1 -> startActivity(Intent(this, Search::class.java))
+            2 -> startActivity(Intent(this, Loans::class.java))
+            3 -> startActivity(Intent(this, Reports::class.java))
+            4 -> startActivity(Intent(this, ReturnItems::class.java))
         }
     }
 
@@ -165,7 +125,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    fun changeName(){
+    private fun changeName(){
 
         var userRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("User")
         var query : Query =userRef.orderByChild("staffName")

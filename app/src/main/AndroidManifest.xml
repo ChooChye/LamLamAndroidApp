@@ -18,9 +18,30 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+
         <activity android:name=".Register.RegRetailer"></activity>
         <activity android:name=".ReturnItems.ReturnItemForm" />
         <activity android:name=".Register.RegisterNewRole" />
+
+        <activity android:name=".Misc.NoInternet"></activity>
+        <activity
+            android:name=".Reports.Reports"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Loans.form.LoanAppForm3"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Loans.form.LoanAppForm2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Loans.form.LoanAppForm"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Loans.Loans"
+            android:label="@string/title_activity_loans"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".ReturnItems.MyStocks" />
 
         <uses-library
@@ -38,7 +59,11 @@
             android:name=".Home.Home"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Login.Login"
             android:theme="@style/AppTheme.NoActionBar" />

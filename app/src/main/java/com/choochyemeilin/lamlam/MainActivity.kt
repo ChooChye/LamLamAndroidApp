@@ -9,10 +9,7 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.Login.Login
-import com.choochyemeilin.lamlam.Register.RegRetailer
-import com.choochyemeilin.lamlam.Register.Register
-import com.choochyemeilin.lamlam.Register.RegisterNewRole
-import com.choochyemeilin.lamlam.ReturnItems.MyStocks
+import com.choochyemeilin.lamlam.Misc.NoInternet
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 
@@ -27,9 +24,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.hide() //Remove Action Bar
 
         //Declare Var
-        var logo    = findViewById<ImageView>(R.id.splash_screen_logo)
-        var pBar    = findViewById<ProgressBar>(R.id.splash_screen_progressBar)
-
+        val logo    = findViewById<ImageView>(R.id.splash_screen_logo)
+        val pBar    = findViewById<ProgressBar>(R.id.splash_screen_progressBar)
 
         //Declare Animation
         utils.declareAnim(this)
@@ -38,22 +34,21 @@ class MainActivity : AppCompatActivity() {
         pBar.startAnimation(utils.fadeInBottom)
 
         //start activity
-        Handler().postDelayed(Runnable {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-
-            var auth: FirebaseAuth = FirebaseAuth.getInstance()
-            val currentUser=auth.currentUser
-
-            if (currentUser != null) {
-                // User is signed in
-                val intent = Intent(this, Home::class.java)
-                startActivity(intent)
-            } else {
-                // No user is signed in
-                // Toast.makeText(this, "User not found", Toast.LENGTH_LONG).show()
+        Handler().postDelayed({
+            if(Utils.isNetworkAvailable(applicationContext)) {
+                if (Utils.checkUserAuth()) {
+                    val intent = Intent(this, Home::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    val intent = Intent(this, Login::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }else{
+                startActivity(Intent(this, NoInternet::class.java))
+                finish()
             }
-
         }, TIME_OUT)
     }
 }
