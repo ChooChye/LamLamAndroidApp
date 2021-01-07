@@ -13,7 +13,6 @@ class Products {
     var status: String? = null
     var loanDate: String? = null
     var returnDate: String? = null
-    var image:String?=null
 
     constructor() {
 
@@ -29,8 +28,7 @@ class Products {
         image: String,
         status: String?,
         loanDate: String?,
-        returnDate: String?,
-        image:String?
+        returnDate: String?
     ) {
         this.id = id
         this.category = category
@@ -42,7 +40,6 @@ class Products {
         this.status = status
         this.loanDate = loanDate
         this.returnDate = returnDate
-        this.image=image
     }
 
 

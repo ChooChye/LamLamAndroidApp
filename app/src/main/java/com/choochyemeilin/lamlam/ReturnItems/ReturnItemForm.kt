@@ -93,7 +93,6 @@ class ReturnItemForm : AppCompatActivity() {
             utils.log("Error #897 | $e")
         }
         //utils.log("TEST readJSON = $data");
-
         val process =
             myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
         process
