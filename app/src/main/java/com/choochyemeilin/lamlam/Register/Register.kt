@@ -46,7 +46,7 @@ class Register : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         
         button_register_reg.setOnClickListener {
-
+            progressBar_reg.visibility = View.VISIBLE
             if (TextUtils.isEmpty(editTextNumber_register_staffID.text.toString())) {
                 editTextNumber_register_staffID.setError("Please enter Staff ID")
                 editTextNumber_register_staffID.requestFocus()
@@ -184,8 +184,8 @@ class Register : AppCompatActivity() {
         utils.closeKeyboard(findViewById(R.id.activity_register))
 
         //Start progress
-        val progress: ProgressBar = progressBar_reg
-        progress.visibility = View.VISIBLE
+        /*val progress: ProgressBar = progressBar_reg
+        progress.visibility = View.VISIBLE*/
 
 
         //Firebase

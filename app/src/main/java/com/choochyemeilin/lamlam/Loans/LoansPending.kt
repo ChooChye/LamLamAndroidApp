@@ -73,8 +73,8 @@ class LoansPending : Fragment() {
                         val product = it.child("productName")
                         val products: MutableMap<String, Int> = mutableMapOf()
                         for (i in 0 until product.childrenCount) {
-                            val prodName = product.value
-                            Utils.log("test = " + prodName.toString())
+                            val prodName = arrayOf(product.value)
+                            Utils.log("test = $prodName")
                             //products[prodName.toString()] = 0
                             //products.add(product.child(i.toString()).value.toString())
                         }

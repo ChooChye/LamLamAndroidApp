@@ -4,29 +4,21 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.R
-import com.choochyemeilin.lamlam.Search.SearchAdapter
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Retailers
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_my_stocks.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.activity_search.rv_result
 import kotlinx.android.synthetic.main.my_stocks_list.*
 import kotlinx.android.synthetic.main.my_stocks_list.view.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import kotlin.jvm.java as java1
 
  class MyStocks : AppCompatActivity() {
 
@@ -74,7 +66,7 @@ import kotlin.jvm.java as java1
                             }
                             //utils.log("${dss.value}")
 
-                            val productItem: Products? = dss.getValue(Products::class.java1)
+                            val productItem: Products? = dss.getValue(Products::class.java)
                             if (productItem != null) {
                                 arrayList.add(productItem)
 

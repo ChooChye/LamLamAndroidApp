@@ -137,12 +137,16 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                         var name = dss.child("staffName").value.toString().toUpperCase()
 
 
-                        if (role1 == "admin") {
-                            welcome_user.text = "Welcome, " + name + "(" + role1 + ")"
-                            //textView_drawer_name.text = name
-                        } else {
-                            welcome_user.text = "Welcome, " + name
-                            //textView_drawer_name.text = name
+                        try {
+                            if (role1 == "admin") {
+                                welcome_user.text = "Welcome, " + name + "(" + role1 + ")"
+                                textView_drawer_name.text = name
+                            } else {
+                                welcome_user.text = "Welcome, " + name
+                                textView_drawer_name.text = name
+                            }
+                        }catch (e: Exception){
+                            Utils.log("${e.message}")
                         }
 
                     }
