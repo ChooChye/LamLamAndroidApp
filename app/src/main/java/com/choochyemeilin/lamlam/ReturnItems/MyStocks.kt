@@ -68,7 +68,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
 
                             val productItem: Products? = dss.getValue(Products::class.java)
                             if (productItem != null) {
-                                arrayList.add(productItem)
+
 
                                 val myAdapter = MyStocksAdapter(applicationContext, arrayList)
                                 list_view_recycle.adapter = myAdapter
@@ -77,6 +77,8 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
                                     false
                                 )
                                 myAdapter.notifyDataSetChanged()
+
+                                arrayList.add(productItem)
                             }
 
 

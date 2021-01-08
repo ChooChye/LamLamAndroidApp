@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ProgressBar
+        android:id="@+id/mystock_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp" />
+
     <ImageView
         android:id="@+id/image_mystock"
         android:layout_width="100dp"
@@ -11,7 +20,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:src="@drawable/ic_baseline_error_outline_24" />
+        android:src="@drawable/blue_sweatshirt" />
 
     <TextView
         android:id="@+id/textView_stock_name"
