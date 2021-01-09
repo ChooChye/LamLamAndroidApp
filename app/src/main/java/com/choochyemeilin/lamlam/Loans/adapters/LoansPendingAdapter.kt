@@ -69,10 +69,17 @@ class LoansPendingAdapter(
         var msg = "Date Applied : ${data.loanDate}\n\n" +
 
                 "Products Requested : \n"
-        Utils.log(data.productName.toString())
-        for (i in 0 until data.productName.size) {
-            //msg += "$i - $prodName (${qty})\n"
+
+        val x = data.productName
+        var index = 1
+        x.forEach {
+            val key = it.key
+            val qty = it.value
+            msg += "$index - $key ($qty)\n"
+            index++
         }
+
+
         builder
             .setTitle("LOAN ID #${dataList[position].loanID}")
             .setMessage(msg)

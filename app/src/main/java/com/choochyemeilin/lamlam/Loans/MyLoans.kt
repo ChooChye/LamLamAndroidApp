@@ -35,7 +35,6 @@ class MyLoans : Fragment() {
                         approvedLoans.add(i)
                     }
                 }
-
                 view.myloans_rv.adapter = LoansApprovedAdapter(approvedLoans)
                 view.myloans_rv.layoutManager = LinearLayoutManager(view.context)
                 view.myloans_rv.setHasFixedSize(true)
@@ -60,11 +59,10 @@ class MyLoans : Fragment() {
                         val status = it.child("status").value.toString()
                         val product = it.child("productName")
                         val products: MutableMap<String, Int> = mutableMapOf()
-                        //val products: ArrayList<String> = ArrayList()
-                        for (i in 0 until product.childrenCount) {
-                            val prodName = product.child(i.toString()).value
-                            products[prodName.toString()] = 0
-                            //products.add(product.child(i.toString()).value.toString())
+                        product.children.forEach { jt ->
+                            val value = jt.value.toString().toInt()
+                            val key = jt.key.toString()
+                            products[key] = value
                         }
                         val item = LoanApplication(loanID, date, status, products)
                         list.add(item)

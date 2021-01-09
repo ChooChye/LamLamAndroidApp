@@ -71,7 +71,6 @@ class LoanFormAdapter(
         if (count != 0) {
             x = --count
             holder.counter.text = x.toString()
-            Utils.log("minus")
             mutableList[product] = x
         }
         fbCallback.push(mutableList)

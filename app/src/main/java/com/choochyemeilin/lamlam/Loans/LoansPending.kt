@@ -72,11 +72,10 @@ class LoansPending : Fragment() {
                         val status = it.child("status").value.toString()
                         val product = it.child("productName")
                         val products: MutableMap<String, Int> = mutableMapOf()
-                        for (i in 0 until product.childrenCount) {
-                            val prodName = arrayOf(product.value)
-                            Utils.log("test = $prodName")
-                            //products[prodName.toString()] = 0
-                            //products.add(product.child(i.toString()).value.toString())
+                        product.children.forEach { jt ->
+                            val value = jt.value.toString().toInt()
+                            val key = jt.key.toString()
+                            products[key] = value
                         }
                         val item = LoanApplication(loanID, date, status, products)
                         list.add(item)
@@ -98,4 +97,6 @@ class LoansPending : Fragment() {
         super.onStop()
         pendingLoans.clear()
     }
+
+
 }
