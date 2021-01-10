@@ -28,7 +28,6 @@ private const val KEY = "map"
 
 class LoanAppForm2 : AppCompatActivity() {
 
-    private var utils: Utils = Utils
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
     private var arrayList: ArrayList<SelectedProducts> = ArrayList()
     private var loanID: Int = genLoanID()
@@ -62,19 +61,24 @@ class LoanAppForm2 : AppCompatActivity() {
 
 
     //Apply now action
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun applyNow() {
         val loan_id = loanID
-        val loanDate = utils.now()
+
         val products = mutableList
         val status = "pending"
 
+        val current: org.joda.time.LocalDateTime = org.joda.time.LocalDateTime.now()
+        val hour = current.hourOfDay
+        val min = current.minuteOfHour
+        val sec = current.secondOfMinute
+        val formattedTime = "$hour:$min:$sec"
 
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val formattedDate = current.format(formatter)
-        val formattedTime = current.format(formatter2)
+        val day = current.dayOfMonth
+        val month = current.monthOfYear
+        val year = current.year
+        val formattedDate = "$year-$month-$day"
+        val loanDate = "$formattedDate $formattedTime"
 
 
         //Create Class

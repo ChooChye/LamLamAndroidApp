@@ -73,4 +73,10 @@ dependencies {
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //JODA Time
+    implementation 'net.danlew:android.joda:2.10.9'
+
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
 }

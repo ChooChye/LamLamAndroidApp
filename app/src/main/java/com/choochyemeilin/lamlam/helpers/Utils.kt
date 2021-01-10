@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.choochyemeilin.lamlam.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -46,6 +47,7 @@ object Utils {
     }
 
     fun log(msg: String){
+        //Timber.d(msg)
         Log.e("TEST", msg)
     }
 

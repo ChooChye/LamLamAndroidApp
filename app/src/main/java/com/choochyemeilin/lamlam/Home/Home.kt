@@ -2,12 +2,14 @@ package com.choochyemeilin.lamlam.Home
 
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Loans.Loans
@@ -18,14 +20,14 @@ import com.choochyemeilin.lamlam.ReturnItems.MyStocks
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.Scan.Scan
 import com.choochyemeilin.lamlam.Search.Search
+import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.nav_header.*
-
-import org.json.JSONArray
-import org.json.JSONObject
+import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -40,6 +42,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
     val currentUser = auth.currentUser
     val uid = currentUser?.uid
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -77,6 +80,8 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         if (currentUser != null) {
             changeName()
         }
+
+        Utils.log("Test")
     }
 
     //Logout Methods
@@ -145,7 +150,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                                 welcome_user.text = "Welcome, " + name
                                 textView_drawer_name.text = name
                             }
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             Utils.log("${e.message}")
                         }
 
