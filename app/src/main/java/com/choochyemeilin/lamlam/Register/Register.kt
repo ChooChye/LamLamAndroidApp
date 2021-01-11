@@ -202,7 +202,7 @@ class Register : AppCompatActivity() {
                     val currentUser = auth.currentUser
                     val uid = currentUser?.uid
                     val rname=textView4.text.toString()
-                   val rid=textView_rid.text.toString()
+                   val rid=textView_rid.text.toString().toInt()
 
 
                     if (uid != null) {

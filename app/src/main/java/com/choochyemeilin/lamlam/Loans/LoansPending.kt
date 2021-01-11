@@ -1,5 +1,6 @@
 package com.choochyemeilin.lamlam.Loans
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +16,15 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_loans_pending.*
 import kotlinx.android.synthetic.main.fragment_loans_pending.view.*
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class LoansPending : Fragment() {
 
     var pendingLoans: ArrayList<LoanApplication> = ArrayList()
+    var staffID = 0
+    var role = "staff"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,13 +34,36 @@ class LoansPending : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_loans_pending, container, false)
         view.loansPending_progressBar.visibility = View.VISIBLE
+
+        Utils.getStaffID(object : FbCallback {
+            override fun onCallbackGetUserID(uid: Int) {
+                super.onCallbackGetUserID(uid)
+                staffID = uid
+            }
+        })
+        Utils.getUserRole(object : FbCallback{
+            override fun onCallbackGetUserEmail(user: String) {
+                super.onCallbackGetUserEmail(user)
+                role = user
+            }
+        })
+
         getPendingLoans(object : FbCallback {
+            @SuppressLint("DefaultLocale")
             override fun onCallback(arr: ArrayList<LoanApplication>) {
                 try {
                     pendingLoans.clear()
                     for (i in arr) {
-                        if (i.status.toUpperCase() == "PENDING") {
-                            pendingLoans.add(i)
+                        if (role == "admin"){
+                            if (i.status.toUpperCase() == "PENDING") {
+                                pendingLoans.add(i)
+                            }
+                        }else if(role == "staff"){
+                            if(i.staffID == staffID){
+                                if (i.status.toUpperCase() == "PENDING") {
+                                    pendingLoans.add(i)
+                                }
+                            }
                         }
                     }
                     pendingLoans.reverse()
@@ -72,6 +100,8 @@ class LoansPending : Fragment() {
                         val loanID = it.child("loanID").value.toString().toInt()
                         val date = it.child("loanDate").value.toString()
                         val status = it.child("status").value.toString()
+                        val staffID = it.child("staffID").value.toString().toInt()
+                        val retailerID = it.child("retailerID").value.toString().toInt()
                         val product = it.child("productName")
                         val products: MutableMap<String, Int> = mutableMapOf()
                         product.children.forEach { jt ->
@@ -79,7 +109,7 @@ class LoansPending : Fragment() {
                             val key = jt.key.toString()
                             products[key] = value
                         }
-                        val item = LoanApplication(loanID, date, status, products)
+                        val item = LoanApplication(loanID, date, status, products, staffID, retailerID)
                         list.add(item)
                         //{loanDate=2020-11-26 23:16, loanID=45647, productName=[Pink Sweatshirt, Blue Sweatshirt, Levi's Jeans (Black)], status=pending}
                     }
