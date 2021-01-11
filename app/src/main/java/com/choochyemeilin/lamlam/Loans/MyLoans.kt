@@ -35,6 +35,7 @@ class MyLoans : Fragment() {
                         approvedLoans.add(i)
                     }
                 }
+                approvedLoans.reverse()
                 view.myloans_rv.adapter = LoansApprovedAdapter(approvedLoans)
                 view.myloans_rv.layoutManager = LinearLayoutManager(view.context)
                 view.myloans_rv.setHasFixedSize(true)

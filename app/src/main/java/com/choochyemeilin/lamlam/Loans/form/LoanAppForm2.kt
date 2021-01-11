@@ -2,12 +2,10 @@ package com.choochyemeilin.lamlam.Loans.form
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.Loans.Classes.SelectedProducts
@@ -15,13 +13,10 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Retailers
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_loan_app_form2.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import kotlin.collections.ArrayList
+import java.text.DecimalFormat
 
 
 private const val KEY = "map"
@@ -37,8 +32,7 @@ class LoanAppForm2 : AppCompatActivity() {
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("Loans")
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loan_app_form2)
@@ -68,6 +62,8 @@ class LoanAppForm2 : AppCompatActivity() {
         val products = mutableList
         val status = "pending"
 
+        var  df: DecimalFormat? = DecimalFormat("00")
+
         val current: org.joda.time.LocalDateTime = org.joda.time.LocalDateTime.now()
         val hour = current.hourOfDay
         val min = current.minuteOfHour
@@ -75,11 +71,11 @@ class LoanAppForm2 : AppCompatActivity() {
         val formattedTime = "$hour:$min:$sec"
 
         val day = current.dayOfMonth
-        val month = current.monthOfYear
+        val month = df?.format(current.monthOfYear)
         val year = current.year
+
         val formattedDate = "$year-$month-$day"
         val loanDate = "$formattedDate $formattedTime"
-
 
         //Create Class
         val loanApplication = LoanApplication(loan_id, loanDate, status, products, staffID!!, rID)

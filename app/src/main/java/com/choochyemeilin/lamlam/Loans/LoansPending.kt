@@ -38,6 +38,8 @@ class LoansPending : Fragment() {
                             pendingLoans.add(i)
                         }
                     }
+                    pendingLoans.reverse()
+
                     view.loansPending_rv.adapter = LoansPendingAdapter(pendingLoans)
                     view.loansPending_rv.layoutManager = LinearLayoutManager(view.context)
                     view.loansPending_rv.setHasFixedSize(true)

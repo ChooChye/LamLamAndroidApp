@@ -25,9 +25,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.nav_header.*
-import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.DecimalFormat
+
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -80,8 +79,6 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
         if (currentUser != null) {
             changeName()
         }
-
-        Utils.log("Test")
     }
 
     //Logout Methods

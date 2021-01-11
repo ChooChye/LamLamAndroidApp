@@ -155,7 +155,7 @@ class Reports : AppCompatActivity() {
                             val dbRID = it.child("retailerID").value.toString().toInt()
                             val status = it.child("status").value.toString()
                             if (retailerID == dbRID) {
-                                if(status.toUpperCase() == "PENDING"){
+                                if(status.toUpperCase() == "APPROVED"){
                                     val product = it.child("productName")
                                     product.children.forEach {
                                         val key = it.key.toString()

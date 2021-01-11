@@ -19,8 +19,6 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
 
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var myRef: DatabaseReference = database.getReference("Products")
-    //private var arrayListText: ArrayList<String> = ArrayList()
     private var mutableMap : MutableMap<String, Int> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +58,6 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         }else{
             val intent = Intent(this, LoanAppForm2::class.java)
             intent.putExtra("map", mutableMap as Serializable)
-            utils.log("LoanAppForm = $mutableMap")
             startActivity(intent)
 
         }
