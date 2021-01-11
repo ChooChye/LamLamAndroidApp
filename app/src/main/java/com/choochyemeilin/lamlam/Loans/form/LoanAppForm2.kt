@@ -13,8 +13,7 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Retailers
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_loan_app_form2.*
 import java.text.DecimalFormat
 
@@ -26,11 +25,12 @@ class LoanAppForm2 : AppCompatActivity() {
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
     private var arrayList: ArrayList<SelectedProducts> = ArrayList()
     private var loanID: Int = genLoanID()
-    private var rID : Int = 0
-    var staffID : Int? = 0
+    private var rID: Int = 0
+    var staffID: Int? = 0
 
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("Loans")
+    private var prodRef: DatabaseReference = database.getReference("Products")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +62,7 @@ class LoanAppForm2 : AppCompatActivity() {
         val products = mutableList
         val status = "pending"
 
-        var  df: DecimalFormat? = DecimalFormat("00")
+        var df: DecimalFormat? = DecimalFormat("00")
 
         val current: org.joda.time.LocalDateTime = org.joda.time.LocalDateTime.now()
         val hour = current.hourOfDay
@@ -79,11 +79,42 @@ class LoanAppForm2 : AppCompatActivity() {
 
         //Create Class
         val loanApplication = LoanApplication(loan_id, loanDate, status, products, staffID!!, rID)
+
         myRef.child(formattedDate).child(formattedTime).setValue(loanApplication)
             .addOnSuccessListener {
+                minusQTYinProducts()
                 startActivity(Intent(this, LoanAppForm3::class.java))
                 this.finish()
             }
+    }
+
+    private var listener : ValueEventListener = object : ValueEventListener {
+
+        override fun onDataChange(snapshot: DataSnapshot) {
+            var productList: MutableMap<String, Int> = mutableMapOf()
+            productList.clear()
+            val products = mutableList
+
+            for (dss in snapshot.children){
+                val key = dss.key.toString()
+                val oldValue = dss.child("qty").value.toString().toInt()
+                val productName = dss.child("product_name").value.toString()
+
+                Utils.log(productName)
+                if (products.keys.contains(productName)) {
+                    val newValue = oldValue - products[productName].toString().toInt()
+                    prodRef.child(key).child("qty").setValue(newValue)
+                }
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            Utils.toast(applicationContext, error.message.toString(), 0)
+        }
+
+    }
+    private fun minusQTYinProducts() {
+        prodRef.addListenerForSingleValueEvent(listener)
     }
 
     //Initialize
@@ -123,5 +154,9 @@ class LoanAppForm2 : AppCompatActivity() {
         onBackPressed()
         this.finish()
         return true
+    }
+
+    override fun finish() {
+        super.finish()
     }
 }
