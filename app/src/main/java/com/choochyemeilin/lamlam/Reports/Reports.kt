@@ -40,7 +40,7 @@ class Reports : AppCompatActivity() {
     private var rList: MutableMap<String, Int> = mutableMapOf()
     private var retailerID : Int? = 0
 
-    private var sortByQty = 0 // 0 = Highest, 1 = Lowest
+    private var sortByQty = 0 // 0 = sort by Highest, 1 = sort by Lowest
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

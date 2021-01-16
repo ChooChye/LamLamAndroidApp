@@ -54,7 +54,6 @@ class Scan : AppCompatActivity() {
         codeScanner.apply {
             camera = CodeScanner.CAMERA_BACK
             formats = CodeScanner.ALL_FORMATS
-
             autoFocusMode = AutoFocusMode.SAFE
             scanMode = ScanMode.CONTINUOUS
             isAutoFocusEnabled = true
@@ -62,27 +61,22 @@ class Scan : AppCompatActivity() {
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
-                    hapticFeedback()
+                    hapticFeedback() //Vibrate the phone after successfully scanning
                     try {
                         val jsonData = "[$it]"
-                        utils.log(it.toString())
-                        //[{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
                         codeScanner.stopPreview()
                         updateDB(jsonData)
                     } catch (e: Exception) {
-                        utils.log(e.toString())
-                        showDialog("An error has occurred #9784 | $e")
+                        showDialog("An error has occurred #9784 | ${e.message}")
                     }
                 }
             }
-
             errorCallback = ErrorCallback {
                 runOnUiThread {
-                    Log.e("Main", "Camera Initialization error : ${it.message}")
+                    Utils.log("Camera Initialization error : ${it.message}")
                 }
             }
         }
-
         scanner_view.setOnClickListener {
             codeScanner.startPreview()
         }
@@ -105,43 +99,27 @@ class Scan : AppCompatActivity() {
         } catch (e: Exception) {
             utils.log("Error #897 | $e")
         }
-        //utils.log("TEST readJSON = $data");
-
         val process =
             myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
         process
             .addOnSuccessListener {
                 val cat = data!![0].category
                 val id = data[0].id
-
-                //val prodDesc = data!![0].desc
                 val prodPrice = data[0].price
                 val prodName = data[0].product_name
-                val prodQty = data[0].qty
 
-
-                /*val msg =
-                    "ID : $id\n" +
-                            "Category     : $cat\n" +
-                            "Product      : $prodDesc\n" +
-                            "Product Name : $prodName\n " +
-                            "Price        : $prodPrice\n" +
-                            "Quantity     : $prodQty \n\n" +
-                            "Successfully recorded"*/
-
-                val msg = String.format("ID : %s\n" +
-                        "Category : %s\n" +
-                        "Product Name : %s\n" +
-                        "Price : %s\n" +
-//                        "Quantity : %s\n\n" +
-                        "Successfully Recorded", id, cat, prodName, prodPrice)
+                val msg = String.format(
+                    "ID : %s\n" +
+                            "Category : %s\n" +
+                            "Product Name : %s\n" +
+                            "Price : %s\n" +
+                            "Successfully Recorded", id, cat, prodName, prodPrice
+                )
                 showDialog(msg)
-
             }
             .addOnFailureListener {
                 showDialog("Firebase error")
             }
-
     }
 
     //Vibrate when scanning
