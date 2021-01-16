@@ -27,7 +27,7 @@
         android:gravity="center"
         android:textSize="22dp"
         android:textStyle=""
-        android:text="Place a QR code to Return Items"
+        android:text="Scan QR code to Return Items"
         android:textColor="@android:color/black"
         android:background="@color/colorAccent"
         android:layout_height="45dp"

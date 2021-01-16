@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.Loans.adapters.LoanFormAdapter
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_loan_app_form_1.*
-import kotlinx.android.synthetic.main.loanform_select_product_list.*
 import java.io.Serializable
 
 
@@ -19,8 +19,6 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
 
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var myRef: DatabaseReference = database.getReference("Products")
-    //private var arrayListText: ArrayList<String> = ArrayList()
     private var mutableMap : MutableMap<String, Int> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +27,16 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setTitle("Loan Application Form")
+        loanform_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(dy > 0){
+                    loanAppForm1_fab.hide()
+                }else{
+                    loanAppForm1_fab.show()
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
         loanAppForm1_fab.setOnClickListener { nextBtn() }
 
         getPendingLoans(object : FbCallback {
@@ -45,7 +53,7 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
                     val key = it.key
                     val value = it.value
 
-                    if(value == 0)
+                    if (value == 0)
                         mutableMap.remove(key)
                     else
                         mutableMap[key] = value
@@ -60,7 +68,6 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         }else{
             val intent = Intent(this, LoanAppForm2::class.java)
             intent.putExtra("map", mutableMap as Serializable)
-            utils.log("LoanAppForm = $mutableMap")
             startActivity(intent)
 
         }
@@ -95,5 +102,4 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         this.finish()
         return true
     }
-
 }

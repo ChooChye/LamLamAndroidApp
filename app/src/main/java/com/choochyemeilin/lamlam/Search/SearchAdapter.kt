@@ -54,7 +54,6 @@ class SearchAdapter(
         }.addOnFailureListener {
             holder.itemView.search_layout_image.setImageResource(R.drawable.no_image)
         }
-
     }
 
     override fun getItemCount(): Int {

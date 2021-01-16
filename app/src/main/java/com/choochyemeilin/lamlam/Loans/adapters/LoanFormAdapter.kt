@@ -23,7 +23,6 @@ class LoanFormAdapter(
 ) : RecyclerView.Adapter<LoanFormAdapter.LoanFormViewHolder>() {
 
 
-    private val arrayList: ArrayList<String> = ArrayList()
     private var mutableList = mutableMapOf<String, Int>()
 
 
@@ -43,11 +42,11 @@ class LoanFormAdapter(
         return LoanFormViewHolder(itemView)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+
     override fun onBindViewHolder(holder: LoanFormViewHolder, position: Int) {
         holder.prodName.text = arr[position]
         holder.counter.id = position
-        val m = mutableList.apply { this[arr[position]] = 0 }
+        mutableList.apply { this[arr[position]] = 0 }
         holder.minusBtn.setOnClickListener { minusCounter(holder) }
         holder.plusBtn.setOnClickListener { plusCounter(holder) }
     }
@@ -71,11 +70,8 @@ class LoanFormAdapter(
         if (count != 0) {
             x = --count
             holder.counter.text = x.toString()
-            Utils.log("minus")
             mutableList[product] = x
         }
         fbCallback.push(mutableList)
     }
-
-
 }

@@ -2,12 +2,10 @@ package com.choochyemeilin.lamlam.Loans.form
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.Loans.Classes.SelectedProducts
@@ -15,31 +13,26 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Retailers
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_loan_app_form2.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import kotlin.collections.ArrayList
+import java.text.DecimalFormat
 
 
 private const val KEY = "map"
 
 class LoanAppForm2 : AppCompatActivity() {
 
-    private var utils: Utils = Utils
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
     private var arrayList: ArrayList<SelectedProducts> = ArrayList()
     private var loanID: Int = genLoanID()
-    private var rID : Int = 0
-    var staffID : Int? = 0
+    private var rID: Int = 0
+    var staffID: Int? = 0
 
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("Loans")
+    private var prodRef: DatabaseReference = database.getReference("Products")
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loan_app_form2)
@@ -62,28 +55,66 @@ class LoanAppForm2 : AppCompatActivity() {
 
 
     //Apply now action
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun applyNow() {
         val loan_id = loanID
-        val loanDate = utils.now()
+
         val products = mutableList
         val status = "pending"
 
+        var df: DecimalFormat? = DecimalFormat("00")
 
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val formattedDate = current.format(formatter)
-        val formattedTime = current.format(formatter2)
+        val current: org.joda.time.LocalDateTime = org.joda.time.LocalDateTime.now()
+        val hour = current.hourOfDay
+        val min = current.minuteOfHour
+        val sec = current.secondOfMinute
+        val formattedTime = "$hour:$min:$sec"
 
+        val day = current.dayOfMonth
+        val month = df?.format(current.monthOfYear)
+        val year = current.year
+
+        val formattedDate = "$year-$month-$day"
+        val loanDate = "$formattedDate $formattedTime"
 
         //Create Class
         val loanApplication = LoanApplication(loan_id, loanDate, status, products, staffID!!, rID)
+
         myRef.child(formattedDate).child(formattedTime).setValue(loanApplication)
             .addOnSuccessListener {
+                minusQTYinProducts()
                 startActivity(Intent(this, LoanAppForm3::class.java))
                 this.finish()
             }
+    }
+
+    private var listener : ValueEventListener = object : ValueEventListener {
+
+        override fun onDataChange(snapshot: DataSnapshot) {
+            var productList: MutableMap<String, Int> = mutableMapOf()
+            productList.clear()
+            val products = mutableList
+
+            for (dss in snapshot.children){
+                val key = dss.key.toString()
+                val oldValue = dss.child("qty").value.toString().toInt()
+                val productName = dss.child("product_name").value.toString()
+
+                Utils.log(productName)
+                if (products.keys.contains(productName)) {
+                    val newValue = oldValue - products[productName].toString().toInt()
+                    prodRef.child(key).child("qty").setValue(newValue)
+                }
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            Utils.toast(applicationContext, error.message.toString(), 0)
+        }
+
+    }
+    private fun minusQTYinProducts() {
+        prodRef.addListenerForSingleValueEvent(listener)
     }
 
     //Initialize
@@ -123,5 +154,9 @@ class LoanAppForm2 : AppCompatActivity() {
         onBackPressed()
         this.finish()
         return true
+    }
+
+    override fun finish() {
+        super.finish()
     }
 }

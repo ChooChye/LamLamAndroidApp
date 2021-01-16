@@ -1,21 +1,23 @@
 package com.choochyemeilin.lamlam.ReturnItems
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.choochyemeilin.lamlam.R
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.budiyev.android.codescanner.*
+import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Scan.fromJson
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
@@ -23,8 +25,6 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_return_items.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import com.choochyemeilin.lamlam.Scan.fromJson
-import kotlinx.android.synthetic.main.activity_my_stocks.*
 
 private const val CAMERA_REQUEST_CODE = 101
 
@@ -42,8 +42,11 @@ class ReturnItems : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_return_items)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val actionBar = supportActionBar
+        actionBar!!.title = "Return Items"
         setupPermissions()
         codeScanner()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -67,7 +70,13 @@ class ReturnItems : AppCompatActivity() {
                         utils.log(it.toString())
                         //[{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
                         codeScanner.stopPreview()
-                        updateDB(jsonData)
+
+                        nextPage(jsonData)
+
+
+
+
+                    //    updateDB(jsonData)
                     } catch (e: Exception) {
                         utils.log(e.toString())
                         showDialog("An error has occurred #9784 | $e")
@@ -87,7 +96,7 @@ class ReturnItems : AppCompatActivity() {
         }
     }
 
-    //Update Database after scanning
+/*    //Update Database after scanning
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDB(jsonData: String) {
         var data: List<Products>? = null
@@ -116,31 +125,35 @@ class ReturnItems : AppCompatActivity() {
 
                 //val prodDesc = data!![0].desc
                 val prodName = data[0].product_name
-                val prodQty = data[0].qty
+                val prodQty = data[0].qty  //NEED TO GET ReturnItemForm QUANTITY
 
                 val oldStatus = data[0].status
                 val status="IN STOCK"
                 oldStatus.equals(status)
-                val returnDate = data[0].returnDate
+           //     val returnDate = data[0].returnDate
                 val current = LocalDateTime.now()
+           //     val remarks=  // NEED TO GET ReturnItemForm REMARKS
 
-                val msg = String.format("Product ID : %s\n" +
-                        "Category : %s\n" +
-                        "Product Name : %s\n" +
-                        "Quantity : %s\n" +
-                        "Status : %s\n" +
-                        "Return Date : %s\n\n" +
-                        "Successfully Recorded", id, cat, prodName, prodQty, status, current)
+                val msg = String.format(
+                    "Product ID : %s\n" +
+                            "Category : %s\n" +
+                            "Product Name : %s\n" +
+                            "Quantity : %s\n" +
+                            "Status : %s\n" +
+                            "Return Date : %s\n\n" +
+                            "Remarks : \n\n" +
+                            "Successfully Recorded", id, cat, prodName, prodQty, status, current
+                )
                 showDialog(msg)
 
-                Toast.makeText(this,"Items Return Successfully",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Items Return Successfully", Toast.LENGTH_LONG).show()
 
             }
             .addOnFailureListener {
                 showDialog("Firebase error")
             }
 
-    }
+    }*/
 
     //Vibrate when scanning
     private fun hapticFeedback() {
@@ -239,10 +252,10 @@ class ReturnItems : AppCompatActivity() {
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.hasChildren()) {
-                   // arrayList.clear()
+                    // arrayList.clear()
                     for (dss in snapshot.children) {
                         //utils.log("${dss.value}")
-                        val productStatus : Products? = dss.getValue(Products::class.java)
+                        val productStatus: Products? = dss.getValue(Products::class.java)
 
 
                     }
@@ -256,5 +269,20 @@ class ReturnItems : AppCompatActivity() {
 
         })
     }
+
+    private fun nextPage(json: Any) {
+
+          //  val b = Bundle()
+          //  b.putStringArrayList("arrayListText", arrayListText)
+       // b.putParcelableArrayList("arrayListText", data)
+        //    val intent = Intent(this, ReturnItemForm::class.java)
+           // intent.putExtras(b)
+      //      startActivity(intent)
+
+        val intent = Intent(this, ReturnItemForm::class.java)
+        intent.putExtra("data", json.toString())
+        startActivity(intent)
+        }
+
 
 }

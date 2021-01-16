@@ -58,8 +58,13 @@ class LoansApprovedAdapter(
         val data = dataList[position]
         var msg = "Date Applied : ${data.loanDate}\n\n" +
                 "Products Requested : \n"
-        for (i in 0 until data.productName.size) {
-            msg += "$i - ${data}\n"
+        val x = data.productName
+        var index = 1
+        x.forEach {
+            val key = it.key
+            val qty = it.value
+            msg += "$index - $key ($qty)\n"
+            index++
         }
         builder
             .setTitle("LOAN ID #${dataList[position].loanID}")

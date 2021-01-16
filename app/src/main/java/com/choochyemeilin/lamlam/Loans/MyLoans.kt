@@ -18,6 +18,8 @@ class MyLoans : Fragment() {
 
     private var utils : Utils = Utils
     var approvedLoans : ArrayList<LoanApplication> = ArrayList()
+    var staffID = 0
+    var role = "staff"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,16 +28,37 @@ class MyLoans : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_loans_myloans, container, false)
 
+        Utils.getStaffID(object : FbCallback {
+            override fun onCallbackGetUserID(uid: Int) {
+                super.onCallbackGetUserID(uid)
+                staffID = uid
+            }
+        })
+        Utils.getUserRole(object : FbCallback{
+            override fun onCallbackGetUserEmail(user: String) {
+                super.onCallbackGetUserEmail(user)
+                role = user
+            }
+        })
+
 
         getPendingLoans(object : FbCallback {
             override fun onCallback(arr: ArrayList<LoanApplication>) {
                 approvedLoans.clear()
                 for (i in arr) {
-                    if (i.status.toUpperCase() == "APPROVED" || i.status.toUpperCase() == "REJECTED") {
-                        approvedLoans.add(i)
+                    if (role == "admin"){
+                        if (i.status.toUpperCase() == "APPROVED" || i.status.toUpperCase() == "REJECTED") {
+                            approvedLoans.add(i)
+                        }
+                    }else if(role == "staff"){
+                        if(i.staffID == staffID){
+                            if (i.status.toUpperCase() == "APPROVED") {
+                                approvedLoans.add(i)
+                            }
+                        }
                     }
                 }
-
+                approvedLoans.reverse()
                 view.myloans_rv.adapter = LoansApprovedAdapter(approvedLoans)
                 view.myloans_rv.layoutManager = LinearLayoutManager(view.context)
                 view.myloans_rv.setHasFixedSize(true)
@@ -58,15 +81,16 @@ class MyLoans : Fragment() {
                         val loanID = it.child("loanID").value.toString().toInt()
                         val date = it.child("loanDate").value.toString()
                         val status = it.child("status").value.toString()
+                        val staffID = it.child("staffID").value.toString().toInt()
+                        val retailerID = it.child("retailerID").value.toString().toInt()
                         val product = it.child("productName")
                         val products: MutableMap<String, Int> = mutableMapOf()
-                        //val products: ArrayList<String> = ArrayList()
-                        for (i in 0 until product.childrenCount) {
-                            val prodName = product.child(i.toString()).value
-                            products[prodName.toString()] = 0
-                            //products.add(product.child(i.toString()).value.toString())
+                        product.children.forEach { jt ->
+                            val value = jt.value.toString().toInt()
+                            val key = jt.key.toString()
+                            products[key] = value
                         }
-                        val item = LoanApplication(loanID, date, status, products)
+                        val item = LoanApplication(loanID, date, status, products, staffID, retailerID)
                         list.add(item)
                         //{loanDate=2020-11-26 23:16, loanID=45647, productName=[Pink Sweatshirt, Blue Sweatshirt, Levi's Jeans (Black)], status=pending}
                     }

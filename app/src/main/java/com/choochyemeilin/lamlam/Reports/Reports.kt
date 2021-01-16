@@ -40,7 +40,7 @@ class Reports : AppCompatActivity() {
     private var rList: MutableMap<String, Int> = mutableMapOf()
     private var retailerID : Int? = 0
 
-    private var sortByQty = 0 // 0 = Highest, 1 = Lowest
+    private var sortByQty = 0 // 0 = sort by Highest, 1 = sort by Lowest
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,39 +106,36 @@ class Reports : AppCompatActivity() {
     }
 
     private fun sortDataByQty(){
+        var map : MutableMap<String, Int>
         if(sortByQty == 0){
             sortByQty = 1
             val sorted = mutableList.toList().sortedBy { col ->col.second}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
         }else{
             sortByQty = 0
             val sorted = mutableList.toList().sortedByDescending { col ->col.second}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
+
         }
+        reports_rv.adapter = ReportAdapter(map)
+        reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+        reports_rv.setHasFixedSize(true)
     }
 
     private fun sortDataByAlpha(){
+        var map : MutableMap<String, Int>
         if(sortByQty == 0){
             sortByQty = 1
             val sorted = mutableList.toList().sortedBy { col ->col.first}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
         }else{
             sortByQty = 0
             val sorted = mutableList.toList().sortedByDescending { col ->col.first}.toMap()
-            val map = sorted.toMutableMap()
-            reports_rv.adapter = ReportAdapter(map)
-            reports_rv.layoutManager = LinearLayoutManager(applicationContext)
-            reports_rv.setHasFixedSize(true)
+            map = sorted.toMutableMap()
         }
+        reports_rv.adapter = ReportAdapter(map)
+        reports_rv.layoutManager = LinearLayoutManager(applicationContext)
+        reports_rv.setHasFixedSize(true)
     }
 
     private fun getData(callback: FbCallback) {
