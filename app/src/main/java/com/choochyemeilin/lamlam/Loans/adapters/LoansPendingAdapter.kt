@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.loans_pending_list_layout.view.*
 class LoansPendingAdapter(
     private val dataList: List<LoanApplication>
 ) : RecyclerView.Adapter<LoansPendingAdapter.ViewHolder>() {
-
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var role = "staff"
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -91,6 +91,7 @@ class LoansPendingAdapter(
             builder
                 .setPositiveButton("APPROVE") { dialogInterface: DialogInterface, _: Int ->
                     actionLoan(dataList[position].loanID!!.toInt(), "approved")
+                    updateProdQTY(position)
                     dialogInterface.dismiss()
                 }
                 .setNeutralButton("CANCEL") { dialogInterface: DialogInterface, _: Int ->
@@ -106,7 +107,7 @@ class LoansPendingAdapter(
     }
 
     private fun actionLoan(loanID: Int, status: String) {
-        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+
         val myRef: DatabaseReference = database.getReference("Loans")
 
         myRef.addValueEventListener(object : ValueEventListener {
@@ -127,6 +128,30 @@ class LoansPendingAdapter(
             override fun onCancelled(error: DatabaseError) {
 
             }
+        })
+    }
+
+    private fun updateProdQTY(position: Int){
+        val myRef: DatabaseReference = database.getReference("Products")
+        val map = dataList[position].productName
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dss in snapshot.children){
+                    val key = dss.key.toString()
+                    val oldValue = dss.child("qty").value.toString().toInt()
+                    val productName = dss.child("product_name").value.toString()
+
+                    if (map.keys.contains(productName)) {
+                        val newValue = oldValue - map[productName].toString().toInt()
+                        myRef.child(key).child("qty").setValue(newValue)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Utils.log("An error has occurred")
+            }
+
         })
     }
 }

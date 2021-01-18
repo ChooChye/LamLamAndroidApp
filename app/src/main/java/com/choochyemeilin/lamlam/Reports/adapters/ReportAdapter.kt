@@ -31,6 +31,6 @@ class ReportAdapter(
     }
 
     override fun getItemCount(): Int {
-        return arrayList.size+1
+        return arrayList.size
     }
 }

@@ -82,39 +82,10 @@ class LoanAppForm2 : AppCompatActivity() {
 
         myRef.child(formattedDate).child(formattedTime).setValue(loanApplication)
             .addOnSuccessListener {
-                minusQTYinProducts()
+
                 startActivity(Intent(this, LoanAppForm3::class.java))
                 this.finish()
             }
-    }
-
-    private var listener : ValueEventListener = object : ValueEventListener {
-
-        override fun onDataChange(snapshot: DataSnapshot) {
-            var productList: MutableMap<String, Int> = mutableMapOf()
-            productList.clear()
-            val products = mutableList
-
-            for (dss in snapshot.children){
-                val key = dss.key.toString()
-                val oldValue = dss.child("qty").value.toString().toInt()
-                val productName = dss.child("product_name").value.toString()
-
-                Utils.log(productName)
-                if (products.keys.contains(productName)) {
-                    val newValue = oldValue - products[productName].toString().toInt()
-                    prodRef.child(key).child("qty").setValue(newValue)
-                }
-            }
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            Utils.toast(applicationContext, error.message.toString(), 0)
-        }
-
-    }
-    private fun minusQTYinProducts() {
-        prodRef.addListenerForSingleValueEvent(listener)
     }
 
     //Initialize
