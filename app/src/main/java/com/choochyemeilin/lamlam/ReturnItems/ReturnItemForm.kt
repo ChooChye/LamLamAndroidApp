@@ -8,10 +8,12 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.fromJson
+import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
+import com.choochyemeilin.lamlam.helpers.Retailers
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.return_item_form.*
 import org.json.JSONException
@@ -24,7 +26,11 @@ class ReturnItemForm : AppCompatActivity() {
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("Return History")
+    private var newRef: DatabaseReference = database.getReference("All Stocks")
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
+    private lateinit var auth: FirebaseAuth
+    private var staffID = 0
+    private var retailerID  = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,6 +151,42 @@ class ReturnItemForm : AppCompatActivity() {
                         remark
                     ))
 
+               /* Utils.getRetailerID(object : FbCallback{
+                    override fun onCallbackGetRetailerID(rid: Int) {
+                        super.onCallbackGetRetailerID(rid)
+                        retailerID = rid
+
+
+                    }
+                })*/
+
+               /* Utils.getStaffID(object : FbCallback{
+                    override fun onCallbackGetUserID(uid: Int) {
+                        super.onCallbackGetUserID(uid)
+                        staffID = uid
+                        newRef.child(retailerID.toString()).child("staffID").setValue(uid.toString())
+                    }
+                })*/
+
+
+
+
+               /* newRef
+                    .child(Utils.getRetailerID(object : FbCallback{
+                        override fun onCallbackGetRetailerID(rid: Int) {
+                            super.onCallbackGetRetailerID(rid)
+                            retailerID = rid
+                        }
+                    }).toString())
+                    .child(          Utils.getStaffID(object : FbCallback{
+                        override fun onCallbackGetUserID(uid: Int) {
+                            super.onCallbackGetUserID(uid)
+                            staffID = uid
+                        }
+                    }).toString())
+                    .child("prodName")
+                    .setValue(prodName,prodQty)*/
+
                 Toast.makeText(this, "Items Return Successfully", Toast.LENGTH_LONG).show()
 
             }
@@ -153,6 +195,7 @@ class ReturnItemForm : AppCompatActivity() {
             }
 
     }
+
 
     private fun showDialog(msg: String) {
         var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)

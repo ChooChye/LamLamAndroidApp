@@ -35,7 +35,6 @@ class Register : AppCompatActivity() {
     lateinit var result:TextView
 
     //  get reference
-    private var myRef: DatabaseReference = databaseReference.getReference("Staff ID")
     private var userRef: DatabaseReference = databaseReference.getReference("User")
     private var roleRef: DatabaseReference = databaseReference.getReference("Role")
     private var staffRef: DatabaseReference = databaseReference.getReference("Staff ID")

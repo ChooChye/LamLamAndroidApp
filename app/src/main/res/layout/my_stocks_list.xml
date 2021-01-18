@@ -20,7 +20,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:src="@drawable/blue_sweatshirt" />
+         />
 
     <TextView
         android:id="@+id/textView_stock_name"
