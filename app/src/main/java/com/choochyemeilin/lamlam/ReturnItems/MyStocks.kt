@@ -7,15 +7,18 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.choochyemeilin.lamlam.Loans.adapters.LoanFormAdapter
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_loan_app_form_1.*
 import kotlinx.android.synthetic.main.activity_my_stocks.*
 import kotlinx.android.synthetic.main.activity_reports.*
 import kotlinx.android.synthetic.main.my_stocks_list.*
+import kotlinx.android.synthetic.main.my_stocks_list.view.*
 
  class MyStocks : AppCompatActivity() {
 
@@ -28,6 +31,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
      private lateinit var auth: FirebaseAuth
      private var mutableList: MutableMap<String, Int> = mutableMapOf()
      private var rList: MutableMap<String, Int> = mutableMapOf()
+     private var myMap: MutableMap<String, String> = mutableMapOf()
      private var staffID : Int? = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -52,6 +56,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
             }
         })
 
+        val dataList: java.util.ArrayList<Products> = java.util.ArrayList()
       // StocksRecyclerView()
 
         getData(object : FbCallback {
@@ -59,7 +64,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
                 super.push(arr)
                 rList = arr
 
-
+                val list: ArrayList<Products> = ArrayList()
                 list_view_recycle.adapter = MyStocksAdapter(arr)
                 list_view_recycle.layoutManager = LinearLayoutManager(
                     applicationContext, LinearLayoutManager.VERTICAL,
@@ -71,6 +76,8 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
                 }
             }
         })
+
+
 
     }
 
@@ -235,6 +242,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
          val database: FirebaseDatabase = FirebaseDatabase.getInstance()
          val myRef: DatabaseReference = database.getReference("Loans")
 
+
          myRef.orderByKey()
              .addValueEventListener(object : ValueEventListener {
                  override fun onDataChange(snapshot: DataSnapshot) {
@@ -251,6 +259,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
                                      val product = it.child("productName")
                                      product.children.forEach {
                                          val key = it.key.toString()
+
                                          val qty = it.value.toString().toInt()
                                          if (mutableList.containsKey(key)) {
                                              val oldValue = mutableList[key].toString().toInt()
@@ -259,12 +268,21 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
                                          } else {
                                              mutableList[key] = qty
                                          }
+
+
+
                                      }
+
                                  }
                              }
+
+
+
                          }
                      }
+
                      callback.push(mutableList)
+
                  }
 
                  override fun onCancelled(error: DatabaseError) {
@@ -273,6 +291,9 @@ import kotlinx.android.synthetic.main.my_stocks_list.*
 
              })
      }
+
+
+
 
      override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
