@@ -8,16 +8,21 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Scan.fromJson
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.my_stocks_list.*
 import kotlinx.android.synthetic.main.my_stocks_list.view.*
+import kotlinx.android.synthetic.main.return_item_form.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MyStocksAdapter(
@@ -25,11 +30,10 @@ class MyStocksAdapter(
     private var context: MutableMap<String, Int>
 ) : RecyclerView.Adapter<MyStocksAdapter.ViewHolder>() {
 
-    var databaseReference: FirebaseDatabase = FirebaseDatabase.getInstance()
-    var loansRef: DatabaseReference = databaseReference.getReference("Loans")
-    var productRef: DatabaseReference = databaseReference.getReference("Products")
+    var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    var productRef: DatabaseReference = database.getReference("Products")
     private var utils : Utils = Utils
-    private lateinit var auth: FirebaseAuth
+
 
     //View Holder
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
@@ -43,23 +47,37 @@ class MyStocksAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
-     //   val products: Products = arrayList.get(position)
-
         val list = context.toList()
-       /* // PENDING PENDING PENDING!!!!!
-        holder.itemView.textView_stock_name.text = products.product_name
-        holder.itemView.textView_stock_qty.text = products.qty
-        holder.itemView.textView_stock_date.text = products.returnDate
-        loadImage(holder, products.image)*/
 
         holder.itemView.textView_stock_name.text = list[position].first
         holder.itemView.textView_stock_qty.text = list[position].second.toString()
-      //  holder.itemView.textView_stock_date.text=getName().toString()
-        //  loadImage(holder, products.image)
+        var sname=holder.itemView.textView_stock_name.text.toString()
+
+
+       productRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (dss in snapshot.children){
+
+                    val pname=dss.child("product_name").value
+                    val image=dss.child("image").value
+
+                    if(sname==pname){
+
+                        loadImage(holder, image.toString())
+                     }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
 
 
-        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("Loans")
 
         myRef.orderByKey()
@@ -74,25 +92,12 @@ class MyStocksAdapter(
                             val product1 = it.child("productName").value.toString()
                             val status = it.child("status").value.toString()
 
-                    //******        holder.itemView.textView_stock_date.text = loanDate1  //2021-1-6 12:39
-
-                   //         holder.itemView.textView_stock_date.text = getReturnDate(loanDate).toString()
-                            val pname = productRef.orderByChild("product_name").toString()
-                            if(status.toUpperCase() == "PENDING") {
-
-                                product.children.forEach {
-
-                                    val key = it.key.toString()
-                            //             holder.itemView.textView_stock_date.text = key
-                                     if (key.equals(pname)) {
-                                    val img = productRef.orderByChild("image")
-                                    loadImage(holder, img.toString())
-
-                                }
-
+                            product.children.forEach{
+                                val pname=it.key
+                                if(sname==pname){
+                                    holder.itemView.textView_stock_date.text = loanDate1
                                 }
                             }
-
                         }
                     }
                 }
@@ -149,6 +154,14 @@ class MyStocksAdapter(
 
     }
 
+    private fun readJSON(json: String): List<Products> {
+
+        return if (json != null)
+            Gson().fromJson(json) //GsonExtension Call
+        else
+            listOf()
+    }
+
     override fun getItemCount(): Int {
         return context.size
     }
@@ -196,30 +209,6 @@ class MyStocksAdapter(
         return currentDatePlusOne
     }
 
-    fun productImg():String{
-        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-        val myRef: Query = database.getReference("Products").orderByChild("product_name")
-        var test="" as Unit
-
-        myRef.orderByKey()
-            .addValueEventListener(object : ValueEventListener {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (dss in snapshot.children) {
-                        val image=dss.value
-
-                        var image1=image as Unit
-                        image1=test
-                        return image1
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
-        return test.toString()
-    }
 
     fun getName(): List<String> {
         var list = ArrayList<String>()

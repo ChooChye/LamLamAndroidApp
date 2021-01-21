@@ -7,6 +7,7 @@ import android.text.Editable
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.fromJson
 import com.choochyemeilin.lamlam.helpers.FbCallback
@@ -16,6 +17,7 @@ import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_my_stocks.*
 import kotlinx.android.synthetic.main.return_item_form.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -29,10 +31,9 @@ class ReturnItemForm : AppCompatActivity() {
     private var myRef: DatabaseReference = database.getReference("Return History")
     private var prodRef: DatabaseReference = database.getReference("Products")
     private var loansRef: DatabaseReference = database.getReference("Loans")
-
-    private lateinit var auth: FirebaseAuth
-    private var test1 = 10
-    private var test2  = 5
+    private var mutableList: MutableMap<String, Int> = mutableMapOf()
+    private var rList: MutableMap<String, Int> = mutableMapOf()
+    private var staffID : Int? = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,29 +44,25 @@ class ReturnItemForm : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = "Return Items Information"
 
-        /* val data = intent.getStringExtra("data")
-         try {
-             var data1: List<Products>? = null
-             val json = data
-              data1=readJSON(json!!)
-
-             Utils.log(data1.toString())
-             Utils.log(data1[0].product_name.toString())
-         } catch (e: JSONException) {
-             e.printStackTrace()
-         }*/
         val data1 = intent.getStringExtra("data")
         var data: List<Products>? = null
         data = readJSON(data1!!)
+
+
         prodRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val name = data!![0].product_name
-                val quantity = data!![0].qty
-                textView_product_name.text = "Product Quantity : $name"
-                textView_product_qty.text = "$quantity"
-                test1=quantity.toInt()
 
+                textView_product_name.text = "Pname: $name"
 
+                for (dss in snapshot.children){
+                    val qty = dss.child("qty").value
+                    val pname=dss.child("product_name").value
+
+                    if (pname==name){
+                        textView_product_qty.text="$qty"
+                    }
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -79,54 +76,145 @@ class ReturnItemForm : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dss in snapshot.children) {
                         dss.children.forEach {
-
+                            val status=it.child("status").value
                             val product = it.child("productName")
-                            product.children.forEach {
-                                val key = it.key.toString()
-                                val qty = it.value.toString()
-                               textView_loan_name.text="Loan Name : $key"
-                                textView_loan_qty.text= "$qty"
-                               test2=qty.toInt()
+                            val dbSID = it.child("staffID").value.toString()
 
-                           //     val test=test1+test2
-                          //      textView_return_qty.text= test.toString()
-                            }
+                            Utils.getStaffID(object : FbCallback{
+                                override fun onCallbackGetUserID(uid: Int) {
+                                    super.onCallbackGetUserID(uid)
+
+                                    var data2: List<Products>? = null
+                                    data2 = readJSON(data1!!)
+                                    val name = data2!![0].product_name
+
+                                    if (uid.toString() == dbSID){
+                                        //------------------------get all approved name qty??????????????????????---------------------------------
+                                        if (status.toString().toUpperCase()=="APPROVED") {
+
+                                            product.children.forEach {
+                                                val key = it.key.toString()
+                                                val qty = it.value.toString()
+                                                val qty1 = it.value.toString().toInt()
+
+                                                textView_loan_name.text = "$key"
+                                                textView_loan_qty.text  = qty
+
+                                               /* if (key.contains(name!!)){
+                                                 //   textView_loan_qty.text = "$qty"
+
+                                                    val oldValue = key.toInt()
+                                                    textView_loan_qty.text  = (oldValue + qty1).toString()
+                                                }*/
+                                            }
+
+                                        }
+                                    }
+
+                                }
+                            })
 
                         }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
                 }
-
             })
 
-   /*  // -------------------------------------------------------------
-        val pqty=  textView_product_qty.text as Int
-        val lqty= textView_loan_qty.text as Int
-        textView_return_qty.text= pqty.minus(lqty).toString()*/
 
 
 
+            button_return_now.setOnClickListener {
 
+                if (return_qty.text.isEmpty()){
+                    utils.toast(this,"Please enter quantity",1)
+                }else  if (return_qty.text.isNotEmpty()){
 
-        button_return_now.setOnClickListener {
-            if(return_qty.text.isEmpty()){
-                utils.toast(this,"Please enter quantity",1)
-            }else if(return_qty.text.toString().toInt()>textView_loan_qty.text.toString().toInt()){
-                  utils.toast(this,"Balance exceed",1)
+                    if (return_qty.text.toString().toInt()>textView_loan_qty.text.toString().toInt()){
+                      utils.toast(this,"Balance exceed",1)
+                    }else if(return_qty.text.toString().toInt()>0 && return_qty.text.toString().toInt()<=textView_loan_qty.text.toString().toInt()){
 
-            }else{
-                val data = intent.getStringExtra("data")
+                        val data = intent.getStringExtra("data")
 
-                if (data != null) {
-                    updateDB(data)
+                            prodRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    var data2: List<Products>? = null
+                                    data2 = readJSON(data1!!)
+                                    val name = data2!![0].product_name
+
+                                    for (dss in snapshot.children){
+                                        val key=dss.key.toString()
+                                        val value = dss.value.toString()
+                                        val oldValue = dss.child("qty").value.toString().toInt()
+                                        val enterValue=return_qty.text.toString().toInt()
+
+                                        if (value.contains(name!!)) {
+                                            val newValue = oldValue + enterValue
+                                            prodRef.child(key).child("qty").setValue(newValue)
+
+                                            //---------set time to show dialog-----then finish----------
+                                        }
+                                    }
+
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
+
+                        loansRef.orderByKey()
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    var data2: List<Products>? = null
+                                    data2 = readJSON(data1!!)
+                                    val name = data2!![0].product_name
+
+                                    for (dss in snapshot.children) {
+                                        val key1=dss.key.toString()
+
+                                        dss.children.forEach {
+                                            val key2=it.key.toString()
+                                            val status=it.child("status").value
+                                            val product = it.child("productName")
+                                            product.children.forEach {
+                                                val key = it.key.toString()
+                                                val qty = it.value.toString()
+                                                val lname=textView_loan_name.text
+                                                val oldValue = qty.toInt()
+                                                val enterValue=return_qty.text.toString().toInt()
+
+                                                //     val test=test1+test2
+                                                //      textView_return_qty.text= test.toString()
+
+                                                if (status.toString().toUpperCase()=="APPROVED"){
+                                                    if (key.contains(name!!)){
+                                                        val newValue = oldValue - enterValue
+                                                        loansRef.child(key1).child(key2).child("productName").child(key).setValue(newValue)
+                                                    }
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+
+                                }
+
+                            })
+
+                        updateDB(data.toString())
+
+                }else if(return_qty.text.toString().toInt()<=0){
+                        utils.toast(this,"Return quantity must be more than 0",1)
+                    }
                 }
-
-
             }
-        }
+
     }
 
     private fun readJSON(json: String): List<Products> {
@@ -170,7 +258,7 @@ class ReturnItemForm : AppCompatActivity() {
                 val image=data[0].image
                 val loanDate=data[0].loanDate
                 val prodName = data[0].product_name
-              //  val prodQty = return_qty.text.toString()  //NEED TO GET ReturnItemForm QUANTITY
+                val prodQty = return_qty.text.toString()  //NEED TO GET ReturnItemForm QUANTITY
                 data[0].qty=return_qty.text.toString()
                 val remark=return_remarks.text.toString()
                 val status="IN STOCK"
@@ -178,9 +266,11 @@ class ReturnItemForm : AppCompatActivity() {
                 val current = LocalDateTime.now()
                 data[0].returnDate= current.toString()
 
-                val prodQty = textView_product_qty.text.toString().toInt()+return_qty.text.toString().toInt()
 
-                val msg = String.format(
+
+
+
+               val msg = String.format(
                     "Product ID : %s\n" +
                             "Category : %s\n" +
                             "Product Name : %s\n" +
@@ -199,26 +289,13 @@ class ReturnItemForm : AppCompatActivity() {
                         prodName,
                         desc,
                         price,
-                        prodQty.toString(),
+                        prodQty,
                         image,
                         status,
                         loanDate,
                         current.toString(),
                         remark
                     ))
-
-              /* //---------------------------------------------------------------------------------------------------
-              prodRef.orderByChild("qty").addValueEventListener(object :ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                       var test=snapshot.value
-                        test==prodQty
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })*/
 
                 Toast.makeText(this, "Items Return Successfully", Toast.LENGTH_LONG).show()
 
@@ -227,9 +304,8 @@ class ReturnItemForm : AppCompatActivity() {
                 showDialog("Firebase error")
             }
 
-
-
     }
+
 
 
     private fun showDialog(msg: String) {

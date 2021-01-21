@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.Loans.adapters.LoanFormAdapter
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Reports.adapters.ReportAdapter
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
      private lateinit var auth: FirebaseAuth
      private var mutableList: MutableMap<String, Int> = mutableMapOf()
      private var rList: MutableMap<String, Int> = mutableMapOf()
-     private var myMap: MutableMap<String, String> = mutableMapOf()
+
      private var staffID : Int? = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -56,23 +57,21 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
             }
         })
 
-        val dataList: java.util.ArrayList<Products> = java.util.ArrayList()
+
       // StocksRecyclerView()
 
         getData(object : FbCallback {
             override fun push(arr: MutableMap<String, Int>) {
                 super.push(arr)
                 rList = arr
-
-                val list: ArrayList<Products> = ArrayList()
                 list_view_recycle.adapter = MyStocksAdapter(arr)
-                list_view_recycle.layoutManager = LinearLayoutManager(
-                    applicationContext, LinearLayoutManager.VERTICAL,
-                    false
-                )
+                list_view_recycle.layoutManager = LinearLayoutManager(applicationContext)
+
+
 
                 if (arr.isEmpty()) {
-                    textView_stock_date.text = "No results found"
+                 //   textView_stock_date.text = "No results found"
+                    utils.toast(this@MyStocks,"No result",1)
                 }
             }
         })
@@ -243,6 +242,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
          val myRef: DatabaseReference = database.getReference("Loans")
 
 
+
          myRef.orderByKey()
              .addValueEventListener(object : ValueEventListener {
                  override fun onDataChange(snapshot: DataSnapshot) {
@@ -252,10 +252,8 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
                              val dbSID = it.child("staffID").value.toString().toInt()
                              val status = it.child("status").value.toString()
 
-
-
                              if (staffID == dbSID) {
-                                 if(status.toUpperCase() == "PENDING"){
+                                 if(status.toUpperCase() == "APPROVED"){
                                      val product = it.child("productName")
                                      product.children.forEach {
                                          val key = it.key.toString()
@@ -269,20 +267,15 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
                                              mutableList[key] = qty
                                          }
 
-
-
                                      }
 
                                  }
                              }
 
-
-
                          }
                      }
 
                      callback.push(mutableList)
-
                  }
 
                  override fun onCancelled(error: DatabaseError) {
