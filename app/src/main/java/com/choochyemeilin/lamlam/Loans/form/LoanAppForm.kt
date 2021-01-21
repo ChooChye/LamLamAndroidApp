@@ -39,7 +39,7 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         })
         loanAppForm1_fab.setOnClickListener { nextBtn() }
 
-        getPendingLoans(object : FbCallback {
+        getProducts(object : FbCallback {
             override fun onCallbackString(arr: ArrayList<String>) {
                 val initAdapter = LoanFormAdapter(arr, this)
                 loanform_rv.adapter = initAdapter
@@ -73,7 +73,7 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         }
     }
 
-    private fun getPendingLoans(callback: FbCallback): List<String> {
+    private fun getProducts(callback: FbCallback): List<String> {
         var list = ArrayList<String>()
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()

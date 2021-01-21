@@ -49,7 +49,6 @@ class LoansPending : Fragment() {
         })
 
         getPendingLoans(object : FbCallback {
-            @SuppressLint("DefaultLocale")
             override fun onCallback(arr: ArrayList<LoanApplication>) {
                 try {
                     pendingLoans.clear()
@@ -80,7 +79,6 @@ class LoansPending : Fragment() {
                     )
                     Utils.log(e.message.toString())
                 }
-
             }
         })
         return view
@@ -116,11 +114,9 @@ class LoansPending : Fragment() {
                 }
                 callback.onCallback(list)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Utils.toast(view?.context!!, "An error has occurred #0984 | ${error.message}", 1)
             }
-
         })
         return list
     }
@@ -129,6 +125,4 @@ class LoansPending : Fragment() {
         super.onStop()
         pendingLoans.clear()
     }
-
-
 }

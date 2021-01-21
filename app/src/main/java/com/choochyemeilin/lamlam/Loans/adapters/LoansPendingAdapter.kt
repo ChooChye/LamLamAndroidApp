@@ -63,13 +63,9 @@ class LoansPendingAdapter(
     private fun showDialog(context: Context, position: Int) {
 
         var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)
-
-
         val data = dataList[position]
         var msg = "Date Applied : ${data.loanDate}\n\n" +
-
-                "Products Requested : \n"
-
+                    "Products Requested : \n"
         val x = data.productName
         var index = 1
         x.forEach {
@@ -78,8 +74,7 @@ class LoansPendingAdapter(
             msg += "$index - $key ($qty)\n"
             index++
         }
-
-
+        //Build Alert Dialog
         builder
             .setTitle("LOAN ID #${dataList[position].loanID}")
             .setMessage(msg)
@@ -124,10 +119,7 @@ class LoansPendingAdapter(
                     }
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
