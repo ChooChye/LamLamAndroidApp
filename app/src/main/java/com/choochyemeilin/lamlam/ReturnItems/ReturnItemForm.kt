@@ -89,6 +89,7 @@ class ReturnItemForm : AppCompatActivity() {
                                     val name = data2!![0].product_name
 
                                     if (uid.toString() == dbSID){
+
                                         //------------------------get all approved name qty??????????????????????---------------------------------
                                         if (status.toString().toUpperCase()=="APPROVED") {
 
@@ -133,7 +134,7 @@ class ReturnItemForm : AppCompatActivity() {
 
                     if (return_qty.text.toString().toInt()>textView_loan_qty.text.toString().toInt()){
                       utils.toast(this,"Balance exceed",1)
-                    }else if(return_qty.text.toString().toInt()>0 && return_qty.text.toString().toInt()<=textView_loan_qty.text.toString().toInt()){
+                    }else if(return_qty.text.toString().toInt()>0){
 
                         val data = intent.getStringExtra("data")
 
