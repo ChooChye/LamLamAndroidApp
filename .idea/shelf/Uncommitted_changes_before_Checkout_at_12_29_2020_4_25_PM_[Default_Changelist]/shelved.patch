@@ -1,0 +1,26 @@
+Index: app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.widget.ImageView\r\nimport android.widget.ProgressBar\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.choochyemeilin.lamlam.Home.Home\r\nimport com.choochyemeilin.lamlam.Loans.Loans\r\nimport com.choochyemeilin.lamlam.Reports.Reports\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\n\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    private var utils = Utils\r\n    private var TIME_OUT: Long = 2000\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n        supportActionBar!!.hide() //Remove Action Bar\r\n\r\n        //Declare Var\r\n        val logo    = findViewById<ImageView>(R.id.splash_screen_logo)\r\n        val pBar    = findViewById<ProgressBar>(R.id.splash_screen_progressBar)\r\n\r\n\r\n        //Declare Animation\r\n        utils.declareAnim(this)\r\n\r\n        logo.startAnimation(utils.fadeInTop)\r\n        pBar.startAnimation(utils.fadeInBottom)\r\n\r\n        //start activity\r\n        Handler().postDelayed( {\r\n            val intent = Intent(this, Home::class.java)\r\n            startActivity(intent)\r\n            finish()\r\n        }, TIME_OUT)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt	(revision ba9811ec0491d987da0de21384799bb1f500a22a)
++++ app/src/main/java/com/choochyemeilin/lamlam/MainActivity.kt	(date 1609230293283)
+@@ -8,6 +8,7 @@
+ import androidx.appcompat.app.AppCompatActivity
+ import com.choochyemeilin.lamlam.Home.Home
+ import com.choochyemeilin.lamlam.Loans.Loans
++import com.choochyemeilin.lamlam.Register.Register
+ import com.choochyemeilin.lamlam.Reports.Reports
+ import com.choochyemeilin.lamlam.helpers.Utils
+ 
+@@ -34,7 +35,7 @@
+ 
+         //start activity
+         Handler().postDelayed( {
+-            val intent = Intent(this, Home::class.java)
++            val intent = Intent(this, Register::class.java)
+             startActivity(intent)
+             finish()
+         }, TIME_OUT)
