@@ -98,7 +98,6 @@ class LoansPendingAdapter(
                 }
         }
         builder.show()
-
     }
 
     private fun actionLoan(loanID: Int, status: String) {
