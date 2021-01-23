@@ -134,7 +134,7 @@ class LoansPendingAdapter(
 
                     if (map.keys.contains(productName)) {
                         val newValue = oldValue - map[productName].toString().toInt()
-                        myRef.child(key).child("qty").setValue(newValue)
+                        myRef.child(key).child("qty").setValue(newValue.toString())
                     }
                 }
             }
