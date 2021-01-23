@@ -23,7 +23,6 @@ private const val KEY = "map"
 class LoanAppForm2 : AppCompatActivity() {
 
     private var mutableList: MutableMap<String, Int> = mutableMapOf()
-    private var arrayList: ArrayList<SelectedProducts> = ArrayList()
     private var loanID: Int = genLoanID()
     private var rID: Int = 0
     var staffID: Int? = 0
@@ -102,7 +101,6 @@ class LoanAppForm2 : AppCompatActivity() {
             tv.id = index
             tv.text = "$key ($value)"
             ll.addView(tv)
-            arrayList.add(SelectedProducts(index, key, value))
             index++
         }
         Utils.getRetailerInfo(object : FbCallback {

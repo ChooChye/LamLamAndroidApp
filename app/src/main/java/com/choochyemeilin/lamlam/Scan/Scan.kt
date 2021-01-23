@@ -74,6 +74,7 @@ class Scan : AppCompatActivity() {
             errorCallback = ErrorCallback {
                 runOnUiThread {
                     Utils.log("Camera Initialization error : ${it.message}")
+                    Utils.toast(applicationContext, "ERROR QR", 1);
                 }
             }
         }
