@@ -136,12 +136,12 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
                     if (cu == dss.child("staffEmail").value.toString()) {
 
                         var role1 = dss.child("role").value.toString()
-                        var name = dss.child("staffName").value.toString().toUpperCase()
+                        var name = dss.child("staffName").value.toString()
 
 
                         try {
                             if (role1 == "admin") {
-                                welcome_user.text = "Welcome, " + name + "(" + role1 + ")"
+                                welcome_user.text = "Welcome, " + name + "(" + role1.toUpperCase() + ")"
                                 textView_drawer_name.text = name
                             } else {
                                 welcome_user.text = "Welcome, " + name
