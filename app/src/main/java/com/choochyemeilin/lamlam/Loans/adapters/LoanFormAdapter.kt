@@ -57,17 +57,11 @@ class LoanFormAdapter(
 
         mutableList.apply { this[arr[position]] = 0 }
 
-        holder.minusBtn.setOnTouchListener(AutoRepeatButton(400, 100, object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                minusCounter(holder)
-            }
-        }))
+        holder.minusBtn.setOnTouchListener(AutoRepeatButton(400, 100,
+            View.OnClickListener { minusCounter(holder) }))
 
-        holder.plusBtn.setOnTouchListener(AutoRepeatButton(400, 100, object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                plusCounter(holder)
-            }
-        }))
+        holder.plusBtn.setOnTouchListener(AutoRepeatButton(400, 100,
+            View.OnClickListener { plusCounter(holder) }))
     }
 
     override fun getItemCount(): Int {
