@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.AutoRepeatButton
 import com.choochyemeilin.lamlam.helpers.FbCallback
+import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.loanform_select_product_list.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -49,10 +50,13 @@ class LoanFormAdapter(
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: LoanFormViewHolder, position: Int) {
 
-
+        holder.plusBtn.id = position
+        holder.minusBtn.id = position
         holder.prodName.text = arr[position]
         holder.counter.id = position
+
         mutableList.apply { this[arr[position]] = 0 }
+
         holder.minusBtn.setOnTouchListener(AutoRepeatButton(400, 100, object : View.OnClickListener {
             override fun onClick(view: View?) {
                 minusCounter(holder)
@@ -70,12 +74,16 @@ class LoanFormAdapter(
         return arr.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     private fun plusCounter(holder: LoanFormViewHolder) {
         val product = holder.prodName.text.toString()
         val count = holder.counter.text.toString().toInt() + 1
-        holder.counter.text = count.toString()
         mutableList[product] = count
         fbCallback.push(mutableList)
+        holder.counter.text = mutableList[product].toString()
     }
 
     private fun minusCounter(holder: LoanFormViewHolder) {
