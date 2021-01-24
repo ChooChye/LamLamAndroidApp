@@ -41,7 +41,7 @@ class LoansPending : Fragment() {
                 staffID = uid
             }
         })
-        Utils.getUserRole(object : FbCallback {
+        Utils.getUserRole(object : FbCallback{
             override fun onCallbackGetUserEmail(user: String) {
                 super.onCallbackGetUserEmail(user)
                 role = user
@@ -53,12 +53,12 @@ class LoansPending : Fragment() {
                 try {
                     pendingLoans.clear()
                     for (i in arr) {
-                        if (role == "admin") {
+                        if (role == "admin"){
                             if (i.status.toUpperCase() == "PENDING") {
                                 pendingLoans.add(i)
                             }
-                        } else if (role == "staff") {
-                            if (i.staffID == staffID) {
+                        }else if(role == "staff"){
+                            if(i.staffID == staffID){
                                 if (i.status.toUpperCase() == "PENDING") {
                                     pendingLoans.add(i)
                                 }
@@ -107,15 +107,13 @@ class LoansPending : Fragment() {
                             val key = jt.key.toString()
                             products[key] = value
                         }
-                        val item =
-                            LoanApplication(loanID, date, status, products, staffID, retailerID)
+                        val item = LoanApplication(loanID, date, status, products, staffID, retailerID)
                         list.add(item)
                         //{loanDate=2020-11-26 23:16, loanID=45647, productName=[Pink Sweatshirt, Blue Sweatshirt, Levi's Jeans (Black)], status=pending}
                     }
                 }
                 callback.onCallback(list)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Utils.toast(view?.context!!, "An error has occurred #0984 | ${error.message}", 1)
             }

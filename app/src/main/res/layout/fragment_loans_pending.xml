@@ -8,15 +8,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:id="@+id/loansPending_tv_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:gravity="center"
-        android:text="No Pending Loans"
-        android:textSize="16sp" />
-
     <ProgressBar
         android:id="@+id/loansPending_progressBar"
         style="?android:attr/progressBarStyle"
@@ -30,7 +21,6 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="4dp"
-        android:visibility="visible"
         tools:listitem="@layout/loans_pending_list_layout">
 
     </androidx.recyclerview.widget.RecyclerView>
