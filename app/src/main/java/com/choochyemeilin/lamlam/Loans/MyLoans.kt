@@ -12,12 +12,13 @@ import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_loans_myloans.*
 import kotlinx.android.synthetic.main.fragment_loans_myloans.view.*
 
 class MyLoans : Fragment() {
 
-    private var utils : Utils = Utils
-    var approvedLoans : ArrayList<LoanApplication> = ArrayList()
+    private var utils: Utils = Utils
+    var approvedLoans: ArrayList<LoanApplication> = ArrayList()
     var staffID = 0
     var role = "staff"
 
@@ -34,7 +35,7 @@ class MyLoans : Fragment() {
                 staffID = uid
             }
         })
-        Utils.getUserRole(object : FbCallback{
+        Utils.getUserRole(object : FbCallback {
             override fun onCallbackGetUserEmail(user: String) {
                 super.onCallbackGetUserEmail(user)
                 role = user
@@ -44,30 +45,39 @@ class MyLoans : Fragment() {
 
         getPendingLoans(object : FbCallback {
             override fun onCallback(arr: ArrayList<LoanApplication>) {
-                approvedLoans.clear()
-                for (i in arr) {
-                    if (role == "admin"){
-                        if (i.status.toUpperCase() == "APPROVED" || i.status.toUpperCase() == "REJECTED") {
-                            approvedLoans.add(i)
-                        }
-                    }else if(role == "staff"){
-                        if(i.staffID == staffID){
-                            if (i.status.toUpperCase() == "APPROVED") {
+                try {
+                    approvedLoans.clear()
+                    for (i in arr) {
+                        if (role == "admin") {
+                            if (i.status.toUpperCase() == "APPROVED" || i.status.toUpperCase() == "REJECTED") {
                                 approvedLoans.add(i)
+                            }
+                        } else if (role == "staff") {
+                            if (i.staffID == staffID) {
+                                if (i.status.toUpperCase() == "APPROVED") {
+                                    approvedLoans.add(i)
+                                }
                             }
                         }
                     }
+                    approvedLoans.reverse()
+                    view.myloans_rv.adapter = LoansApprovedAdapter(approvedLoans)
+                    view.myloans_rv.layoutManager = LinearLayoutManager(view.context)
+                    view.myloans_rv.setHasFixedSize(true)
+                }catch (e: Exception){
+                    Utils.toast(
+                        view.context,
+                        "An error has occurred. Please restart the application",
+                        0
+                    )
+                    Utils.log(e.message.toString())
                 }
-                approvedLoans.reverse()
-                view.myloans_rv.adapter = LoansApprovedAdapter(approvedLoans)
-                view.myloans_rv.layoutManager = LinearLayoutManager(view.context)
-                view.myloans_rv.setHasFixedSize(true)
             }
         })
         return view
     }
 
-    private fun getPendingLoans(callback: FbCallback) : List<LoanApplication>{
+    private fun getPendingLoans(callback: FbCallback): List<LoanApplication> {
         var list = ArrayList<LoanApplication>()
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -90,7 +100,8 @@ class MyLoans : Fragment() {
                             val key = jt.key.toString()
                             products[key] = value
                         }
-                        val item = LoanApplication(loanID, date, status, products, staffID, retailerID)
+                        val item =
+                            LoanApplication(loanID, date, status, products, staffID, retailerID)
                         list.add(item)
                         //{loanDate=2020-11-26 23:16, loanID=45647, productName=[Pink Sweatshirt, Blue Sweatshirt, Levi's Jeans (Black)], status=pending}
                     }

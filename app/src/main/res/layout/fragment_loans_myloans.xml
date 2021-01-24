@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".Loans.LoansPending">
 
+    <TextView
+        android:id="@+id/myLoans_tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="No Approved Loans"
+        android:textSize="16sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myloans_rv"
         android:layout_width="match_parent"
