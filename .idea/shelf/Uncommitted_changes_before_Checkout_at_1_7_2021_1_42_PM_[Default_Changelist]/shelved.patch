@@ -1,0 +1,218 @@
+Index: app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocks.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+> package com.choochyemeilin.lamlam.ReturnItems\r\n\r\nimport android.os.Build\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.TextView\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.Search.SearchAdapter\r\nimport com.choochyemeilin.lamlam.helpers.FbCallback\r\nimport com.choochyemeilin.lamlam.helpers.Products\r\nimport com.choochyemeilin.lamlam.helpers.Retailers\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.firebase.ui.database.FirebaseRecyclerAdapter\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.*\r\nimport kotlinx.android.synthetic.main.activity_my_stocks.*\r\nimport kotlinx.android.synthetic.main.activity_register.*\r\nimport kotlinx.android.synthetic.main.activity_search.*\r\nimport kotlinx.android.synthetic.main.activity_search.rv_result\r\nimport kotlinx.android.synthetic.main.my_stocks_list.*\r\nimport kotlinx.android.synthetic.main.my_stocks_list.view.*\r\nimport java.time.LocalDateTime\r\nimport java.time.format.DateTimeFormatter\r\nimport kotlin.jvm.java as java1\r\n\r\n class MyStocks : AppCompatActivity() {\r\n\r\n     lateinit var mRecyclerView: RecyclerView\r\n\r\n     var database: FirebaseDatabase = FirebaseDatabase.getInstance()\r\n     private var myRef: DatabaseReference = database.getReference(\"Categories\")\r\n     private lateinit var arrayList: ArrayList<Products>\r\n    private var utils : Utils = Utils\r\n     private lateinit var auth: FirebaseAuth\r\n\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_my_stocks)\r\n        supportActionBar!!.setDisplayHomeAsUpEnabled(true)\r\n        val actionBar = supportActionBar\r\n        actionBar!!.title = \"My Stocks\"\r\n\r\n        arrayList = ArrayList()\r\n        list_view_recycle.setHasFixedSize(true)\r\n\r\n      //  mRecyclerView=findViewById(R.id.list_view_recycle)\r\n       StocksRecyclerView()\r\n\r\n\r\n    }\r\n\r\n    @RequiresApi(Build.VERSION_CODES.O)\r\n    private fun StocksRecyclerView(){\r\n\r\n        //----------ORIGINAL------------\r\n       var query : Query = myRef.child(\"Tops\").orderByChild(\"product_name\")\r\n    //    var query : Query = myRef.child(\"2021-01-07\").orderByChild(\"productName\")\r\n\r\n   //     var query : Query = myRef\r\n        query.addValueEventListener(object : ValueEventListener {\r\n\r\n            override fun onDataChange(snapshot: DataSnapshot) {\r\n\r\n                    for (dss in snapshot.children) {\r\n                            dss.children.forEach {\r\n\r\n                            }\r\n                            //utils.log(\"${dss.value}\")\r\n\r\n                            val productItem: Products? = dss.getValue(Products::class.java1)\r\n                            if (productItem != null) {\r\n                                arrayList.add(productItem)\r\n                            }\r\n\r\n                        val myAdapter = MyStocksAdapter(applicationContext, arrayList)\r\n                        list_view_recycle.adapter = myAdapter\r\n                        list_view_recycle.layoutManager = LinearLayoutManager(\r\n                            applicationContext, LinearLayoutManager.VERTICAL,\r\n                            false\r\n                        )\r\n                        myAdapter.notifyDataSetChanged()\r\n\r\n                    }\r\n\r\n            }\r\n\r\n\r\n            override fun onCancelled(error: DatabaseError) {\r\n                utils.log(\"$error\")\r\n            }\r\n\r\n        })\r\n\r\n\r\n//-----------MY STOCKS ADAPTER-----------------\r\n        /*var loansRef: DatabaseReference = database.getReference(\"Loans\")\r\n        var productRef: DatabaseReference = database.getReference(\"Products\")\r\n        loansRef.addValueEventListener(object : ValueEventListener {\r\n            override fun onDataChange(snapshot: DataSnapshot) {\r\n                for (dss in snapshot.children) {\r\n                    val productItem : Products? = dss.getValue(Products::class.java)\r\n                    dss.children.forEach {\r\n                        val status = it.child(\"status\").value\r\n                        if (status.toString() == \"pending\") {\r\n                            val loopName=it.child(\"productName\")\r\n\r\n                            loopName.children.forEach{\r\n                                val k=it.key\r\n                                val quantity=it.value\r\n\r\n                                val objName=Products()\r\n                              //  arrayList.add()\r\n                                textView_stock_name.text = k.toString()\r\n                                textView_stock_qty.text=quantity.toString()\r\n                            }\r\n\r\n                           *//* val pname=productRef.orderByChild(\"product_name\")\r\n                            val qty=it.child(\"productName\")\r\n\r\n                            if (qty.equals(pname)){\r\n                                val img=productRef.orderByChild(\"image\")\r\n                                val pqty=qty.getValue().toString()\r\n\r\n                                //      val pimg= img.toString()\r\n                                //    holder.itemView.image_mystock.setImageResource(pimg)\r\n\r\n\r\n                            }*//*\r\n                        //    val date=it.child(\"returnDate\").value\r\n\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n\r\n            override fun onCancelled(error: DatabaseError) {\r\n                TODO(\"Not yet implemented\")\r\n            }\r\n\r\n        })\r\n*/\r\n\r\n        /*//------ADAPTER INSIDE------ERROR---------\r\n      var  FirebaseRecyclerAdapter=object: FirebaseRecyclerAdapter<Products,ItemViewHolder>(\r\n          Products::class.java1,\r\n          R.layout.my_stocks_list,\r\n          ItemViewHolder::class.java,\r\n          myRef\r\n      ){\r\n          override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {\r\n              TODO(\"Not yet implemented\")\r\n          }\r\n\r\n          override fun onBindViewHolder(holder: ItemViewHolder, position: Int, model: Products) {\r\n              val products: Products = arrayList.get(position)\r\n              holder.itemView.textView_stock_name.text = products.product_name\r\n              holder.itemView.textView_stock_qty.text = products.qty\r\n              holder.itemView.textView_stock_date.text = products.returnDate\r\n          }\r\n      }\r\n        mRecyclerView.adapter=FirebaseRecyclerAdapter*/\r\n    }\r\n\r\n    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){\r\n\r\n    }\r\n\r\n     fun getRetailerID(callback : FbCallback) : Int{\r\n         val user = auth.currentUser?.email\r\n         var retailerID  = 0\r\n         val myRef: DatabaseReference = database.getReference(\"User\")\r\n         myRef.addValueEventListener(object : ValueEventListener {\r\n             override fun onDataChange(snapshot: DataSnapshot) {\r\n                 for(dss in snapshot.children){\r\n                     val staffEmail = dss.child(\"staffEmail\").value.toString()\r\n                     if(user == staffEmail){\r\n                         val retailerID = dss.child(\"retailerID\").value.toString().toInt()\r\n                         callback.onCallbackGetUserID(retailerID!!)\r\n                     }\r\n                 }\r\n             }\r\n\r\n             override fun onCancelled(error: DatabaseError) {\r\n                 utils.log(\"Error has occurred #9372 | ${error.message}\")\r\n             }\r\n         })\r\n         return retailerID\r\n     }\r\n\r\n     fun getRetailerInfo(callback : FbCallback){\r\n         val user = auth.currentUser?.email\r\n         var retailerID : Int? = 0\r\n\r\n         getRetailerID(object : FbCallback{\r\n             override fun onCallbackGetUserID(uid: Int) {\r\n                 super.onCallbackGetUserID(uid)\r\n                 retailerID =  uid\r\n             }\r\n         })\r\n\r\n         val myRef: DatabaseReference = database.getReference(\"Retailers\")\r\n         myRef.addValueEventListener(object : ValueEventListener {\r\n             override fun onDataChange(snapshot: DataSnapshot) {\r\n                 for(dss in snapshot.children){\r\n                     val dbRetailerID = dss.child(\"retailerID\").value.toString().toInt()\r\n                     if(retailerID == dbRetailerID){\r\n                         val retailerName = dss.child(\"retailerName\").value.toString()\r\n                         val retailerAddress = dss.child(\"retailerAddress\").value.toString()\r\n                         val arr : ArrayList<Retailers> = ArrayList()\r\n                         arr.add(Retailers(dbRetailerID, retailerName, retailerAddress))\r\n                         callback.onCallbackRetailer(arr)\r\n                     }\r\n                 }\r\n             }\r\n\r\n             override fun onCancelled(error: DatabaseError) {\r\n                 utils.log(\"Error has occurred #9373 | ${error.message}\")\r\n             }\r\n         })\r\n     }\r\n\r\n    override fun onSupportNavigateUp(): Boolean {\r\n        onBackPressed()\r\n        this.finish()\r\n        return true\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocks.kt	(revision e95e842a7893d16080735779f5fc85db7ef1d7e7)
++++ app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocks.kt	(date 1609998136562)
+@@ -1,4 +1,4 @@
+- package com.choochyemeilin.lamlam.ReturnItems
++package com.choochyemeilin.lamlam.ReturnItems
+ 
+ import android.os.Build
+ import androidx.appcompat.app.AppCompatActivity
+@@ -28,15 +28,15 @@
+ import java.time.format.DateTimeFormatter
+ import kotlin.jvm.java as java1
+ 
+- class MyStocks : AppCompatActivity() {
++class MyStocks : AppCompatActivity() {
+ 
+-     lateinit var mRecyclerView: RecyclerView
++    lateinit var mRecyclerView: RecyclerView
+ 
+-     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+-     private var myRef: DatabaseReference = database.getReference("Categories")
+-     private lateinit var arrayList: ArrayList<Products>
+-    private var utils : Utils = Utils
+-     private lateinit var auth: FirebaseAuth
++    var database: FirebaseDatabase = FirebaseDatabase.getInstance()
++    private var myRef: DatabaseReference = database.getReference("Categories")
++    private lateinit var arrayList: ArrayList<Products>
++    private var utils: Utils = Utils
++    private lateinit var auth: FirebaseAuth
+ 
+ 
+     @RequiresApi(Build.VERSION_CODES.O)
+@@ -50,44 +50,44 @@
+         arrayList = ArrayList()
+         list_view_recycle.setHasFixedSize(true)
+ 
+-      //  mRecyclerView=findViewById(R.id.list_view_recycle)
+-       StocksRecyclerView()
++        //  mRecyclerView=findViewById(R.id.list_view_recycle)
++        StocksRecyclerView()
+ 
+ 
+     }
+ 
+     @RequiresApi(Build.VERSION_CODES.O)
+-    private fun StocksRecyclerView(){
++    private fun StocksRecyclerView() {
+ 
+         //----------ORIGINAL------------
+-       var query : Query = myRef.child("Tops").orderByChild("product_name")
+-    //    var query : Query = myRef.child("2021-01-07").orderByChild("productName")
++        var query: Query = myRef.child("Tops").orderByChild("product_name")
++        //    var query : Query = myRef.child("2021-01-07").orderByChild("productName")
+ 
+-   //     var query : Query = myRef
++        //     var query : Query = myRef
+         query.addValueEventListener(object : ValueEventListener {
+ 
+             override fun onDataChange(snapshot: DataSnapshot) {
+ 
+-                    for (dss in snapshot.children) {
+-                            dss.children.forEach {
++                for (dss in snapshot.children) {
++                    dss.children.forEach {
+ 
+-                            }
+-                            //utils.log("${dss.value}")
++                    }
++                    //utils.log("${dss.value}")
+ 
+-                            val productItem: Products? = dss.getValue(Products::class.java1)
+-                            if (productItem != null) {
+-                                arrayList.add(productItem)
+-                            }
++                    val productItem: Products? = dss.getValue(Products::class.java1)
++                    if (productItem != null) {
++                        arrayList.add(productItem)
++                    }
+ 
+-                        val myAdapter = MyStocksAdapter(applicationContext, arrayList)
+-                        list_view_recycle.adapter = myAdapter
+-                        list_view_recycle.layoutManager = LinearLayoutManager(
+-                            applicationContext, LinearLayoutManager.VERTICAL,
+-                            false
+-                        )
+-                        myAdapter.notifyDataSetChanged()
++                    val myAdapter = MyStocksAdapter(applicationContext, arrayList)
++                    list_view_recycle.adapter = myAdapter
++                    list_view_recycle.layoutManager = LinearLayoutManager(
++                        applicationContext, LinearLayoutManager.VERTICAL,
++                        false
++                    )
++                    myAdapter.notifyDataSetChanged()
+ 
+-                    }
++                }
+ 
+             }
+ 
+@@ -168,63 +168,63 @@
+         mRecyclerView.adapter=FirebaseRecyclerAdapter*/
+     }
+ 
+-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
++    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+ 
+     }
+ 
+-     fun getRetailerID(callback : FbCallback) : Int{
+-         val user = auth.currentUser?.email
+-         var retailerID  = 0
+-         val myRef: DatabaseReference = database.getReference("User")
+-         myRef.addValueEventListener(object : ValueEventListener {
+-             override fun onDataChange(snapshot: DataSnapshot) {
+-                 for(dss in snapshot.children){
+-                     val staffEmail = dss.child("staffEmail").value.toString()
+-                     if(user == staffEmail){
+-                         val retailerID = dss.child("retailerID").value.toString().toInt()
+-                         callback.onCallbackGetUserID(retailerID!!)
+-                     }
+-                 }
+-             }
++    fun getRetailerID(callback: FbCallback): Int {
++        val user = auth.currentUser?.email
++        var retailerID = 0
++        val myRef: DatabaseReference = database.getReference("User")
++        myRef.addValueEventListener(object : ValueEventListener {
++            override fun onDataChange(snapshot: DataSnapshot) {
++                for (dss in snapshot.children) {
++                    val staffEmail = dss.child("staffEmail").value.toString()
++                    if (user == staffEmail) {
++                        val retailerID = dss.child("retailerID").value.toString().toInt()
++                        callback.onCallbackGetUserID(retailerID!!)
++                    }
++                }
++            }
+ 
+-             override fun onCancelled(error: DatabaseError) {
+-                 utils.log("Error has occurred #9372 | ${error.message}")
+-             }
+-         })
+-         return retailerID
+-     }
++            override fun onCancelled(error: DatabaseError) {
++                utils.log("Error has occurred #9372 | ${error.message}")
++            }
++        })
++        return retailerID
++    }
+ 
+-     fun getRetailerInfo(callback : FbCallback){
+-         val user = auth.currentUser?.email
+-         var retailerID : Int? = 0
++    fun getRetailerInfo(callback: FbCallback) {
++        val user = auth.currentUser?.email
++        var retailerID: Int? = 0
+ 
+-         getRetailerID(object : FbCallback{
+-             override fun onCallbackGetUserID(uid: Int) {
+-                 super.onCallbackGetUserID(uid)
+-                 retailerID =  uid
+-             }
+-         })
++        getRetailerID(object : FbCallback {
++            override fun onCallbackGetUserID(uid: Int) {
++                super.onCallbackGetUserID(uid)
++                retailerID = uid
++            }
++        })
+ 
+-         val myRef: DatabaseReference = database.getReference("Retailers")
+-         myRef.addValueEventListener(object : ValueEventListener {
+-             override fun onDataChange(snapshot: DataSnapshot) {
+-                 for(dss in snapshot.children){
+-                     val dbRetailerID = dss.child("retailerID").value.toString().toInt()
+-                     if(retailerID == dbRetailerID){
+-                         val retailerName = dss.child("retailerName").value.toString()
+-                         val retailerAddress = dss.child("retailerAddress").value.toString()
+-                         val arr : ArrayList<Retailers> = ArrayList()
+-                         arr.add(Retailers(dbRetailerID, retailerName, retailerAddress))
+-                         callback.onCallbackRetailer(arr)
+-                     }
+-                 }
+-             }
++        val myRef: DatabaseReference = database.getReference("Retailers")
++        myRef.addValueEventListener(object : ValueEventListener {
++            override fun onDataChange(snapshot: DataSnapshot) {
++                for (dss in snapshot.children) {
++                    val dbRetailerID = dss.child("retailerID").value.toString().toInt()
++                    if (retailerID == dbRetailerID) {
++                        val retailerName = dss.child("retailerName").value.toString()
++                        val retailerAddress = dss.child("retailerAddress").value.toString()
++                        val arr: ArrayList<Retailers> = ArrayList()
++                        arr.add(Retailers(dbRetailerID, retailerName, retailerAddress))
++                        callback.onCallbackRetailer(arr)
++                    }
++                }
++            }
+ 
+-             override fun onCancelled(error: DatabaseError) {
+-                 utils.log("Error has occurred #9373 | ${error.message}")
+-             }
+-         })
+-     }
++            override fun onCancelled(error: DatabaseError) {
++                utils.log("Error has occurred #9373 | ${error.message}")
++            }
++        })
++    }
+ 
+     override fun onSupportNavigateUp(): Boolean {
+         onBackPressed()

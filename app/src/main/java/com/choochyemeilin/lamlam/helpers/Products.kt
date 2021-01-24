@@ -1,6 +1,5 @@
 package com.choochyemeilin.lamlam.helpers
 
-import java.sql.Date
 
 class Products {
     var id: String? = null
@@ -44,7 +43,4 @@ class Products {
         this.returnDate = returnDate
         this.remarks=remarks
     }
-
-
-
 }
