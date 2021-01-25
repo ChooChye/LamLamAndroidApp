@@ -72,6 +72,7 @@
         android:text="error"
         android:textSize="17sp"
         />
+
     <TextView
         android:id="@+id/textView_stock_testing"
         android:layout_width="wrap_content"
@@ -80,6 +81,6 @@
         android:layout_marginTop="125dp"
         android:text="error"
         android:textSize="17sp"
-        />
+        android:visibility="gone" />
 
 </RelativeLayout>
