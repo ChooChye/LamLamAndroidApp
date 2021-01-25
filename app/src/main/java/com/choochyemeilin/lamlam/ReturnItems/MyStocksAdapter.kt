@@ -86,16 +86,20 @@ class MyStocksAdapter(
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dss in snapshot.children) {
                         dss.children.forEach {
-                            val loanDate = it.child("loanDate")
+                            val loanDate = it.child("loanDate").value
                             val product = it.child("productName")
                             val loanDate1 = it.child("loanDate").value.toString()
                             val product1 = it.child("productName").value.toString()
                             val status = it.child("status").value.toString()
 
+
+
+
                             product.children.forEach{
                                 val pname=it.key
                                 if(sname==pname){
                                     holder.itemView.textView_stock_date.text = loanDate1
+                               //     holder.itemView.textView_stock_testing.text= testing.toString()
                                 }
                             }
                         }
@@ -106,51 +110,6 @@ class MyStocksAdapter(
                     TODO("Not yet implemented")
                 }
             })
-
-
-/*
-       loansRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dss in snapshot.children) {
-                    val productItem : Products? = dss.getValue(Products::class.java)
-                    dss.children.forEach {
-                        val status = it.child("status").value
-                        if (status.toString() == "pending") {
-                            val loopName=it.child("productName")
-
-                            loopName.children.forEach{
-                                val k=it.key
-                                val quantity=it.value
-
-                                holder.itemView.textView_stock_name.text = k.toString()
-                                holder.itemView.textView_stock_qty.text=quantity.toString()
-
-                            }
-
-                           *//* val pname=productRef.orderByChild("product_name")
-                             val qty=it.child("productName")
-
-                            if (qty.equals(pname)){
-                                val img=productRef.orderByChild("image")
-                                val pqty=qty.getValue().toString()
-
-                                val pimg= img.toString()
-                            }*//*
-                            loadImage(holder, products.image)
-                            }
-                            val date=it.child("returnDate").value
-                            holder.itemView.textView_stock_date.text = date.toString()
-                        }
-                    }
-                }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })*/
-
 
     }
 
@@ -186,10 +145,14 @@ class MyStocksAdapter(
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getReturnDate(daysAgo: DataSnapshot): Date {
+/*    @RequiresApi(Build.VERSION_CODES.O)
+    fun getReturnDate(daysAgo: Int): Date {
 
-     //   val timeAddedLong = ServerValue.TIMESTAMP.toString()
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
+
+        return calendar.time
+    *//* //   val timeAddedLong = ServerValue.TIMESTAMP.toString()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
         val data1=daysAgo.value as Date  //2021-1-6 12:39
         val test1: Any? =data1
@@ -206,8 +169,8 @@ class MyStocksAdapter(
         // Convert calendar back to Date
         val currentDatePlusOne = calendar.time
 
-        return currentDatePlusOne
-    }
+        return currentDatePlusOne*//*
+    }*/
 
 
     fun getName(): List<String> {
