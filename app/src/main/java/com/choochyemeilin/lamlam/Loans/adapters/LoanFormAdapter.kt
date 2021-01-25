@@ -51,6 +51,8 @@ class LoanFormAdapter(
         holder.prodName.text = productName
         holder.counter.id = position
 
+
+        //Set all products to 0
         mutableList.apply {
             this[productName] = 0
         }
@@ -81,7 +83,7 @@ class LoanFormAdapter(
         val maxQty : Int = convertedMap[position].second
         if(count == maxQty){
             count = maxQty
-            Utils.toast(holder.itemView.context, "Maximum Quantity to loan has been exceeded", 0);
+            Utils.toast(holder.itemView.context, "Maximum quantity has been exceeded for $product", 0);
         }else{
             count++
         }
