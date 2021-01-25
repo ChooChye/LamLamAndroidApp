@@ -2,6 +2,7 @@ package com.choochyemeilin.lamlam.Loans.form
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +20,6 @@ import java.io.Serializable
 class LoanAppForm : AppCompatActivity(), FbCallback {
 
     private var utils: Utils = Utils
-    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var mutableMap : MutableMap<String, Int> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,15 +41,17 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         loanAppForm1_fab.setOnClickListener { nextBtn() }
 
         getProducts(object : FbCallback {
-            override fun onCallbackString(arr: ArrayList<String>) {
-                val initAdapter = LoanFormAdapter(arr, this)
+            override fun push(arr: MutableMap<String, Int>) {
+                val initAdapter = LoanFormAdapter(arr.toSortedMap(), this)
+
                 loanform_rv.adapter = initAdapter
                 loanform_rv.layoutManager = LinearLayoutManager(applicationContext)
                 loanform_rv.setHasFixedSize(true)
                 loanAppForm1_progressBar.visibility = View.GONE
+
             }
 
-            override fun push(arr: MutableMap<String, Int>) {
+            override fun pushForLoanForm(arr: MutableMap<String, Int>) {
                 arr.forEach {
                     val key = it.key
                     val value = it.value
@@ -74,8 +76,8 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
         }
     }
 
-    private fun getProducts(callback: FbCallback): List<String> {
-        var list = ArrayList<String>()
+    private fun getProducts(callback: FbCallback): MutableMap<String, Int> {
+        var list : MutableMap<String, Int> = mutableMapOf()
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("Products")
@@ -85,9 +87,10 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
                 list.clear()
                 for (dss in snapshot.children) {
                     val productName = dss.child("product_name").value.toString()
-                    list.add(productName)
+                    val qty = dss.child("qty").value.toString()
+                    list[productName] = qty.toInt()
                 }
-                callback.onCallbackString(list)
+                callback.push(list)
             }
 
             override fun onCancelled(error: DatabaseError) {
