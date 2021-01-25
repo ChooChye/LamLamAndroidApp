@@ -42,7 +42,7 @@ class LoanAppForm : AppCompatActivity(), FbCallback {
 
         getProducts(object : FbCallback {
             override fun push(arr: MutableMap<String, Int>) {
-                val initAdapter = LoanFormAdapter(arr, this)
+                val initAdapter = LoanFormAdapter(arr.toSortedMap(), this)
 
                 loanform_rv.adapter = initAdapter
                 loanform_rv.layoutManager = LinearLayoutManager(applicationContext)

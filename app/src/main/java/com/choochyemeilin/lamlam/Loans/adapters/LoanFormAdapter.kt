@@ -24,7 +24,6 @@ class LoanFormAdapter(
 
 ) : RecyclerView.Adapter<LoanFormAdapter.LoanFormViewHolder>() {
     private var convertedMap = arr.toList()
-    var fixedTimer: Timer = Timer();
     private var mutableList = mutableMapOf<String, Int>()
 
 
@@ -43,10 +42,6 @@ class LoanFormAdapter(
             .inflate(R.layout.loanform_select_product_list, parent, false)
         return LoanFormViewHolder(itemView)
     }
-
-    /*fun initTimer() {
-        fixedTimer = Timer();
-    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: LoanFormViewHolder, position: Int) {
