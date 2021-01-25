@@ -92,12 +92,7 @@ class MyStocksAdapter(
                             val product1 = it.child("productName").value.toString()
                             val status = it.child("status").value.toString()
 
-                            val testing=loanDate as Int
 
-
-                            /*val calendar = Calendar.getInstance()
-                            calendar.add(Calendar.DAY_OF_YEAR, -testing)*/
-                            holder.itemView.textView_stock_testing.text= testing.toString()
 
 
                             product.children.forEach{
@@ -115,51 +110,6 @@ class MyStocksAdapter(
                     TODO("Not yet implemented")
                 }
             })
-
-
-/*
-       loansRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dss in snapshot.children) {
-                    val productItem : Products? = dss.getValue(Products::class.java)
-                    dss.children.forEach {
-                        val status = it.child("status").value
-                        if (status.toString() == "pending") {
-                            val loopName=it.child("productName")
-
-                            loopName.children.forEach{
-                                val k=it.key
-                                val quantity=it.value
-
-                                holder.itemView.textView_stock_name.text = k.toString()
-                                holder.itemView.textView_stock_qty.text=quantity.toString()
-
-                            }
-
-                           *//* val pname=productRef.orderByChild("product_name")
-                             val qty=it.child("productName")
-
-                            if (qty.equals(pname)){
-                                val img=productRef.orderByChild("image")
-                                val pqty=qty.getValue().toString()
-
-                                val pimg= img.toString()
-                            }*//*
-                            loadImage(holder, products.image)
-                            }
-                            val date=it.child("returnDate").value
-                            holder.itemView.textView_stock_date.text = date.toString()
-                        }
-                    }
-                }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })*/
-
 
     }
 
