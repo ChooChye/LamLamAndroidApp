@@ -15,15 +15,16 @@ import com.choochyemeilin.lamlam.helpers.Utils
 import kotlinx.android.synthetic.main.loanform_select_product_list.view.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.max
 
 
 class LoanFormAdapter(
-    private var arr: ArrayList<String> = ArrayList(),
+    private var arr: MutableMap<String, Int> = mutableMapOf(),
     var fbCallback: FbCallback
 
 ) : RecyclerView.Adapter<LoanFormAdapter.LoanFormViewHolder>() {
-
-    var fixedTimer : Timer = Timer();
+    private var convertedMap = arr.toList()
+    var fixedTimer: Timer = Timer();
     private var mutableList = mutableMapOf<String, Int>()
 
 
@@ -49,19 +50,25 @@ class LoanFormAdapter(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: LoanFormViewHolder, position: Int) {
-
         holder.plusBtn.id = position
         holder.minusBtn.id = position
-        holder.prodName.text = arr[position]
+        val productName = convertedMap[position].first
+        holder.prodName.text = productName
         holder.counter.id = position
 
-        mutableList.apply { this[arr[position]] = 0 }
+        mutableList.apply {
+            this[productName] = 0
+        }
 
-        holder.minusBtn.setOnTouchListener(AutoRepeatButton(400, 100,
-            View.OnClickListener { minusCounter(holder) }))
+        holder.minusBtn.setOnTouchListener(
+            AutoRepeatButton(400, 100,
+                View.OnClickListener { minusCounter(holder) })
+        )
 
-        holder.plusBtn.setOnTouchListener(AutoRepeatButton(400, 100,
-            View.OnClickListener { plusCounter(holder) }))
+        holder.plusBtn.setOnTouchListener(
+            AutoRepeatButton(400, 100,
+                View.OnClickListener { plusCounter(holder) })
+        )
     }
 
     override fun getItemCount(): Int {
@@ -73,11 +80,19 @@ class LoanFormAdapter(
     }
 
     private fun plusCounter(holder: LoanFormViewHolder) {
+        val position = holder.plusBtn.id
         val product = holder.prodName.text.toString()
-        val count = holder.counter.text.toString().toInt() + 1
+        var count : Int = holder.counter.text.toString().toInt()
+        val maxQty : Int = convertedMap[position].second
+        if(count == maxQty){
+            count = maxQty
+            Utils.toast(holder.itemView.context, "Maximum Quantity to loan has been exceeded", 0);
+        }else{
+            count++
+        }
+        holder.counter.text = count.toString()
         mutableList[product] = count
-        fbCallback.push(mutableList)
-        holder.counter.text = mutableList[product].toString()
+        fbCallback.pushForLoanForm(mutableList)
     }
 
     private fun minusCounter(holder: LoanFormViewHolder) {
@@ -89,6 +104,6 @@ class LoanFormAdapter(
             holder.counter.text = x.toString()
             mutableList[product] = x
         }
-        fbCallback.push(mutableList)
+        fbCallback.pushForLoanForm(mutableList)
     }
 }

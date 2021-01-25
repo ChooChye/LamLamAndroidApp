@@ -12,5 +12,6 @@ interface FbCallback {
     fun onCallbackGetUserID(uid : Int){}
     fun onCallback(arr : ArrayList<LoanApplication>){}
     fun push(arr : MutableMap<String, Int>){}
+    fun pushForLoanForm(arr : MutableMap<String, Int>){}
     fun push1(arr : MutableMap<String, Int>, arr1: MutableMap<String, String>){}
 }
