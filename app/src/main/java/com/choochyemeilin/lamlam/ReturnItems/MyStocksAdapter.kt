@@ -86,16 +86,25 @@ class MyStocksAdapter(
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dss in snapshot.children) {
                         dss.children.forEach {
-                            val loanDate = it.child("loanDate")
+                            val loanDate = it.child("loanDate").value
                             val product = it.child("productName")
                             val loanDate1 = it.child("loanDate").value.toString()
                             val product1 = it.child("productName").value.toString()
                             val status = it.child("status").value.toString()
 
+                            val testing=loanDate as Int
+
+
+                            /*val calendar = Calendar.getInstance()
+                            calendar.add(Calendar.DAY_OF_YEAR, -testing)*/
+                            holder.itemView.textView_stock_testing.text= testing.toString()
+
+
                             product.children.forEach{
                                 val pname=it.key
                                 if(sname==pname){
                                     holder.itemView.textView_stock_date.text = loanDate1
+                               //     holder.itemView.textView_stock_testing.text= testing.toString()
                                 }
                             }
                         }
@@ -186,10 +195,14 @@ class MyStocksAdapter(
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getReturnDate(daysAgo: DataSnapshot): Date {
+/*    @RequiresApi(Build.VERSION_CODES.O)
+    fun getReturnDate(daysAgo: Int): Date {
 
-     //   val timeAddedLong = ServerValue.TIMESTAMP.toString()
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
+
+        return calendar.time
+    *//* //   val timeAddedLong = ServerValue.TIMESTAMP.toString()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
         val data1=daysAgo.value as Date  //2021-1-6 12:39
         val test1: Any? =data1
@@ -206,8 +219,8 @@ class MyStocksAdapter(
         // Convert calendar back to Date
         val currentDatePlusOne = calendar.time
 
-        return currentDatePlusOne
-    }
+        return currentDatePlusOne*//*
+    }*/
 
 
     fun getName(): List<String> {
