@@ -163,7 +163,6 @@ class Reports : AppCompatActivity() {
                                         if (mutableList.containsKey(key)) {
                                             val oldValue = mutableList[key].toString().toInt()
                                             mutableList[key] = oldValue + qty
-
                                         } else {
                                             mutableList[key] = qty
                                         }
