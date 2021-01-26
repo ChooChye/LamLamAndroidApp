@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Loans.form.LoanAppForm2">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="70dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -113,12 +116,16 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
 
     <Button
         android:id="@+id/loanAppForm_btn_applyNow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_green"
         android:fontFamily="@font/quicksand_bold"
