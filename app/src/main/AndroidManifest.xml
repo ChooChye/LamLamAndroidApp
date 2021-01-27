@@ -18,12 +18,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-
-        <activity android:name=".Register.RegRetailer"></activity>
+        <activity android:name=".Profile.Profile"></activity>
+        <activity android:name=".Register.RegRetailer" />
         <activity android:name=".ReturnItems.ReturnItemForm" />
         <activity android:name=".Register.RegisterNewRole" />
-
-        <activity android:name=".Misc.NoInternet"></activity>
+        <activity android:name=".Misc.NoInternet" />
         <activity
             android:name=".Reports.Reports"
             android:screenOrientation="portrait" />
@@ -41,7 +40,6 @@
             android:label="@string/title_activity_loans"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".ReturnItems.MyStocks" />
 
         <uses-library
