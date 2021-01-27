@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.choochyemeilin.lamlam.Loans.Loans
 import com.choochyemeilin.lamlam.Login.Login
+import com.choochyemeilin.lamlam.Profile.Profile
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Reports.Reports
 import com.choochyemeilin.lamlam.ReturnItems.MyStocks
@@ -25,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.nav_header.*
-import java.text.DecimalFormat
+import kotlin.collections.ArrayList
 
 
 class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
@@ -58,11 +59,7 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         nav_view.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.mItem1 -> Toast.makeText(
-                    applicationContext,
-                    "My Profile",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.mItem1 -> startActivity(Intent(this, Profile::class.java))
                 R.id.mItem2 -> startActivity(Intent(this, MyStocks::class.java))
                 R.id.mItem3 -> logout()
             }

@@ -19,8 +19,6 @@ import com.google.android.material.tabs.TabLayout
 
 class Loans : AppCompatActivity() {
 
-    private var utils : Utils = Utils
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loans)
