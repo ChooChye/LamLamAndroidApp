@@ -3,11 +3,14 @@ package com.choochyemeilin.lamlam.Scan
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -15,11 +18,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Scan.ScanHistory.ScanHistory
+import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_scan.*
+import org.json.JSONArray
+import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -32,6 +39,7 @@ class Scan : AppCompatActivity() {
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("ScanHistory")
+    private var staffID = 0
 
 
     //Main Program
@@ -42,6 +50,12 @@ class Scan : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        Utils.getStaffID(object : FbCallback {
+            override fun onCallbackGetUserID(uid: Int) {
+                staffID = uid
+                super.onCallbackGetUserID(uid)
+            }
+        })
         setupPermissions()
         codeScanner()
     }
@@ -62,9 +76,14 @@ class Scan : AppCompatActivity() {
                 runOnUiThread {
                     hapticFeedback() //Vibrate the phone after successfully scanning
                     try {
-                        val jsonData = "[$it]"
+                        val jsonData = it.toString()
+                        var newJsonObj = JSONObject(jsonData)
+                        var newJsonData = JSONArray()
+                        newJsonObj.put("staffID", staffID)
+                        newJsonData.put(newJsonObj)
                         codeScanner.stopPreview()
-                        updateDB(jsonData)
+
+                        updateDB(newJsonData.toString())
                     } catch (e: Exception) {
                         showDialog("An error has occurred #9784 | ${e.message}")
                     }
@@ -88,19 +107,18 @@ class Scan : AppCompatActivity() {
         var data: List<Products>? = null
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter3 = DateTimeFormatter.ofPattern("ss") //yyyy-MM-dd HH:mm:ss.SSS
+        val formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss") //yyyy-MM-dd HH:mm:ss.SSS
         val formattedDate = current.format(formatter)
         val formattedTime = current.format(formatter2)
-        val formattedSec = current.format(formatter3)
 
         try {
             data = readJSON(jsonData)
+            //[{"category":"Tops","desc":"Tzu Pink Sweatshirt with Hoodie","image":"pink_sweatshirt.jpg","price":"39.00","product_name":"Tzu Pink Sweatshirt","qty":"80","id":"-MOyCeFDbzM2wbtV8Ied"}]
         } catch (e: Exception) {
             utils.log("Error #897 | $e")
         }
         val process =
-            myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
+            myRef.child(formattedDate).child(formattedTime).setValue(data)
         process
             .addOnSuccessListener {
                 val cat = data!![0].category
@@ -205,6 +223,19 @@ class Scan : AppCompatActivity() {
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.scan_history_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.scanHistory_menu_btn -> startActivity(Intent(this, ScanHistory::class.java))
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     override fun onSupportNavigateUp(): Boolean {

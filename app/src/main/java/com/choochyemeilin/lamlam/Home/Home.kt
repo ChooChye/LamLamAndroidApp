@@ -4,6 +4,7 @@ package com.choochyemeilin.lamlam.Home
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import com.choochyemeilin.lamlam.Loans.Loans
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.Profile.Profile
@@ -59,8 +61,14 @@ class Home : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         nav_view.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.mItem1 -> startActivity(Intent(this, Profile::class.java))
-                R.id.mItem2 -> startActivity(Intent(this, MyStocks::class.java))
+                R.id.mItem1 -> {
+                    startActivity(Intent(this, Profile::class.java))
+                    drawerLayout.closeDrawer(GravityCompat.START, true)
+                }
+                R.id.mItem2 -> {
+                    startActivity(Intent(this, MyStocks::class.java))
+                    drawerLayout.closeDrawer(GravityCompat.START, true)
+                }
                 R.id.mItem3 -> logout()
             }
             true
