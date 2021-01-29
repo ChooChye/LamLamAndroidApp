@@ -59,7 +59,7 @@ class ScanHistory : AppCompatActivity() {
                     }
                     index++
                 }
-                arr.reverse()
+                newArr.reverse()
                 if(newArr.isEmpty()){
                     scanHistory_rv.visibility = View.GONE
                     scan_history_items_tv_noresult.visibility = View.VISIBLE

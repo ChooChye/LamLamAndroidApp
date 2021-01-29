@@ -34,7 +34,7 @@ class ScanHistoryAdapter(
 
     override fun onBindViewHolder(holder: ScanHistoryVH, position: Int) {
 
-        holder.prodName.text = "1 x ${mutableList[position].prodName}"
+        holder.prodName.text = "1 x ${mutableList[position].product_name}"
         holder.time.text = mutableList[position].date + " " + mutableList[position].time
     }
 
@@ -47,22 +47,18 @@ class ScanHistoryAdapter(
         val dataSet = mutableList[position]
         removedPosition = position
         val time = dataSet.time
-        removedItem = dataSet.prodName
-
+        removedItem = dataSet.product_name
         mutableList.removeAt(position)
         notifyItemRemoved(position)
+
+        removeInDB(dataSet) // Remove in Firebase
 
         Snackbar.make(viewHolder.itemView, "$removedItem ($time) deleted", Snackbar.LENGTH_LONG)
             .setAction("UNDO") {
                 mutableList.add(removedPosition, dataSet)
                 notifyItemInserted(removedPosition)
-            }.addCallback(object : Snackbar.Callback() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    removeInDB(dataSet)
-                    super.onDismissed(transientBottomBar, event)
-                }
-            })
-            .show()
+                undo(dataSet)
+            }.show()
     }
 
     private fun removeInDB(dataSet: ScanHistoryObj) {
@@ -70,6 +66,13 @@ class ScanHistoryAdapter(
         var myRef: DatabaseReference = database.getReference("ScanHistory")
 
         myRef.child(dataSet.date).child(dataSet.time).removeValue()
+    }
+
+    private fun undo(dataSet: ScanHistoryObj){
+        var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        var myRef: DatabaseReference = database.getReference("ScanHistory")
+
+        myRef.child(dataSet.date).child(dataSet.time).child("0").setValue(dataSet)
     }
 
 
