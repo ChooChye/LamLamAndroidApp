@@ -13,6 +13,7 @@ class Products {
     var loanDate: String? = null
     var returnDate: String? = null
     var remarks: String = ""
+    var staffID : Int = 0
 
     constructor() {
 
@@ -42,5 +43,28 @@ class Products {
         this.loanDate = loanDate
         this.returnDate = returnDate
         this.remarks=remarks
+    }
+
+    //Constructor for Scan History
+    constructor(
+        id: String?,
+        category: String?,
+        product_name: String?,
+        desc: String?,
+        price: String,
+        qty: String,
+        image: String,
+        remarks: String,
+        staffID : Int
+    ) {
+        this.id = id
+        this.category = category
+        this.product_name = product_name
+        this.desc = desc
+        this.price = price
+        this.qty = qty
+        this.image = image
+        this.remarks=remarks
+        this.staffID = staffID
     }
 }

@@ -2,7 +2,7 @@ package com.choochyemeilin.lamlam.helpers
 
 
 import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
-
+import com.choochyemeilin.lamlam.Scan.ScanHistory.ScanHistoryObj
 
 
 interface FbCallback {
@@ -14,4 +14,5 @@ interface FbCallback {
     fun push(arr : MutableMap<String, Int>){}
     fun pushForLoanForm(arr : MutableMap<String, Int>){}
     fun profileCallback(arr : MutableMap<String, String>){}
+    fun scanHistoryCallback(arr : MutableList<ScanHistoryObj>){}
 }
