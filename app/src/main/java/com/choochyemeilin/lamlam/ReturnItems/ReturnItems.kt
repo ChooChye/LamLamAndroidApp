@@ -33,8 +33,6 @@ class ReturnItems : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var myRef: DatabaseReference = database.getReference("Return History")
-    private var productRef: DatabaseReference = database.getReference("Products")
 
     //Main Program
     @RequiresApi(Build.VERSION_CODES.O)
@@ -74,8 +72,6 @@ class ReturnItems : AppCompatActivity() {
                         nextPage(jsonData)
 
 
-
-
                     //    updateDB(jsonData)
                     } catch (e: Exception) {
                         utils.log(e.toString())
@@ -95,65 +91,6 @@ class ReturnItems : AppCompatActivity() {
             codeScanner.startPreview()
         }
     }
-
-/*    //Update Database after scanning
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun updateDB(jsonData: String) {
-        var data: List<Products>? = null
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter3 = DateTimeFormatter.ofPattern("ss") //yyyy-MM-dd HH:mm:ss.SSS
-        val formattedDate = current.format(formatter)
-        val formattedTime = current.format(formatter2)
-        val formattedSec = current.format(formatter3)
-
-        try {
-            data = readJSON(jsonData)
-
-        } catch (e: Exception) {
-            utils.log("Error #897 | $e")
-        }
-        //utils.log("TEST readJSON = $data");
-
-        val process =
-            myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
-        process
-            .addOnSuccessListener {
-                val cat = data!![0].category
-                val id = data[0].id
-
-                //val prodDesc = data!![0].desc
-                val prodName = data[0].product_name
-                val prodQty = data[0].qty  //NEED TO GET ReturnItemForm QUANTITY
-
-                val oldStatus = data[0].status
-                val status="IN STOCK"
-                oldStatus.equals(status)
-           //     val returnDate = data[0].returnDate
-                val current = LocalDateTime.now()
-           //     val remarks=  // NEED TO GET ReturnItemForm REMARKS
-
-                val msg = String.format(
-                    "Product ID : %s\n" +
-                            "Category : %s\n" +
-                            "Product Name : %s\n" +
-                            "Quantity : %s\n" +
-                            "Status : %s\n" +
-                            "Return Date : %s\n\n" +
-                            "Remarks : \n\n" +
-                            "Successfully Recorded", id, cat, prodName, prodQty, status, current
-                )
-                showDialog(msg)
-
-                Toast.makeText(this, "Items Return Successfully", Toast.LENGTH_LONG).show()
-
-            }
-            .addOnFailureListener {
-                showDialog("Firebase error")
-            }
-
-    }*/
 
     //Vibrate when scanning
     private fun hapticFeedback() {
@@ -246,39 +183,8 @@ class ReturnItems : AppCompatActivity() {
         return true
     }
 
-    fun updateStatus(){
-        var query : Query = productRef.orderByChild("status")
-
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.hasChildren()) {
-                    // arrayList.clear()
-                    for (dss in snapshot.children) {
-                        //utils.log("${dss.value}")
-                        val productStatus: Products? = dss.getValue(Products::class.java)
-
-
-                    }
-
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                utils.log("$error")
-            }
-
-        })
-    }
 
     private fun nextPage(json: Any) {
-
-          //  val b = Bundle()
-          //  b.putStringArrayList("arrayListText", arrayListText)
-       // b.putParcelableArrayList("arrayListText", data)
-        //    val intent = Intent(this, ReturnItemForm::class.java)
-           // intent.putExtras(b)
-      //      startActivity(intent)
-
         val intent = Intent(this, ReturnItemForm::class.java)
         intent.putExtra("data", json.toString())
         startActivity(intent)

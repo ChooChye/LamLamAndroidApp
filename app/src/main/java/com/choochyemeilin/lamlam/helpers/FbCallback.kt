@@ -15,4 +15,5 @@ interface FbCallback {
     fun pushForLoanForm(arr : MutableMap<String, Int>){}
     fun profileCallback(arr : MutableMap<String, String>){}
     fun scanHistoryCallback(arr : MutableList<ScanHistoryObj>){}
+    fun pushLoanDate(loandate: String){}
 }

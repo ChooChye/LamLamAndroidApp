@@ -1,39 +1,33 @@
 package com.choochyemeilin.lamlam.ReturnItems
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.fromJson
+import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.my_stocks_list.*
 import kotlinx.android.synthetic.main.my_stocks_list.view.*
-import kotlinx.android.synthetic.main.return_item_form.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MyStocksAdapter(
 
-    private var context: MutableMap<String, Int>
+    private var context: MutableMap<String, Int>,
+    private var ldate: String
 ) : RecyclerView.Adapter<MyStocksAdapter.ViewHolder>() {
 
     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     var productRef: DatabaseReference = database.getReference("Products")
     private var utils : Utils = Utils
-
+    private   var staffID : Int? = 0
 
     //View Holder
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
@@ -51,36 +45,50 @@ class MyStocksAdapter(
 
         holder.itemView.textView_stock_name.text = list[position].first
         holder.itemView.textView_stock_qty.text = list[position].second.toString()
+
+        holder.itemView.textView_stock_date.text = ldate.toString()
+        holder.itemView.textView_stock_return_date.text= getRDate(ldate)
+
         var sname=holder.itemView.textView_stock_name.text.toString()
+
+        Utils.getStaffID(object : FbCallback {
+            override fun onCallbackGetUserID(uid: Int) {
+                super.onCallbackGetUserID(uid)
+                staffID = uid
+                holder.itemView.textView_stock_sid.text = staffID.toString()
+            }
+        })
+
+
 
 
        productRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+           override fun onDataChange(snapshot: DataSnapshot) {
 
-                for (dss in snapshot.children){
+               for (dss in snapshot.children) {
 
-                    val pname=dss.child("product_name").value
-                    val image=dss.child("image").value
+                   val pname = dss.child("product_name").value
+                   val image = dss.child("image").value
 
-                    if(sname==pname){
+                   if (sname == pname) {
 
-                        loadImage(holder, image.toString())
-                     }
+                       loadImage(holder, image.toString())
+                   }
 
-                }
-            }
+               }
+           }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+           override fun onCancelled(error: DatabaseError) {
+               TODO("Not yet implemented")
+           }
 
-        })
+       })
 
 
 
         val myRef: DatabaseReference = database.getReference("Loans")
 
-        myRef.orderByKey()
+      /*  myRef.orderByKey()
             .addValueEventListener(object : ValueEventListener {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -89,19 +97,45 @@ class MyStocksAdapter(
                             val loanDate = it.child("loanDate").value
                             val product = it.child("productName")
                             val loanDate1 = it.child("loanDate").value.toString()
-                            val product1 = it.child("productName").value.toString()
+                            val sid = it.child("staffID").value.toString()
+                            val sidvalue = holder.itemView.textView_stock_sid.text.toString()
                             val status = it.child("status").value.toString()
+                            holder.itemView.textView_stock_return_date.text = status
 
-
-
-
-                            product.children.forEach{
-                                val pname=it.key
-                                if(sname==pname){
+                            //  if (sidvalue==sid){
+                            product.children.forEach {
+                                val pname = it.key
+                                if (sname == pname) {
                                     holder.itemView.textView_stock_date.text = loanDate1
-                               //     holder.itemView.textView_stock_testing.text= testing.toString()
+                                    //    holder.itemView.textView_stock_return_date.text=staffID.toString()
+                                    //      holder.itemView.textView_stock_return_date.text= getRDate(loanDate1)
+
                                 }
                             }
+
+                            //  }
+
+                            *//*    Utils.getStaffID(object : FbCallback {
+                                override fun onCallbackGetUserID(uid: Int) {
+                                    super.onCallbackGetUserID(uid)
+                                    staffID = uid
+
+                                    if (staffID==sid){
+                                        product.children.forEach{
+                                            val pname=it.key
+                                            if(sname==pname){
+                                                holder.itemView.textView_stock_date.text = loanDate1
+                                                holder.itemView.textView_stock_return_date.text=staffID.toString()
+                                                //     holder.itemView.textView_stock_return_date.text= getRDate(loanDate1)
+
+                                            }
+                                        }
+
+                                    }
+
+                                }
+                            })*//*
+
                         }
                     }
                 }
@@ -109,7 +143,7 @@ class MyStocksAdapter(
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
                 }
-            })
+            })*/
 
     }
 
@@ -145,56 +179,18 @@ class MyStocksAdapter(
 
     }
 
-/*    @RequiresApi(Build.VERSION_CODES.O)
-    fun getReturnDate(daysAgo: Int): Date {
 
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
+    fun getRDate(dateString: String):String {
 
-        return calendar.time
-    *//* //   val timeAddedLong = ServerValue.TIMESTAMP.toString()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-        val data1=daysAgo.value as Date  //2021-1-6 12:39
-        val test1: Any? =data1
-        val data=data1.format(Date())
-        val test = LocalDate.parse(daysAgo.toString(), formatter)
+        val cal : Calendar = Calendar.getInstance()
+        var sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss") //pattern must match with string
+        val d : Date? = sdf.parse(dateString) //Convert into Date object
+        cal.time = d //Convert Date object into Calendar Object
+        cal.add(Calendar.DAY_OF_YEAR, 30) // Add 30 days into date  | Tue Feb 23 21:26:36 GMT+08:00 2021  -- Sample Output
+        val date = sdf.format(cal.time) //format back into the same pattern -- Sample output 2021-02-23 21:26:36
+        Utils.log(date.toString())
 
-        val calendar = Calendar.getInstance()
-
-        // Convert Date to Calendar
-        calendar.time = data
-
-        calendar.add(Calendar.DATE, -10)
-
-        // Convert calendar back to Date
-        val currentDatePlusOne = calendar.time
-
-        return currentDatePlusOne*//*
-    }*/
-
-
-    fun getName(): List<String> {
-        var list = ArrayList<String>()
-
-        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-        val myRef: DatabaseReference = database.getReference("Products")
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                list.clear()
-                for (dss in snapshot.children) {
-                    val productName = dss.child("product_name").value.toString()
-                    list.add(productName)
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-        return list
+        return date
     }
 }
 

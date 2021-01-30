@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="22dp"
         android:text="STOCK"
         android:maxLines="2"
         android:textSize="18sp"
@@ -58,29 +58,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="100dp"
         android:text="Loan Date :"
         android:textSize="17sp"
         android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textView_stock_date"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="255dp"
-        android:layout_marginTop="105dp"
-        android:text="error"
-        android:textSize="17sp"
-        />
+        android:layout_marginTop="100dp"
+        android:text="ERROR"
+        android:textSize="17sp" />
 
     <TextView
-        android:id="@+id/textView_stock_testing"
+        android:id="@+id/textView_stock_rdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginTop="125dp"
-        android:text="error"
+        android:layout_marginTop="135dp"
+        android:text="Return Date :"
         android:textSize="17sp"
-        android:visibility="gone" />
+        android:textStyle="bold"/>
 
+    <TextView
+        android:id="@+id/textView_stock_return_date"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="255dp"
+        android:layout_marginTop="135dp"
+        android:text="ERROR"
+        android:textSize="17sp"
+
+        />
+
+    <TextView
+        android:id="@+id/textView_stock_sid"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="255dp"
+        android:layout_marginTop="135dp"
+        android:text="SID"
+        android:textSize="17sp"
+        android:visibility="invisible"
+        />
 </RelativeLayout>

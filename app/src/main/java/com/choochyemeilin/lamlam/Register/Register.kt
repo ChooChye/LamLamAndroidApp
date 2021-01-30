@@ -110,18 +110,6 @@ class Register : AppCompatActivity() {
 
                 })
 
-
-                /*               if(compareStaffID()) {
-                                   Toast.makeText(this@Register, "ID NOT IN THE DATABASE", Toast.LENGTH_LONG).show()
-                               }else{
-                                   register(
-                                       editTextTextEmailAddress_register_email.text.trim().toString(),
-                                       editTextTextPassword_register_password.text.trim().toString()
-                                   )
-                               }
-
-
-                 */
             }
         }
 
@@ -181,11 +169,6 @@ class Register : AppCompatActivity() {
     private fun register(email: String, password: String) {
 
         utils.closeKeyboard(findViewById(R.id.activity_register))
-
-        //Start progress
-        /*val progress: ProgressBar = progressBar_reg
-        progress.visibility = View.VISIBLE*/
-
 
         //Firebase
         auth.createUserWithEmailAndPassword(email, password)
@@ -261,10 +244,6 @@ class Register : AppCompatActivity() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                //   val i=dataSnapshot.getValue().toString()
-                //    i.equals(textRegStaffID)
-
 
                 var textRegStaffID = editTextNumber_register_staffID.text.toString()
 
