@@ -1,4 +1,4 @@
- package com.choochyemeilin.lamlam.ReturnItems
+package com.choochyemeilin.lamlam.ReturnItems
 
 import android.os.Build
 import android.os.Bundle
@@ -17,18 +17,14 @@ import kotlinx.android.synthetic.main.activity_reports.*
 import kotlinx.android.synthetic.main.my_stocks_list.*
 import kotlinx.android.synthetic.main.my_stocks_list.view.*
 
- class MyStocks : AppCompatActivity() {
+class MyStocks : AppCompatActivity() {
 
-     lateinit var mRecyclerView: RecyclerView
-
-     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-     private lateinit var arrayList: ArrayList<Products>
-     private var utils : Utils = Utils
-     private var mutableList: MutableMap<String, Int> = mutableMapOf()
-     private var rList: MutableMap<String, Int> = mutableMapOf()
-     private lateinit var testingArray:ArrayList<String>
-     private var staffID : Int? = 0
-     private var ldate="testing"
+    var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var utils: Utils = Utils
+    private var mutableList: MutableMap<String, Int> = mutableMapOf()
+    private var rList: MutableMap<String, Int> = mutableMapOf()
+    private var loanDatesArr: ArrayList<String> = arrayListOf()
+    private var staffID: Int? = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +34,7 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
         val actionBar = supportActionBar
         actionBar!!.title = "My Stocks"
 
-      //  arrayList = ArrayList()
+        //  arrayList = ArrayList()
         list_view_recycle.setHasFixedSize(true)
 
 
@@ -53,11 +49,11 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
 
 
         getData(object : FbCallback {
-            override fun push(arr: MutableMap<String, Int>){
+            override fun pushLoanDate(arr: MutableMap<String, Int>, loanDate: ArrayList<String>, oldestDate : String) {
                 super.push(arr)
-      //          super.pushLoanDate(ldate)
+
                 rList = arr
-                list_view_recycle.adapter = MyStocksAdapter(arr,ldate)
+                list_view_recycle.adapter = MyStocksAdapter(arr, loanDate, oldestDate)
                 list_view_recycle.layoutManager = LinearLayoutManager(applicationContext)
 
 
@@ -69,62 +65,62 @@ import kotlinx.android.synthetic.main.my_stocks_list.view.*
 
     }
 
-     private fun getData(callback: FbCallback) {
-         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-         val myRef: DatabaseReference = database.getReference("Loans")
+    private fun getData(callback: FbCallback) {
+        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val myRef: DatabaseReference = database.getReference("Loans")
 
-         myRef.orderByKey()
-             .addValueEventListener(object : ValueEventListener {
-                 override fun onDataChange(snapshot: DataSnapshot) {
-                     mutableList.clear()
-                     for (dss in snapshot.children) {
-                         dss.children.forEach {
-                             val dbSID = it.child("staffID").value.toString().toInt()
-                             val status = it.child("status").value.toString()
-                             val loanDate = it.child("loanDate").value.toString()
-                             val testingArray = arrayOf(loanDate)
+        myRef.orderByKey()
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    mutableList.clear()
+                    var oldestDate = ""
+                    for (dss in snapshot.children) {
+                        dss.children.forEachIndexed { index, it ->
+                            val dbSID = it.child("staffID").value.toString().toInt()
+                            val status = it.child("status").value.toString()
+                            val loanDate = it.child("loanDate").value.toString()
 
-                             if (staffID == dbSID) {
-                                 if (status.toUpperCase() == "APPROVED") {
-                                     val product = it.child("productName")
-                                     product.children.forEach {
-                                         val key = it.key.toString()
-                                         val qty = it.value.toString().toInt()
-                                         if (mutableList.containsKey(key)) {
-                                             val oldValue = mutableList[key].toString().toInt()
-                                             mutableList[key] = oldValue + qty
+                            if (staffID == dbSID) {
+                                if (status.toUpperCase() == "APPROVED") {
+                                    val product = it.child("productName")
+                                    product.children.forEach {
+                                        val key = it.key.toString()
+                                        val qty = it.value.toString().toInt()
+                                        if (mutableList.containsKey(key)) {
+                                            val oldValue = mutableList[key].toString().toInt()
+                                            mutableList[key] = oldValue + qty
 
-                                         } else {
-                                             mutableList[key] = qty
-                                             ldate= testingArray[0]
-                                        //     ldate=loanDate
+                                        } else {
+                                            if (index == 1){
+                                                oldestDate = loanDate
+                                            }
+                                            loanDatesArr.add(loanDate)
+                                            mutableList[key] = qty
+                                            //ldate=loanDate
 
-                                         }
+                                        }
 
-                                     }
+                                    }
 
-                                 }
-                             }
+                                }
+                            }
 
-                         }
-                     }
-                     callback.push(mutableList )
-                //     callback.pushLoanDate(ldate)
-                 }
+                        }
+                    }
+                    callback.pushLoanDate(mutableList, loanDatesArr, oldestDate)
+                }
 
-                 override fun onCancelled(error: DatabaseError) {
-                     Utils.toast(applicationContext, error.message, 1)
-                 }
+                override fun onCancelled(error: DatabaseError) {
+                    Utils.toast(applicationContext, error.message, 1)
+                }
 
-             })
-
-
-     }
-
+            })
 
 
+    }
 
-     override fun onSupportNavigateUp(): Boolean {
+
+    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         this.finish()
         return true

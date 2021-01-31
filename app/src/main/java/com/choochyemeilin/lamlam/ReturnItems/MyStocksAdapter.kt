@@ -21,7 +21,8 @@ import java.util.*
 class MyStocksAdapter(
 
     private var context: MutableMap<String, Int>,
-    private var ldate: String
+    private var loanDateArr: ArrayList<String>,
+    private var oldestDate : String
 ) : RecyclerView.Adapter<MyStocksAdapter.ViewHolder>() {
 
     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -43,11 +44,18 @@ class MyStocksAdapter(
 
         val list = context.toList()
 
+
         holder.itemView.textView_stock_name.text = list[position].first
         holder.itemView.textView_stock_qty.text = list[position].second.toString()
 
-        holder.itemView.textView_stock_date.text = ldate.toString()
-        holder.itemView.textView_stock_return_date.text= getRDate(ldate)
+        if(loanDateArr[position] == oldestDate)
+            holder.itemView.textView_stock_date.text = oldestDate
+        else
+            holder.itemView.textView_stock_date.text = loanDateArr[position]
+
+        holder.itemView.textView_stock_return_date.text= getRDate(holder.itemView.textView_stock_date.text.toString())
+
+
 
         var sname=holder.itemView.textView_stock_name.text.toString()
 

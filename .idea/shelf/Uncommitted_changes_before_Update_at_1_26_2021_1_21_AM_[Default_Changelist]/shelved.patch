@@ -1,0 +1,135 @@
+Index: app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocksAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.choochyemeilin.lamlam.ReturnItems\r\n\r\nimport android.os.Build\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.choochyemeilin.lamlam.Loans.Classes.LoanApplication\r\nimport com.choochyemeilin.lamlam.R\r\nimport com.choochyemeilin.lamlam.Scan.fromJson\r\nimport com.choochyemeilin.lamlam.helpers.Products\r\nimport com.choochyemeilin.lamlam.helpers.Utils\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.database.*\r\nimport com.google.firebase.storage.FirebaseStorage\r\nimport com.google.gson.Gson\r\nimport com.squareup.picasso.Picasso\r\nimport kotlinx.android.synthetic.main.my_stocks_list.*\r\nimport kotlinx.android.synthetic.main.my_stocks_list.view.*\r\nimport kotlinx.android.synthetic.main.return_item_form.*\r\nimport java.time.LocalDate\r\nimport java.time.format.DateTimeFormatter\r\nimport java.util.*\r\nimport kotlin.collections.ArrayList\r\n\r\n\r\nclass MyStocksAdapter(\r\n\r\n    private var context: MutableMap<String, Int>\r\n) : RecyclerView.Adapter<MyStocksAdapter.ViewHolder>() {\r\n\r\n    var database: FirebaseDatabase = FirebaseDatabase.getInstance()\r\n    var productRef: DatabaseReference = database.getReference(\"Products\")\r\n    private var utils : Utils = Utils\r\n\r\n\r\n    //View Holder\r\n    open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {\r\n        val view: View =\r\n            LayoutInflater.from(parent.context).inflate(R.layout.my_stocks_list, parent, false)\r\n        return object : ViewHolder(view) {}\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: ViewHolder, position: Int) {\r\n\r\n\r\n        val list = context.toList()\r\n\r\n        holder.itemView.textView_stock_name.text = list[position].first\r\n        holder.itemView.textView_stock_qty.text = list[position].second.toString()\r\n        var sname=holder.itemView.textView_stock_name.text.toString()\r\n\r\n\r\n       productRef.addValueEventListener(object : ValueEventListener {\r\n            override fun onDataChange(snapshot: DataSnapshot) {\r\n\r\n                for (dss in snapshot.children){\r\n\r\n                    val pname=dss.child(\"product_name\").value\r\n                    val image=dss.child(\"image\").value\r\n\r\n                    if(sname==pname){\r\n\r\n                        loadImage(holder, image.toString())\r\n                     }\r\n\r\n                }\r\n            }\r\n\r\n            override fun onCancelled(error: DatabaseError) {\r\n                TODO(\"Not yet implemented\")\r\n            }\r\n\r\n        })\r\n\r\n\r\n\r\n        val myRef: DatabaseReference = database.getReference(\"Loans\")\r\n\r\n        myRef.orderByKey()\r\n            .addValueEventListener(object : ValueEventListener {\r\n                @RequiresApi(Build.VERSION_CODES.O)\r\n                override fun onDataChange(snapshot: DataSnapshot) {\r\n                    for (dss in snapshot.children) {\r\n                        dss.children.forEach {\r\n                            val loanDate = it.child(\"loanDate\").value\r\n                            val product = it.child(\"productName\")\r\n                            val loanDate1 = it.child(\"loanDate\").value.toString()\r\n                            val product1 = it.child(\"productName\").value.toString()\r\n                            val status = it.child(\"status\").value.toString()\r\n\r\n                            val testing=loanDate as Int\r\n\r\n\r\n                            /*val calendar = Calendar.getInstance()\r\n                            calendar.add(Calendar.DAY_OF_YEAR, -testing)*/\r\n                            holder.itemView.textView_stock_testing.text= testing.toString()\r\n\r\n\r\n                            product.children.forEach{\r\n                                val pname=it.key\r\n                                if(sname==pname){\r\n                                    holder.itemView.textView_stock_date.text = loanDate1\r\n                               //     holder.itemView.textView_stock_testing.text= testing.toString()\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n\r\n                override fun onCancelled(error: DatabaseError) {\r\n                    TODO(\"Not yet implemented\")\r\n                }\r\n            })\r\n\r\n\r\n/*\r\n       loansRef.addValueEventListener(object : ValueEventListener {\r\n            override fun onDataChange(snapshot: DataSnapshot) {\r\n                for (dss in snapshot.children) {\r\n                    val productItem : Products? = dss.getValue(Products::class.java)\r\n                    dss.children.forEach {\r\n                        val status = it.child(\"status\").value\r\n                        if (status.toString() == \"pending\") {\r\n                            val loopName=it.child(\"productName\")\r\n\r\n                            loopName.children.forEach{\r\n                                val k=it.key\r\n                                val quantity=it.value\r\n\r\n                                holder.itemView.textView_stock_name.text = k.toString()\r\n                                holder.itemView.textView_stock_qty.text=quantity.toString()\r\n\r\n                            }\r\n\r\n                           *//* val pname=productRef.orderByChild(\"product_name\")\r\n                             val qty=it.child(\"productName\")\r\n\r\n                            if (qty.equals(pname)){\r\n                                val img=productRef.orderByChild(\"image\")\r\n                                val pqty=qty.getValue().toString()\r\n\r\n                                val pimg= img.toString()\r\n                            }*//*\r\n                            loadImage(holder, products.image)\r\n                            }\r\n                            val date=it.child(\"returnDate\").value\r\n                            holder.itemView.textView_stock_date.text = date.toString()\r\n                        }\r\n                    }\r\n                }\r\n\r\n\r\n            override fun onCancelled(error: DatabaseError) {\r\n                TODO(\"Not yet implemented\")\r\n            }\r\n\r\n        })*/\r\n\r\n\r\n    }\r\n\r\n    private fun readJSON(json: String): List<Products> {\r\n\r\n        return if (json != null)\r\n            Gson().fromJson(json) //GsonExtension Call\r\n        else\r\n            listOf()\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        return context.size\r\n    }\r\n\r\n    override fun getItemId(position: Int): Long {\r\n        return position.toLong()\r\n    }\r\n\r\n    private fun loadImage(holder: ViewHolder, getImage: String) {\r\n        var image : String\r\n        val storage = FirebaseStorage.getInstance()\r\n        val gsReference = storage.reference.child(\"products/$getImage\")\r\n        gsReference.downloadUrl.addOnSuccessListener { Uri ->\r\n            image = Uri.toString()\r\n            Picasso.get().load(image).into(holder.itemView.image_mystock)\r\n            android.os.Handler().postDelayed({\r\n                holder.itemView.mystock_progressBar.visibility = View.GONE\r\n            }, 1000)\r\n        }.addOnFailureListener {\r\n            holder.itemView.image_mystock.setImageResource(R.drawable.no_image)\r\n        }\r\n\r\n    }\r\n\r\n/*    @RequiresApi(Build.VERSION_CODES.O)\r\n    fun getReturnDate(daysAgo: Int): Date {\r\n\r\n        val calendar = Calendar.getInstance()\r\n        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)\r\n\r\n        return calendar.time\r\n    *//* //   val timeAddedLong = ServerValue.TIMESTAMP.toString()\r\n        val formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm:ss.SSS\")\r\n        val data1=daysAgo.value as Date  //2021-1-6 12:39\r\n        val test1: Any? =data1\r\n        val data=data1.format(Date())\r\n        val test = LocalDate.parse(daysAgo.toString(), formatter)\r\n\r\n        val calendar = Calendar.getInstance()\r\n\r\n        // Convert Date to Calendar\r\n        calendar.time = data\r\n\r\n        calendar.add(Calendar.DATE, -10)\r\n\r\n        // Convert calendar back to Date\r\n        val currentDatePlusOne = calendar.time\r\n\r\n        return currentDatePlusOne*//*\r\n    }*/\r\n\r\n\r\n    fun getName(): List<String> {\r\n        var list = ArrayList<String>()\r\n\r\n        val database: FirebaseDatabase = FirebaseDatabase.getInstance()\r\n        val myRef: DatabaseReference = database.getReference(\"Products\")\r\n\r\n        myRef.addValueEventListener(object : ValueEventListener {\r\n            override fun onDataChange(snapshot: DataSnapshot) {\r\n                list.clear()\r\n                for (dss in snapshot.children) {\r\n                    val productName = dss.child(\"product_name\").value.toString()\r\n                    list.add(productName)\r\n                }\r\n\r\n            }\r\n\r\n            override fun onCancelled(error: DatabaseError) {\r\n\r\n            }\r\n\r\n        })\r\n        return list\r\n    }\r\n}\r\n\r\nprivate fun Any?.format(date: Date): Date {\r\nreturn date\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocksAdapter.kt	(revision 36ee422ac25aa813eb674af911d2f8d44eda2086)
++++ app/src/main/java/com/choochyemeilin/lamlam/ReturnItems/MyStocksAdapter.kt	(date 1611591710525)
+@@ -6,21 +6,18 @@
+ import android.view.ViewGroup
+ import androidx.annotation.RequiresApi
+ import androidx.recyclerview.widget.RecyclerView
+-import com.choochyemeilin.lamlam.Loans.Classes.LoanApplication
+ import com.choochyemeilin.lamlam.R
+ import com.choochyemeilin.lamlam.Scan.fromJson
+ import com.choochyemeilin.lamlam.helpers.Products
+ import com.choochyemeilin.lamlam.helpers.Utils
+-import com.google.firebase.auth.FirebaseAuth
+ import com.google.firebase.database.*
+ import com.google.firebase.storage.FirebaseStorage
+ import com.google.gson.Gson
+ import com.squareup.picasso.Picasso
+-import kotlinx.android.synthetic.main.my_stocks_list.*
+ import kotlinx.android.synthetic.main.my_stocks_list.view.*
+-import kotlinx.android.synthetic.main.return_item_form.*
+-import java.time.LocalDate
+-import java.time.format.DateTimeFormatter
++import org.joda.time.DateTime
++import org.joda.time.format.DateTimeFormat.forPattern
++import org.joda.time.format.DateTimeFormatter
+ import java.util.*
+ import kotlin.collections.ArrayList
+ 
+@@ -32,7 +29,7 @@
+ 
+     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+     var productRef: DatabaseReference = database.getReference("Products")
+-    private var utils : Utils = Utils
++    private var utils: Utils = Utils
+ 
+ 
+     //View Holder
+@@ -51,21 +48,21 @@
+ 
+         holder.itemView.textView_stock_name.text = list[position].first
+         holder.itemView.textView_stock_qty.text = list[position].second.toString()
+-        var sname=holder.itemView.textView_stock_name.text.toString()
++        var sname = holder.itemView.textView_stock_name.text.toString()
+ 
+ 
+-       productRef.addValueEventListener(object : ValueEventListener {
++        productRef.addValueEventListener(object : ValueEventListener {
+             override fun onDataChange(snapshot: DataSnapshot) {
+ 
+-                for (dss in snapshot.children){
++                for (dss in snapshot.children) {
+ 
+-                    val pname=dss.child("product_name").value
+-                    val image=dss.child("image").value
++                    val pname = dss.child("product_name").value
++                    val image = dss.child("image").value
+ 
+-                    if(sname==pname){
++                    if (sname == pname) {
+ 
+                         loadImage(holder, image.toString())
+-                     }
++                    }
+ 
+                 }
+             }
+@@ -77,7 +74,6 @@
+         })
+ 
+ 
+-
+         val myRef: DatabaseReference = database.getReference("Loans")
+ 
+         myRef.orderByKey()
+@@ -92,19 +88,30 @@
+                             val product1 = it.child("productName").value.toString()
+                             val status = it.child("status").value.toString()
+ 
+-                            val testing=loanDate as Int
++                            val formatter: DateTimeFormatter = forPattern("YYYY-MM-dd HH:mm")
++                            val formatter2: DateTimeFormatter =
++                                forPattern("YYYY-MM-dd'T'HH:mm:ss.SSSZ")
+ 
++                            val dt = formatter.parseDateTime(loanDate1)
++                            val dateTime = dt.toDateTime()
++                            dateTime.plusDays(30)
++                            Utils.log(dateTime.toString())
++                            //val dateTime = DateTime.parse(dt.toString(), formatter)
++                            //val dtf = forPattern("yyyy-MM-dd HH:mm:ss")
++                            //val dt = DateTime()
+ 
+-                            /*val calendar = Calendar.getInstance()
+-                            calendar.add(Calendar.DAY_OF_YEAR, -testing)*/
+-                            holder.itemView.textView_stock_testing.text= testing.toString()
++                            /*val formatter: DateTimeFormatter =
++                                forPattern("yyyy-MM-dd'T'HH:mm:ssZ")
++                            val dt: DateTime = formatter.parseDateTime(loanDate1)
++                            Utils.log(dt.toString())*/
++
+ 
+ 
+-                            product.children.forEach{
+-                                val pname=it.key
+-                                if(sname==pname){
++                            product.children.forEach {
++                                val pname = it.key
++                                if (sname == pname) {
+                                     holder.itemView.textView_stock_date.text = loanDate1
+-                               //     holder.itemView.textView_stock_testing.text= testing.toString()
++                                    //     holder.itemView.textView_stock_testing.text= testing.toString()
+                                 }
+                             }
+                         }
+@@ -180,7 +187,7 @@
+     }
+ 
+     private fun loadImage(holder: ViewHolder, getImage: String) {
+-        var image : String
++        var image: String
+         val storage = FirebaseStorage.getInstance()
+         val gsReference = storage.reference.child("products/$getImage")
+         gsReference.downloadUrl.addOnSuccessListener { Uri ->
+@@ -249,5 +256,5 @@
+ }
+ 
+ private fun Any?.format(date: Date): Date {
+-return date
++    return date
+ }
