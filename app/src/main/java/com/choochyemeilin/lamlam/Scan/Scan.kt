@@ -223,10 +223,10 @@ class Scan : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showBulkDialog(dataset : String){
 
-
+        val data = readJSON("[$dataset]")
         val view: View = View.inflate(this, R.layout.scan_dialog_view, null)
         val builder: AlertDialog = AlertDialog.Builder(this)
-            .setTitle("BULK")
+            .setTitle(data[0].product_name)
             .setView(view)
             .setPositiveButton("OK", null)
             .setNeutralButton("CANCEL", null)
