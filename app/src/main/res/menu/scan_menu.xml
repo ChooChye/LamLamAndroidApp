@@ -2,9 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+   <!-- <item
+        android:id="@+id/stock_count_menu_btn"
+        android:icon="@drawable/ic_inventory"
+        app:showAsAction="always"
+        android:title="Stock Count"/>-->
+
     <item
         android:id="@+id/scanHistory_menu_btn"
         android:icon="@drawable/ic_baseline_history_24"
         app:showAsAction="always"
-        android:title="SORT BY ALPHABETS"/>
+        android:title="Scan History"/>
 </menu>
