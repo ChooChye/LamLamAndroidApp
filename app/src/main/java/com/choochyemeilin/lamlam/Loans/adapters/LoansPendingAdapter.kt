@@ -51,7 +51,7 @@ class LoansPendingAdapter(
         if (holder.status.text.toString() == "PENDING") {
             holder.status.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
         }
-        holder.title.setOnClickListener { showDialog(context, position) }
+        holder.itemView.setOnClickListener { showDialog(context, position) }
 
     }
 

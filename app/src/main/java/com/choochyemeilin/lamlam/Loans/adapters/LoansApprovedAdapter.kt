@@ -45,7 +45,7 @@ class LoansApprovedAdapter(
         } else {
             holder.status.setTextColor(ContextCompat.getColor(context, R.color.colorError))
         }
-        holder.title.setOnClickListener { showDialog(context, position) }
+        holder.itemView.setOnClickListener { showDialog(context, position) }
     }
 
     override fun getItemCount(): Int {

@@ -3,24 +3,36 @@ package com.choochyemeilin.lamlam.Scan
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
+import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
 import com.choochyemeilin.lamlam.R
+import com.choochyemeilin.lamlam.Scan.ScanHistory.ScanHistory
+import com.choochyemeilin.lamlam.Scan.StockCount.StockCount
+import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_scan.*
+import kotlinx.android.synthetic.main.scan_dialog_view.view.*
+import org.json.JSONArray
+import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -33,6 +45,7 @@ class Scan : AppCompatActivity() {
     private var utils: Utils = Utils
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var myRef: DatabaseReference = database.getReference("ScanHistory")
+    private var staffID = 0
 
 
     //Main Program
@@ -43,6 +56,12 @@ class Scan : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        Utils.getStaffID(object : FbCallback {
+            override fun onCallbackGetUserID(uid: Int) {
+                staffID = uid
+                super.onCallbackGetUserID(uid)
+            }
+        })
         setupPermissions()
         codeScanner()
     }
@@ -63,9 +82,12 @@ class Scan : AppCompatActivity() {
                 runOnUiThread {
                     hapticFeedback() //Vibrate the phone after successfully scanning
                     try {
-                        val jsonData = "[$it]"
+                        val jsonData = it.toString()
+
                         codeScanner.stopPreview()
-                        updateDB(jsonData)
+
+                        //Show Dialog Here
+                        showBulkDialog(jsonData)
                     } catch (e: Exception) {
                         showDialog("An error has occurred #9784 | ${e.message}")
                     }
@@ -89,32 +111,32 @@ class Scan : AppCompatActivity() {
         var data: List<Products>? = null
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter2 = DateTimeFormatter.ofPattern("HH:mm") //yyyy-MM-dd HH:mm:ss.SSS
-        val formatter3 = DateTimeFormatter.ofPattern("ss") //yyyy-MM-dd HH:mm:ss.SSS
+        val formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss") //yyyy-MM-dd HH:mm:ss.SSS
         val formattedDate = current.format(formatter)
         val formattedTime = current.format(formatter2)
-        val formattedSec = current.format(formatter3)
 
         try {
             data = readJSON(jsonData)
+            //[{"category":"Tops","desc":"Tzu Pink Sweatshirt with Hoodie","image":"pink_sweatshirt.jpg","price":"39.00","product_name":"Tzu Pink Sweatshirt","qty":"80","id":"-MOyCeFDbzM2wbtV8Ied"}]
         } catch (e: Exception) {
             utils.log("Error #897 | $e")
         }
         val process =
-            myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
+            myRef.child(formattedDate).child(formattedTime).setValue(data)
         process
             .addOnSuccessListener {
                 val cat = data!![0].category
                 val id = data[0].id
                 val prodPrice = data[0].price
                 val prodName = data[0].product_name
+                val scannedQty = data[0].scannedQty
 
                 val msg = String.format(
                     "ID : %s\n" +
                             "Category : %s\n" +
                             "Product Name : %s\n" +
                             "Price : %s\n" +
-                            "Successfully Recorded", id, cat, prodName, prodPrice
+                            "%s records added successfully", id, cat, prodName, prodPrice, scannedQty
                 )
                 showDialog(msg)
             }
@@ -198,6 +220,42 @@ class Scan : AppCompatActivity() {
             .show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showBulkDialog(dataset : String){
+
+        val data = readJSON("[$dataset]")
+        val view: View = View.inflate(this, R.layout.scan_dialog_view, null)
+        val builder: AlertDialog = AlertDialog.Builder(this)
+            .setTitle(data[0].product_name)
+            .setView(view)
+            .setPositiveButton("OK", null)
+            .setNeutralButton("CANCEL", null)
+            .create()
+
+        builder.setOnShowListener{
+            val button: Button = builder.getButton(AlertDialog.BUTTON_POSITIVE)
+            val qty = view.scan_dialog_view_tv_qty
+
+            var newJsonObj = JSONObject(dataset)
+            var newJsonData = JSONArray()
+            newJsonObj.put("staffID", staffID)
+            newJsonObj.put("scannedQty", qty.text)
+            newJsonData.put(newJsonObj)
+
+            button.setOnClickListener {
+                if (TextUtils.isEmpty(qty.text)) {
+                    qty.setError("Please enter a quantity")
+                    qty.requestFocus()
+                    return@setOnClickListener
+                }else{
+                    builder.dismiss()
+                    updateDB(newJsonData.toString())
+                }
+            }
+        }
+        builder.show()
+    }
+
     override fun onResume() {
         super.onResume()
         codeScanner.startPreview()
@@ -206,6 +264,20 @@ class Scan : AppCompatActivity() {
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.scan_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.scanHistory_menu_btn -> startActivity(Intent(this, ScanHistory::class.java))
+            //R.id.stock_count_menu_btn -> startActivity(Intent(this, StockCount::class.java))
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     override fun onSupportNavigateUp(): Boolean {
