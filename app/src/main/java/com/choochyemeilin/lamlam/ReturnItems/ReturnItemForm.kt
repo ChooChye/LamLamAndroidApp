@@ -31,9 +31,7 @@ class ReturnItemForm : AppCompatActivity() {
     private var myRef: DatabaseReference = database.getReference("Return History")
     private var prodRef: DatabaseReference = database.getReference("Products")
     private var loansRef: DatabaseReference = database.getReference("Loans")
-    private var mutableList: MutableMap<String, Int> = mutableMapOf()
-    private var rList: MutableMap<String, Int> = mutableMapOf()
-    private var staffID : Int? = 0
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,17 +94,10 @@ class ReturnItemForm : AppCompatActivity() {
                                             product.children.forEach {
                                                 val key = it.key.toString()
                                                 val qty = it.value.toString()
-                                                val qty1 = it.value.toString().toInt()
 
                                                 textView_loan_name.text = "$key"
                                                 textView_loan_qty.text  = qty
 
-                                               /* if (key.contains(name!!)){
-                                                 //   textView_loan_qty.text = "$qty"
-
-                                                    val oldValue = key.toInt()
-                                                    textView_loan_qty.text  = (oldValue + qty1).toString()
-                                                }*/
                                             }
 
                                         }
@@ -186,8 +177,6 @@ class ReturnItemForm : AppCompatActivity() {
                                                 val oldValue = qty.toInt()
                                                 val enterValue=return_qty.text.toString().toInt()
 
-                                                //     val test=test1+test2
-                                                //      textView_return_qty.text= test.toString()
 
                                                 if (status.toString().toUpperCase()=="APPROVED"){
                                                     if (key.contains(name!!)){
@@ -246,7 +235,7 @@ class ReturnItemForm : AppCompatActivity() {
         } catch (e: Exception) {
             utils.log("Error #897 | $e")
         }
-        //utils.log("TEST readJSON = $data");
+
 
         val process =
             myRef.child(formattedDate).child(formattedTime).child(formattedSec).setValue(data)
