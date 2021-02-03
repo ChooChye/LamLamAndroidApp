@@ -144,7 +144,9 @@ class ScanHistory : AppCompatActivity() {
                             val time = jt.key
                             val date = dss.key
                             val dbStaffID = it.child("staffID").value.toString().toInt()
-                            data.add(ScanHistoryObj(date.toString(), time.toString(), productName.toString(), dbStaffID))
+                            val scannedQty = it.child("scannedQty").value.toString().toInt()
+                            val image = it.child("image").value.toString()
+                            data.add(ScanHistoryObj(date.toString(), time.toString(), productName.toString(), dbStaffID, scannedQty, image))
                         }
                     }
                 }

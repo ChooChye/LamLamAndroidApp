@@ -34,7 +34,7 @@ class ScanHistoryAdapter(
 
     override fun onBindViewHolder(holder: ScanHistoryVH, position: Int) {
 
-        holder.prodName.text = "1 x ${mutableList[position].product_name}"
+        holder.prodName.text = "${mutableList[position].scannedQty} x ${mutableList[position].product_name}"
         holder.time.text = mutableList[position].date + " " + mutableList[position].time
     }
 
