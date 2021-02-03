@@ -96,7 +96,6 @@ class MyStocks : AppCompatActivity() {
                                             }
                                             loanDatesArr.add(loanDate)
                                             mutableList[key] = qty
-                                            //ldate=loanDate
 
                                         }
 

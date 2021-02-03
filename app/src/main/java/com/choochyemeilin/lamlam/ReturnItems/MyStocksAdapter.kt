@@ -59,16 +59,6 @@ class MyStocksAdapter(
 
         var sname=holder.itemView.textView_stock_name.text.toString()
 
-        Utils.getStaffID(object : FbCallback {
-            override fun onCallbackGetUserID(uid: Int) {
-                super.onCallbackGetUserID(uid)
-                staffID = uid
-                holder.itemView.textView_stock_sid.text = staffID.toString()
-            }
-        })
-
-
-
 
        productRef.addValueEventListener(object : ValueEventListener {
            override fun onDataChange(snapshot: DataSnapshot) {
@@ -92,76 +82,8 @@ class MyStocksAdapter(
 
        })
 
-
-
-        val myRef: DatabaseReference = database.getReference("Loans")
-
-      /*  myRef.orderByKey()
-            .addValueEventListener(object : ValueEventListener {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (dss in snapshot.children) {
-                        dss.children.forEach {
-                            val loanDate = it.child("loanDate").value
-                            val product = it.child("productName")
-                            val loanDate1 = it.child("loanDate").value.toString()
-                            val sid = it.child("staffID").value.toString()
-                            val sidvalue = holder.itemView.textView_stock_sid.text.toString()
-                            val status = it.child("status").value.toString()
-                            holder.itemView.textView_stock_return_date.text = status
-
-                            //  if (sidvalue==sid){
-                            product.children.forEach {
-                                val pname = it.key
-                                if (sname == pname) {
-                                    holder.itemView.textView_stock_date.text = loanDate1
-                                    //    holder.itemView.textView_stock_return_date.text=staffID.toString()
-                                    //      holder.itemView.textView_stock_return_date.text= getRDate(loanDate1)
-
-                                }
-                            }
-
-                            //  }
-
-                            *//*    Utils.getStaffID(object : FbCallback {
-                                override fun onCallbackGetUserID(uid: Int) {
-                                    super.onCallbackGetUserID(uid)
-                                    staffID = uid
-
-                                    if (staffID==sid){
-                                        product.children.forEach{
-                                            val pname=it.key
-                                            if(sname==pname){
-                                                holder.itemView.textView_stock_date.text = loanDate1
-                                                holder.itemView.textView_stock_return_date.text=staffID.toString()
-                                                //     holder.itemView.textView_stock_return_date.text= getRDate(loanDate1)
-
-                                            }
-                                        }
-
-                                    }
-
-                                }
-                            })*//*
-
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })*/
-
     }
 
-    private fun readJSON(json: String): List<Products> {
-
-        return if (json != null)
-            Gson().fromJson(json) //GsonExtension Call
-        else
-            listOf()
-    }
 
     override fun getItemCount(): Int {
         return context.size
@@ -202,6 +124,3 @@ class MyStocksAdapter(
     }
 }
 
-private fun Any?.format(date: Date): Date {
-return date
-}

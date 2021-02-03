@@ -82,7 +82,6 @@ class Login : AppCompatActivity() {
     fun login(){
         val email:String=editText_login_email.text.toString()
         val password:String=editTextTextPassword_login_password.text.toString()
-      //  val currentUser=auth.currentUser
 
         if(editTextTextPassword_login_password.length()<6){
            editTextTextPassword_login_password.setError("Password must be greater than 5 characters")

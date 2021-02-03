@@ -66,8 +66,7 @@ class ReturnItems : AppCompatActivity() {
                     try {
                         val jsonData = "[$it]"
                         utils.log(it.toString())
-                        //[{ "id":"-MOMC5KxRtiN1NIlAPZC", "category":"Tops", "product":[{ "desc":"Pink Sweatshirt with Logo", "price":"39.00", "product_name":"Pink Sweatshirt", "qty":"1" }] }]
-                        codeScanner.stopPreview()
+                       codeScanner.stopPreview()
 
                         nextPage(jsonData)
 
