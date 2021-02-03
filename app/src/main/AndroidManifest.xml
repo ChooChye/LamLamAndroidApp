@@ -18,7 +18,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+
         <activity android:name=".notifications.notification"></activity>
+        <activity android:name=".Scan.StockCount.StockCount"></activity>
+
         <activity android:name=".Scan.ScanHistory.ScanHistory" />
         <activity android:name=".Profile.Profile" />
 
