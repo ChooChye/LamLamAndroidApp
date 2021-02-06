@@ -1,22 +1,24 @@
 package com.choochyemeilin.lamlam.Scan.StockCount
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.preference.PreferenceManager
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.ScanHistory.ScanHistoryObj
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_stock_count.*
-import java.lang.reflect.Type
+
 
 class StockCount : AppCompatActivity() {
 
@@ -26,8 +28,10 @@ class StockCount : AppCompatActivity() {
     private lateinit var viewAdapter: StockCountAdapter
     private var staffID = 0
 
-    private var dataMap: MutableMap<String, Int> = mutableMapOf()
-    private var dataArr: ArrayList<ScanHistoryObj> = arrayListOf()
+    private var dataLoans: MutableMap<String, Int> = mutableMapOf()
+    private var dataScanHistory: MutableMap<String, Int> = mutableMapOf()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,89 +48,38 @@ class StockCount : AppCompatActivity() {
                 super.onCallbackGetUserID(uid)
             }
         })
-
-        /*getData(object : FbCallback {
-            override fun stockCountCallback(
-                map: MutableMap<String, Int>,
-                arr: ArrayList<ScanHistoryObj>
-            ) {
-                Utils.log("MAP  = ${map.size} | Arr = ${arr.size}")
-                dataMap = map
-                super.push(map)
-            }
-        })*/
-
         getLoans(object : FbCallback {
             override fun push(map: MutableMap<String, Int>) {
-                Utils.log("MAP  = ${map.size}")
-                dataMap = map
+                //Utils.log("MAP  = ${map.size}")
+                dataLoans = map
                 super.push(map)
             }
         })
 
-        getScanHistory(object : FbCallback{
-            override fun scanHistoryArrCallback(arr: ArrayList<ScanHistoryObj>) {
-                Utils.log("Arr = ${arr.size}")
-                super.scanHistoryArrCallback(arr)
+        getScanHistory(object : FbCallback {
+            override fun push(arr: MutableMap<String, Int>) {
+                //Utils.log("Arr = ${arr.size}")
+                dataScanHistory = arr
+                super.push(arr)
             }
         })
 
-
-        /*if (dataMap.isEmpty()) {
-            stock_count_tv_result.visibility = View.VISIBLE
-            stock_count_rv.visibility = View.GONE
-        } else {
-            stock_count_tv_result.visibility = View.GONE
-            viewAdapter = StockCountAdapter(dataMap, dataArr)
-            stock_count_rv.apply {
-                adapter = viewAdapter
-                layoutManager = LinearLayoutManager(applicationContext)
-                addItemDecoration(
-                    DividerItemDecoration(
-                        applicationContext,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
-            }
-        }*/
-
-    }
-
-    private fun getData(fbCallback: FbCallback) {
-        val mutableMap: MutableMap<String, Int> = mutableMapOf()
-        val arrScanHistory: ArrayList<ScanHistoryObj> = arrayListOf()
-
-        //Get Loans
-        myLoans.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach { jt ->
-                    jt.children.forEach { lt ->
-                        val dbStaff = lt.child("staffID").value.toString().toInt()
-                        val status = lt.child("status").value.toString()
-                        if (dbStaff == staffID) {
-                            if (status == "approved") {
-                                val prodName = lt.child("productName")
-                                prodName.children.forEach {
-                                    val key = it.key.toString()
-                                    val qty = it.value.toString().toInt()
-                                    if (mutableMap.containsKey(key)) {
-                                        val oldValue = mutableMap[key].toString().toInt()
-                                        mutableMap[key] = oldValue + qty
-                                    } else {
-                                        mutableMap[key] = qty
-                                    }
-                                }
-                            }
-                        }
-                    }
-
+        Handler(Looper.getMainLooper()).postDelayed({
+            Utils.log("MainAct : Loans = $dataLoans \n\n History = $dataScanHistory")
+            if(dataLoans.isEmpty()){
+                stock_count_tv_result.visibility = View.VISIBLE
+                stock_count_rv.visibility = View.GONE
+                stockCount_progressBar.visibility = View.GONE
+            }else{
+                stock_count_rv.apply {
+                    adapter = StockCountAdapter(dataLoans.toSortedMap(), dataScanHistory)
+                    layoutManager = LinearLayoutManager(context)
+                    addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
                 }
-            }//END of myLoans
-
-            override fun onCancelled(error: DatabaseError) {
-                return
+                stockCount_progressBar.visibility = View.GONE
             }
-        })
+        }, 2000)
+
     }
 
     private fun getLoans(fbCallback: FbCallback) {
@@ -164,13 +117,13 @@ class StockCount : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 return
             }
-
         })
     }
 
     private fun getScanHistory(fbCallback: FbCallback) {
         //Get ScanHistory
         val arrScanHistory: ArrayList<ScanHistoryObj> = arrayListOf()
+        val mutableMapScan : MutableMap<String, Int> = mutableMapOf()
         myScanHistory.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 try {
@@ -179,9 +132,15 @@ class StockCount : AppCompatActivity() {
                             jt.children.forEach { kt ->
                                 val dbStaff = kt.child("staffID").value.toString().toInt()
                                 if (dbStaff == staffID) {
-                                    val obj: ScanHistoryObj =
-                                        kt.getValue(ScanHistoryObj::class.java)!!
-                                    arrScanHistory.add(obj)
+                                    val prodName = kt.child("product_name").value.toString()
+                                    val scannedQty = kt.child("scannedQty").value.toString().toInt()
+
+                                    if (mutableMapScan.containsKey(prodName)) {
+                                        val oldValue = mutableMapScan[prodName].toString().toInt()
+                                        mutableMapScan[prodName] = oldValue + scannedQty
+                                    } else {
+                                        mutableMapScan[prodName] = scannedQty
+                                    }
                                 }
                             }
                         }
@@ -189,7 +148,7 @@ class StockCount : AppCompatActivity() {
                 } catch (e: Exception) {
                     Utils.log(e.message.toString())
                 }
-                fbCallback.scanHistoryArrCallback(arrScanHistory)
+                fbCallback.push(mutableMapScan)
             }
 
             override fun onCancelled(error: DatabaseError) {

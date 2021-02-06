@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Scan.StockCount.StockCount">
 
+    <ProgressBar
+        android:id="@+id/stockCount_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/stock_count_rv"
         android:layout_width="match_parent"
@@ -14,15 +24,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/search_list_layout"/>
+        tools:listitem="@layout/stock_count_items"/>
 
     <TextView
-        android:visibility="invisible"
         android:id="@+id/stock_count_tv_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/quicksand_bold"
         android:text="No results to display"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
