@@ -18,9 +18,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".Scan.ScanHistory.ScanHistory"></activity>
+
+        <activity android:name=".notifications.notification"></activity>
+        <activity android:name=".Scan.StockCount.StockCount"></activity>
+
+        <activity android:name=".Scan.ScanHistory.ScanHistory" />
         <activity android:name=".Profile.Profile" />
-        <activity android:name=".Register.RegRetailer" />
+
         <activity android:name=".ReturnItems.ReturnItemForm" />
         <activity android:name=".Register.RegisterNewRole" />
         <activity android:name=".Misc.NoInternet" />

@@ -64,12 +64,12 @@ class LoanAppForm2 : AppCompatActivity() {
         var df: DecimalFormat? = DecimalFormat("00")
 
         val current: org.joda.time.LocalDateTime = org.joda.time.LocalDateTime.now()
-        val hour = current.hourOfDay
-        val min = current.minuteOfHour
-        val sec = current.secondOfMinute
+        val hour = df?.format(current.hourOfDay)
+        val min = df?.format(current.minuteOfHour)
+        val sec = df?.format(current.secondOfMinute)
         val formattedTime = "$hour:$min:$sec"
 
-        val day = current.dayOfMonth
+        val day = df?.format(current.dayOfMonth)
         val month = df?.format(current.monthOfYear)
         val year = current.year
 

@@ -14,6 +14,7 @@ class Products {
     var returnDate: String? = null
     var remarks: String = ""
     var staffID : Int = 0
+    var scannedQty : Int = 0
 
     constructor() {
 
@@ -55,7 +56,8 @@ class Products {
         qty: String,
         image: String,
         remarks: String,
-        staffID : Int
+        staffID : Int,
+        scannedQty : Int
     ) {
         this.id = id
         this.category = category
@@ -66,5 +68,6 @@ class Products {
         this.image = image
         this.remarks=remarks
         this.staffID = staffID
+        this.scannedQty = scannedQty
     }
 }
