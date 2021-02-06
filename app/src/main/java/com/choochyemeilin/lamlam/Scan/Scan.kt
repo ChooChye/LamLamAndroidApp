@@ -275,7 +275,7 @@ class Scan : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.scanHistory_menu_btn -> startActivity(Intent(this, ScanHistory::class.java))
-            //R.id.stock_count_menu_btn -> startActivity(Intent(this, StockCount::class.java))
+            R.id.stock_count_menu_btn -> startActivity(Intent(this, StockCount::class.java))
         }
         return super.onOptionsItemSelected(item);
     }
