@@ -69,7 +69,7 @@ class LoanAppForm2 : AppCompatActivity() {
         val sec = current.secondOfMinute
         val formattedTime = "$hour:$min:$sec"
 
-        val day = current.dayOfMonth
+        val day = df?.format(current.dayOfMonth)
         val month = df?.format(current.monthOfYear)
         val year = current.year
 
