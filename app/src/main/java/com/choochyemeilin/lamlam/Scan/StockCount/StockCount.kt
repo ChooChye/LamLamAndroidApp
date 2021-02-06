@@ -65,16 +65,14 @@ class StockCount : AppCompatActivity() {
         })
 
         Handler(Looper.getMainLooper()).postDelayed({
-            dataLoans.clear()
-            dataScanHistory.clear()
-
+            Utils.log("MainAct : Loans = $dataLoans \n\n History = $dataScanHistory")
             if(dataLoans.isEmpty()){
                 stock_count_tv_result.visibility = View.VISIBLE
                 stock_count_rv.visibility = View.GONE
                 stockCount_progressBar.visibility = View.GONE
             }else{
                 stock_count_rv.apply {
-                    adapter = StockCountAdapter(dataLoans, dataScanHistory)
+                    adapter = StockCountAdapter(dataLoans.toSortedMap(), dataScanHistory)
                     layoutManager = LinearLayoutManager(context)
                     addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
                 }

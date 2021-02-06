@@ -31,7 +31,7 @@ class StockCountAdapter(
 
 
     override fun onBindViewHolder(holder: StockCountVH, position: Int) {
-        Utils.log("Adapter : Loans = $mutableMapLoans \n\n History = $mutableMapHistory")
+        //Utils.log("Adapter : Loans = $mutableMapLoans \n\n History = $mutableMapHistory")
 
         var listLoans = mutableMapLoans.toList()
         var listHistory = mutableMapHistory.toList()
@@ -39,25 +39,33 @@ class StockCountAdapter(
 
         holder.prodName.text = listLoans[position].first
 
-        if(mutableMapHistory.containsKey(listLoans[position].first)){
-            val totalScannedQty = mutableMapHistory[listLoans[position].first]
-            holder.stockCount.text = "($totalScannedQty/$totalLoanQty)"
+        try {
+            if(mutableMapHistory.containsKey(listLoans[position].first)){
+                val totalScannedQty = mutableMapHistory[listLoans[position].first]
+                holder.stockCount.text = "($totalScannedQty/$totalLoanQty)"
 
-            if(totalScannedQty == totalLoanQty){
-                holder.status.setText("BALANCED")
-                holder.status.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorSuccess))
-                holder.status.visibility = View.VISIBLE
+                if(totalScannedQty == totalLoanQty){
+                    holder.status.text = "BALANCED"
+                    holder.status.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorSuccess))
+                    holder.status.visibility = View.VISIBLE
+                }else{
+                    holder.status.text = "IMBALANCED"
+                    holder.status.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorError))
+                    holder.status.visibility = View.VISIBLE
+                }
             }else{
-                holder.status.setText("IMBALANCED")
-                holder.status.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorError))
-                holder.status.visibility = View.VISIBLE
+                holder.stockCount.text = "(0/$totalLoanQty)"
             }
-        }else{
-            holder.stockCount.text = "(0/$totalLoanQty)"
+        }catch (e : Exception){
+            Utils.log(e.message.toString())
         }
     }
 
     override fun getItemCount(): Int {
         return mutableMapLoans.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 }
