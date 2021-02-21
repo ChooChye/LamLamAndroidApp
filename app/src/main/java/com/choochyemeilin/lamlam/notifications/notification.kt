@@ -17,11 +17,16 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.choochyemeilin.lamlam.Home.Home
+import com.choochyemeilin.lamlam.ReturnItems.MyStocks
+import com.choochyemeilin.lamlam.ReturnItems.MyStocksAdapter
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.choochyemeilin.lamlam.notifications.NotificationApp.Companion.CHANNEL_1_ID
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_my_stocks.*
 import kotlinx.android.synthetic.main.activity_notification.*
 import java.util.*
 
@@ -31,7 +36,6 @@ class notification : AppCompatActivity(), View.OnClickListener {
     private var staffID: Int? = 0
     private val notificationId=1
     private var message = "MESSAGE TESTING"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +50,13 @@ class notification : AppCompatActivity(), View.OnClickListener {
         button_notification_set.setOnClickListener(this)
         button_notification_cancel.setOnClickListener(this)
 
+        showMessage(object : FbCallback {
+            override fun onCallbackGetNotificationInfo(msg: String) {
+                super.onCallbackGetNotificationInfo(msg)
+                textView_message.text=msg
+            }
+        })
+
      }
 
 
@@ -56,13 +67,13 @@ class notification : AppCompatActivity(), View.OnClickListener {
          val intent = Intent(this, NotificationReceiver::class.java)
 
          intent.putExtra("notificationId", notificationId)
-         intent.putExtra("message", showMessage().toString())
+         intent.putExtra("message", message)
+
 
          // PendingIntent
          val pendingIntent = PendingIntent.getBroadcast(
              this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT
          )
-
 
          // AlarmManager
          val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
@@ -86,13 +97,15 @@ class notification : AppCompatActivity(), View.OnClickListener {
 
              button_notification_cancel.setOnClickListener {
                  alarmManager.cancel(pendingIntent)
+                 val intent = Intent(this, MyStocks::class.java)
+                 startActivity(intent)
 
              }
 
          }
      }
 
-    fun showMessage(){
+    fun showMessage(callback: FbCallback){
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("Loans")
 
@@ -104,7 +117,7 @@ class notification : AppCompatActivity(), View.OnClickListener {
                         dss.children.forEachIndexed { index, it ->
                             val dbSID = it.child("staffID").value.toString().toInt()
                             val status = it.child("status").value.toString()
-                            val loanDate = it.child("loanDate").value.toString()
+                            val loanID = it.child("loanID").value.toString()
 
                             Utils.getStaffID(object : FbCallback {
                                 override fun onCallbackGetUserID(uid: Int) {
@@ -113,30 +126,30 @@ class notification : AppCompatActivity(), View.OnClickListener {
 
                                     if (staffID == dbSID) {
                                         if (status.toUpperCase() == "APPROVED") {
+
                                             val product = it.child("productName")
-                                            product.children.forEach {
+                                            val product1 = it.child("productName").value.toString()
+
+                                            message="Loan ID :"+loanID +"\n"+"Product :"+product1+"\n"
+                                            callback.onCallbackGetNotificationInfo(message)
+
+                                            /*product.children.forEach {
+
                                                 val key = it.key.toString()
                                                 val qty = it.value.toString()
 
-                                                val msg = String.format(
-                                                            " %s = %s\n"
-                                                            , key,qty
-                                                )
+                                                    message="Loan ID :"+loanID +"\n"+"Product :"+product1+"\n"
 
-                                                message=msg
-
-                                            }
+                                                callback.onCallbackGetNotificationInfo(message)
+                                            }*/
 
                                         }
                                     }
                                 }
                             })
 
-
-
                         }
                     }
-
                 }
 
                 override fun onCancelled(error: DatabaseError) {

@@ -20,5 +20,5 @@ interface FbCallback {
     fun scanHistoryArrCallback(arr : ArrayList<ScanHistoryObj>){}
     fun stockCountCallback(map : MutableMap<String, Int>, arr : ArrayList<ScanHistoryObj>){}
     fun storeArr(arr : ArrayList<ScanHistoryObj>){}
-
+    fun onCallbackGetNotificationInfo(msg : String){}
 }

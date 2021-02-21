@@ -24,8 +24,6 @@
         <receiver
             android:name=".notifications.NotificationReceiver" />
 
-
-
         <activity android:name=".Scan.StockCount.StockCount"></activity>
 
         <activity android:name=".Scan.ScanHistory.ScanHistory" />
