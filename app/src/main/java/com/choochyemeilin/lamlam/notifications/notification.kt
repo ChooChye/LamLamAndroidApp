@@ -28,6 +28,7 @@ import com.choochyemeilin.lamlam.notifications.NotificationApp.Companion.CHANNEL
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_my_stocks.*
 import kotlinx.android.synthetic.main.activity_notification.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class notification : AppCompatActivity(), View.OnClickListener {
@@ -56,7 +57,6 @@ class notification : AppCompatActivity(), View.OnClickListener {
                 textView_message.text=msg
             }
         })
-
      }
 
 
@@ -118,6 +118,8 @@ class notification : AppCompatActivity(), View.OnClickListener {
                             val dbSID = it.child("staffID").value.toString().toInt()
                             val status = it.child("status").value.toString()
                             val loanID = it.child("loanID").value.toString()
+                            val loanDate = it.child("loanDate").value.toString()
+                            val returnDate=getRDate(loanDate)
 
                             Utils.getStaffID(object : FbCallback {
                                 override fun onCallbackGetUserID(uid: Int) {
@@ -127,21 +129,10 @@ class notification : AppCompatActivity(), View.OnClickListener {
                                     if (staffID == dbSID) {
                                         if (status.toUpperCase() == "APPROVED") {
 
-                                            val product = it.child("productName")
                                             val product1 = it.child("productName").value.toString()
 
-                                            message="Loan ID :"+loanID +"\n"+"Product :"+product1+"\n"
+                                            message="\n"+"Loan ID : #"+loanID +"\n"+"Loan Date : " +loanDate+"\n"+"Return Date : "+returnDate +"\n"
                                             callback.onCallbackGetNotificationInfo(message)
-
-                                            /*product.children.forEach {
-
-                                                val key = it.key.toString()
-                                                val qty = it.value.toString()
-
-                                                    message="Loan ID :"+loanID +"\n"+"Product :"+product1+"\n"
-
-                                                callback.onCallbackGetNotificationInfo(message)
-                                            }*/
 
                                         }
                                     }
@@ -157,6 +148,19 @@ class notification : AppCompatActivity(), View.OnClickListener {
                 }
 
             })
+    }
+
+    fun getRDate(dateString: String):String {
+
+        val cal : Calendar = Calendar.getInstance()
+        var sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val d : Date? = sdf.parse(dateString)
+        cal.time = d
+        cal.add(Calendar.DAY_OF_YEAR, 30)
+        val date = sdf.format(cal.time)
+        Utils.log(date.toString())
+
+        return date
     }
 
     override fun onSupportNavigateUp(): Boolean {

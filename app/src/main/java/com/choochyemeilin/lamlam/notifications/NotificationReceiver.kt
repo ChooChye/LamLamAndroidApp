@@ -24,11 +24,9 @@ class NotificationReceiver : BroadcastReceiver() {
     private val CHANNEL_ID = "CHANNEL_SAMPLE"
 
     override fun onReceive(context: Context, intent: Intent) {
-
-
         val message = intent.getStringExtra("message")
 
-        // Call MainActivity when notification is tapped.
+        // Call Activity when notification is tapped.
         val mainIntent = Intent(context, ReturnItems::class.java)
         val contentIntent = PendingIntent.getActivity(context, 0, mainIntent, 0)
 
@@ -58,7 +56,7 @@ class NotificationReceiver : BroadcastReceiver() {
             .setContentTitle("DUE DATE CLOSE")
             .setContentText("Please Return Asap")
             .setContentIntent(contentIntent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setColor(Color.BLUE)
