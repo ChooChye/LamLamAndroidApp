@@ -17,9 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m">
+        tools:targetApi="m"
+        android:name=".notifications.NotificationApp">
 
         <activity android:name=".notifications.notification"></activity>
+        <receiver
+            android:name=".notifications.NotificationReceiver" />
+
         <activity android:name=".Scan.StockCount.StockCount"></activity>
 
         <activity android:name=".Scan.ScanHistory.ScanHistory" />

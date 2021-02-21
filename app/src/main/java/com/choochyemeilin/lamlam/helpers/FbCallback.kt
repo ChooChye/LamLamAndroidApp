@@ -16,6 +16,7 @@ interface FbCallback {
     fun profileCallback(arr : MutableMap<String, String>){}
     fun scanHistoryCallback(arr : MutableList<ScanHistoryObj>){}
     fun pushLoanDate(arr : MutableMap<String, Int>, loanDate: ArrayList<String>, oldestDate : String){}
-
-
+    fun stockCountCallback(map : MutableMap<String, Int>, arr : ArrayList<ScanHistoryObj>){}
+    fun storeArr(arr : ArrayList<ScanHistoryObj>){}
+    fun onCallbackGetNotificationInfo(msg : String){}
 }

@@ -1,15 +1,20 @@
 package com.choochyemeilin.lamlam.ReturnItems
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
+import com.choochyemeilin.lamlam.notifications.notification
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_loan_app_form_1.*
 import kotlinx.android.synthetic.main.activity_my_stocks.*
@@ -64,6 +69,21 @@ class MyStocks : AppCompatActivity() {
         })
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.notification_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.notification_menu ->    startActivity(Intent(this, notification::class.java))
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private fun getData(callback: FbCallback) {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
