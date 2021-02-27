@@ -53,9 +53,9 @@ class NotificationReceiver : BroadcastReceiver() {
         val builder: Notification? = NotificationCompat.Builder(context, CHANNEL_ID)
 
             .setSmallIcon(com.choochyemeilin.lamlam.R.mipmap.ic_launcher)
-            .setContentTitle("DUE DATE CLOSE")
-            .setContentText("Please Return Asap")
-            .setContentIntent(contentIntent)
+            .setContentTitle("DUE DATE NEXT WEEK")
+            .setContentText("Reminder")
+           // .setContentIntent(contentIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)

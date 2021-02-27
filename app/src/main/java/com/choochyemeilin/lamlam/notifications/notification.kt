@@ -131,7 +131,8 @@ class notification : AppCompatActivity(), View.OnClickListener {
 
                                             val product1 = it.child("productName").value.toString()
 
-                                            message="\n"+"Loan ID : #"+loanID +"\n"+"Loan Date : " +loanDate+"\n"+"Return Date : "+returnDate +"\n"
+                                            message="\n"+"Your Loan ID #"+loanID +" is expiring at "+returnDate+
+                                                    ". Please return the loan as soon as you can. Thank you.\n"
                                             callback.onCallbackGetNotificationInfo(message)
 
                                         }
