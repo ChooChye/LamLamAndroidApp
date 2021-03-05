@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m"
-        android:name=".notifications.NotificationApp">
+        >
 
         <activity android:name=".notifications.notification"></activity>
         <receiver
@@ -30,7 +30,7 @@
         <activity android:name=".Profile.Profile" />
 
         <activity android:name=".ReturnItems.ReturnItemForm" />
-        <activity android:name=".Register.RegisterNewRole" />
+
         <activity android:name=".Misc.NoInternet" />
         <activity
             android:name=".Reports.Reports"

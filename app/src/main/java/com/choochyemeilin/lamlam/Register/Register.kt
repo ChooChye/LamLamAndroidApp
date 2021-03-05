@@ -10,18 +10,15 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
-import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.nav_header.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
 
 class Register : AppCompatActivity() {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -36,7 +33,6 @@ class Register : AppCompatActivity() {
 
     //  get reference
     private var userRef: DatabaseReference = databaseReference.getReference("User")
-    private var roleRef: DatabaseReference = databaseReference.getReference("Role")
     private var staffRef: DatabaseReference = databaseReference.getReference("Staff ID")
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -92,7 +88,7 @@ class Register : AppCompatActivity() {
                 staffRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         for (dss in snapshot.children) {
-                            //dss.children.forEach {
+
                                 val id = dss.value
                                 if (id.toString() == editTextNumber_register_staffID.text.toString()) {
                                     register(
@@ -100,7 +96,6 @@ class Register : AppCompatActivity() {
                                         editTextTextPassword_register_password.text.trim().toString()
                                     )
                                 }
-                         //   }
                         }
                     }
 
@@ -148,7 +143,6 @@ class Register : AppCompatActivity() {
                   textView_rid.text=""
                   result.text=""
               }
-         //       result.text=options.get(position)
 
             }
 
@@ -175,7 +169,7 @@ class Register : AppCompatActivity() {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     Toast.makeText(this@Register, "Registration Success", Toast.LENGTH_LONG).show()
-                    //    val userID="User ID : "
+
                     val staffID = editTextNumber_register_staffID.text.toString().toInt()
                     val staffName = editText_register_name.text.toString()
                     val staffEmail = editTextTextEmailAddress_register_email.text.toString()
@@ -227,41 +221,5 @@ class Register : AppCompatActivity() {
         }
         editTextTextPassword_register_password.setSelection(editTextTextPassword_register_password.text.toString().length)
     }
-
-
-    fun compareStaffID(): Boolean {
-
-        var query: Query = roleRef.child("Admin").orderByChild("Staff ID")
-        var q2: Query = roleRef.child("Staff").orderByChild("Staff ID")
-        //     val textRegStaffID = findViewById<EditText>(R.id.editTextNumber_register_staffID)
-
-
-        //Get Data
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                utils.log("$error")
-                Toast.makeText(this@Register, "ERROR", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                var textRegStaffID = editTextNumber_register_staffID.text.toString()
-
-
-                for (i in dataSnapshot.children) {
-
-                    var id = i.getValue().toString().compareTo(textRegStaffID)
-                    if (id.equals(true)) {
-                        Toast.makeText(this@Register, "SUCCESS", Toast.LENGTH_LONG).show()
-                    } else {
-                        editTextNumber_register_staffID.setError("Staff ID is not in the database")
-                        editTextNumber_register_staffID.requestFocus()
-                    }
-                }
-            }
-        })
-        return true
-    }
-
 
 }

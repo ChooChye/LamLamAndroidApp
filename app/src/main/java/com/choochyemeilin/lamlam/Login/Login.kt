@@ -20,21 +20,7 @@ import com.choochyemeilin.lamlam.Register.Register
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.nav_header.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.lang.Exception
-import java.lang.StringBuilder
-import java.util.regex.Matcher
 
 class Login : AppCompatActivity() {
 
@@ -141,9 +127,6 @@ class Login : AppCompatActivity() {
         }
         editTextTextPassword_login_password.setSelection(editTextTextPassword_login_password.text.toString().length)
     }
-
-
-
 }
 
 

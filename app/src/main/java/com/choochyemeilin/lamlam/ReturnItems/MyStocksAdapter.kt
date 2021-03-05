@@ -5,13 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.choochyemeilin.lamlam.R
-import com.choochyemeilin.lamlam.Scan.fromJson
-import com.choochyemeilin.lamlam.helpers.FbCallback
-import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.my_stocks_list.view.*
 import java.text.SimpleDateFormat
@@ -27,8 +23,6 @@ class MyStocksAdapter(
 
     var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     var productRef: DatabaseReference = database.getReference("Products")
-    private var utils : Utils = Utils
-    private   var staffID : Int? = 0
 
     //View Holder
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
@@ -41,24 +35,20 @@ class MyStocksAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-
         val list = context.toList()
-
 
         holder.itemView.textView_stock_name.text = list[position].first
         holder.itemView.textView_stock_qty.text = list[position].second.toString()
 
-        if(loanDateArr[position] == oldestDate)
+        if(loanDateArr[position] == oldestDate){
             holder.itemView.textView_stock_date.text = oldestDate
-        else
+        }
+        else{
             holder.itemView.textView_stock_date.text = loanDateArr[position]
-
-        holder.itemView.textView_stock_return_date.text= getRDate(holder.itemView.textView_stock_date.text.toString())
-
-
+            holder.itemView.textView_stock_return_date.text= getRDate(holder.itemView.textView_stock_date.text.toString())
+        }
 
         var sname=holder.itemView.textView_stock_name.text.toString()
-
 
        productRef.addValueEventListener(object : ValueEventListener {
            override fun onDataChange(snapshot: DataSnapshot) {
@@ -72,16 +62,13 @@ class MyStocksAdapter(
 
                        loadImage(holder, image.toString())
                    }
-
                }
            }
 
            override fun onCancelled(error: DatabaseError) {
                TODO("Not yet implemented")
            }
-
        })
-
     }
 
 

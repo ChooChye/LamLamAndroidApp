@@ -8,11 +8,8 @@ import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.choochyemeilin.lamlam.Login.Login
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.helpers.FbCallback
-import com.choochyemeilin.lamlam.helpers.Products
 import com.choochyemeilin.lamlam.helpers.Utils
 import com.choochyemeilin.lamlam.notifications.notification
 import com.google.firebase.database.*
@@ -39,9 +36,7 @@ class MyStocks : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = "My Stocks"
 
-        //  arrayList = ArrayList()
         list_view_recycle.setHasFixedSize(true)
-
 
         Utils.getStaffID(object : FbCallback {
             override fun onCallbackGetUserID(uid: Int) {
@@ -50,8 +45,6 @@ class MyStocks : AppCompatActivity() {
 
             }
         })
-
-
 
         getData(object : FbCallback {
             override fun pushLoanDate(arr: MutableMap<String, Int>, loanDate: ArrayList<String>, oldestDate : String) {

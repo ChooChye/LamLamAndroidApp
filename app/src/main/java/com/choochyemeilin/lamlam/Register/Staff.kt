@@ -22,8 +22,4 @@ class Staff {
 
     }
 
-   /* constructor(retailerName:String,retailerAddress:String){
-        this.retailerName=retailerName
-        this.retailerAddress=retailerAddress
-    }*/
 }

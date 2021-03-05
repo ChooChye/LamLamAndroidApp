@@ -108,13 +108,6 @@ class ReturnItems : AppCompatActivity() {
         }
     }
 
-    private fun readJSON(json: String): List<Products> {
-        return if (json != null)
-            Gson().fromJson(json) //GsonExtension Call
-        else
-            listOf()
-    }
-
     //Check if camera permissions is granted
     private fun setupPermissions() {
         val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)

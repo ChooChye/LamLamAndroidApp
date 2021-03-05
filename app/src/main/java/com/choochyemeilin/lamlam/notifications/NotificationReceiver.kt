@@ -10,13 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
-import com.choochyemeilin.lamlam.MainActivity
-
-
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat.startActivity
-import com.choochyemeilin.lamlam.Home.Home
 import com.choochyemeilin.lamlam.ReturnItems.ReturnItems
 
 class NotificationReceiver : BroadcastReceiver() {
@@ -55,7 +49,6 @@ class NotificationReceiver : BroadcastReceiver() {
             .setSmallIcon(com.choochyemeilin.lamlam.R.mipmap.ic_launcher)
             .setContentTitle("DUE DATE NEXT WEEK")
             .setContentText("Reminder")
-           // .setContentIntent(contentIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)

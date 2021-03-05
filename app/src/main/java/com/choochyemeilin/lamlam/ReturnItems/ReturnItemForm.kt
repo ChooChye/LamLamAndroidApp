@@ -3,24 +3,17 @@ package com.choochyemeilin.lamlam.ReturnItems
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.choochyemeilin.lamlam.R
 import com.choochyemeilin.lamlam.Scan.fromJson
 import com.choochyemeilin.lamlam.helpers.FbCallback
 import com.choochyemeilin.lamlam.helpers.Products
-import com.choochyemeilin.lamlam.helpers.Retailers
 import com.choochyemeilin.lamlam.helpers.Utils
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_my_stocks.*
 import kotlinx.android.synthetic.main.return_item_form.*
-import org.json.JSONException
-import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -88,7 +81,6 @@ class ReturnItemForm : AppCompatActivity() {
 
                                     if (uid.toString() == dbSID){
 
-                                        //------------------------get all approved name qty??????????????????????---------------------------------
                                         if (status.toString().toUpperCase()=="APPROVED") {
 
                                             product.children.forEach {
@@ -99,10 +91,8 @@ class ReturnItemForm : AppCompatActivity() {
                                                 textView_loan_qty.text  = qty
 
                                             }
-
                                         }
                                     }
-
                                 }
                             })
 
@@ -113,9 +103,6 @@ class ReturnItemForm : AppCompatActivity() {
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
-
-
-
 
             button_return_now.setOnClickListener {
 
@@ -142,10 +129,8 @@ class ReturnItemForm : AppCompatActivity() {
                                         val enterValue=return_qty.text.toString().toInt()
 
                                         if (value.contains(name!!)) {
-                                            val newValue = oldValue + enterValue
+                                            val newValue = (oldValue + enterValue).toString()
                                             prodRef.child(key).child("qty").setValue(newValue)
-
-                                            //---------set time to show dialog-----then finish----------
                                         }
                                     }
 
@@ -256,10 +241,6 @@ class ReturnItemForm : AppCompatActivity() {
                 val current = LocalDateTime.now()
                 data[0].returnDate= current.toString()
 
-
-
-
-
                val msg = String.format(
                     "Product ID : %s\n" +
                             "Category : %s\n" +
@@ -295,8 +276,6 @@ class ReturnItemForm : AppCompatActivity() {
             }
 
     }
-
-
 
     private fun showDialog(msg: String) {
         var builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
